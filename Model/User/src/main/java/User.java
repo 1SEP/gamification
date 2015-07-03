@@ -16,8 +16,8 @@ public class User {
     private String role;
     private String birthday;
     private double rating;
-    public ArrayList<Task> PublicTasks; //С маленькой буквы
-    private ArrayList<Task> PrivateTasks;//С маленькой буквы
+    public ArrayList<Task> PublicTasks;
+    private ArrayList<Task> PrivateTasks;
     private String login;
     private String passwordHesh;
     private URL foto;
