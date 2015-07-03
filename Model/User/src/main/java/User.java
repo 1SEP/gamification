@@ -84,7 +84,7 @@ public class User {
         return login;
     }
 
-    public String getpasswordHesh() {  //getPasswordHesh
+    public String getpasswordHesh() {
         return passwordHesh;
     }
 
