@@ -11,13 +11,13 @@ public class User {
     private int id;
     private String firstname;
     private String lastname;
-    private String patronoymic;
+    private String patronoymic; 
     private String post;
     private String role;
     private String birthday;
     private double rating;
-    public ArrayList<Task> PublicTasks;
-    private ArrayList<Task> PrivateTasks;
+    public ArrayList<Task> PublicTasks; //С маленькой буквы
+    private ArrayList<Task> PrivateTasks;//С маленькой буквы
     private String login;
     private String passwordHesh;
     private URL foto;
@@ -84,7 +84,7 @@ public class User {
         return login;
     }
 
-    public String getpasswordHesh() {
+    public String getpasswordHesh() {  //getPasswordHesh
         return passwordHesh;
     }
 
