@@ -11,13 +11,13 @@ public class User {
     private int id;
     private String firstname;
     private String lastname;
-    private String patronoymic; 
+    private String patronoymic;
     private String post;
     private String role;
     private String birthday;
     private double rating;
-    public ArrayList<Task> PublicTasks;
-    private ArrayList<Task> PrivateTasks;
+    public ArrayList<Task> publicTasks;
+    private ArrayList<Task> privateTasks;
     private String login;
     private String passwordHesh;
     private URL foto;
@@ -32,8 +32,8 @@ public class User {
         this.role = role;
         this.birthday = birthday;
         this.rating = rating;
-        PublicTasks = publicTasks;
-        PrivateTasks = privateTasks;
+        this.publicTasks = publicTasks;
+        this.privateTasks = privateTasks;
         this.login = login;
         this.passwordHesh = security.md5(passwordHesh);
         this.foto = foto;
@@ -73,27 +73,23 @@ public class User {
     }
 
     public ArrayList<Task> getPublicTasks() {
-        return PublicTasks;
+        return publicTasks;
     }
 
     public ArrayList<Task> getPrivateTasks() {
-        return PrivateTasks;
+        return privateTasks;
+    }
+
+    public String getPasswordHesh() {
+        return passwordHesh;
     }
 
     public String getLogin() {
         return login;
     }
 
-    public String getpasswordHesh() {
-        return passwordHesh;
-    }
-
     public URL getFoto() {
         return foto;
-    }
-
-    public Security getSecurity() {
-        return security;
     }
 
     @Override
