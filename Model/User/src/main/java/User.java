@@ -9,41 +9,52 @@ import java.util.ArrayList;
  */
 public class User {
     private int id;
-    private String name;
-    private String surname;
+    private String firstname;
+    private String lastname;
     private String patronoymic;
-    private int age;
     private String post;
     private String role;
     private String birthday;
-    private double ration;
-    public ArrayList<Task> tasksPublic;
-    private ArrayList<Task> tasksPrivate;
+    private double rating;
+    public ArrayList<Task> PublicTasks;
+    private ArrayList<Task> PrivateTasks;
     private String login;
-    private String password;
+    private String passwordHesh;
     private URL foto;
     private Security security = new Security();
 
-    public int getId() {
+    public User(int id, String firstname, String lastname, String patronoymic, String post, String role, String birthday, double rating, ArrayList<Task> publicTasks, ArrayList<Task> privateTasks, String login, String passwordHesh, URL foto) {
+        this.id = id;
+        this.firstname = firstname;
+        this.lastname = lastname;
+        this.patronoymic = patronoymic;
+        this.post = post;
+        this.role = role;
+        this.birthday = birthday;
+        this.rating = rating;
+        PublicTasks = publicTasks;
+        PrivateTasks = privateTasks;
+        this.login = login;
+        this.passwordHesh = security.md5(passwordHesh);
+        this.foto = foto;
+    }
 
+    public int getId() {
         return id;
     }
 
-    public String getName() {
-        return name;
+    public String getFirstname() {
+        return firstname;
     }
 
-    public String getSurname() {
-        return surname;
+    public String getLastname() {
+        return lastname;
     }
 
     public String getPatronoymic() {
         return patronoymic;
     }
 
-    public int getAge() {
-        return age;
-    }
 
     public String getPost() {
         return post;
@@ -53,62 +64,52 @@ public class User {
         return role;
     }
 
-    public double getRation() {
-        return ration;
-    }
-
-    public ArrayList<Task> getTasksPrivate() {
-        return tasksPrivate;
-    }
-
     public String getBirthday() {
         return birthday;
     }
 
-    public User(int id, String name, String surname, String patronoymic, int age, String post, String role, double ration, ArrayList<Task> tasksPublic, ArrayList<Task> tasksPrivate, String login, String password, URL foto) {
-        this.id = id;
-        this.name = name;
-        this.surname = surname;
-        this.patronoymic = patronoymic;
-        this.age = age;
-        this.post = post;
-        this.role = role;
-        this.ration = ration;
-        this.tasksPublic = tasksPublic;
-        this.tasksPrivate = tasksPrivate;
-        this.login = login;
-
-        this.password = security.md5(password);
-        this.foto = foto;
+    public double getRating() {
+        return rating;
     }
 
-    public ArrayList<Task> getTasksPublic() {
-        return tasksPublic;
+    public ArrayList<Task> getPublicTasks() {
+        return PublicTasks;
     }
+
+    public ArrayList<Task> getPrivateTasks() {
+        return PrivateTasks;
+    }
+
     public String getLogin() {
         return login;
     }
 
-    public String getPassword() {
-        return password;
+    public String getpasswordHesh() {
+        return passwordHesh;
     }
 
     public URL getFoto() {
         return foto;
     }
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("id", id)
-                .add("name", name)
-                .add("surname", surname)
-                .toString();
+    public Security getSecurity() {
+        return security;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id, name, age);
+        return Objects.hashCode(id, firstname, lastname, patronoymic, birthday);
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("id", id)
+                .add("firstname", firstname)
+                .add("lastname", lastname)
+                .add("patronoymic", patronoymic)
+                .add("post", post)
+                .toString();
     }
 
     @Override
@@ -121,7 +122,9 @@ public class User {
         }
         final User other = (User) obj;
         return Objects.equal(this.id, other.id)
-                && Objects.equal(this.name, other.name)
-                && Objects.equal(this.age, other.age);
+                && Objects.equal(this.firstname, other.firstname)
+                && Objects.equal(this.lastname, other.lastname)
+                && Objects.equal(this.patronoymic, other.patronoymic)
+                && Objects.equal(this.birthday, other.birthday);
     }
 }
