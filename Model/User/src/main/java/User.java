@@ -15,10 +15,11 @@ public class User {
     private int age;
     private String post;
     private String role;
+    private String birthday;
     private double ration;
     public ArrayList<Task> tasksPublic;
     private ArrayList<Task> tasksPrivate;
-    private String email;
+    private String login;
     private String password;
     private URL foto;
     private Security security = new Security();
@@ -60,7 +61,11 @@ public class User {
         return tasksPrivate;
     }
 
-    public User(int id, String name, String surname, String patronoymic, int age, String post, String role, double ration, ArrayList<Task> tasksPublic, ArrayList<Task> tasksPrivate, String email, String password, URL foto) {
+    public String getBirthday() {
+        return birthday;
+    }
+
+    public User(int id, String name, String surname, String patronoymic, int age, String post, String role, double ration, ArrayList<Task> tasksPublic, ArrayList<Task> tasksPrivate, String login, String password, URL foto) {
         this.id = id;
         this.name = name;
         this.surname = surname;
@@ -71,7 +76,8 @@ public class User {
         this.ration = ration;
         this.tasksPublic = tasksPublic;
         this.tasksPrivate = tasksPrivate;
-        this.email = email;
+        this.login = login;
+
         this.password = security.md5(password);
         this.foto = foto;
     }
@@ -79,8 +85,8 @@ public class User {
     public ArrayList<Task> getTasksPublic() {
         return tasksPublic;
     }
-    public String getEmail() {
-        return email;
+    public String getLogin() {
+        return login;
     }
 
     public String getPassword() {
