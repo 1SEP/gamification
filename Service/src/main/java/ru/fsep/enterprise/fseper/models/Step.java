@@ -14,7 +14,7 @@ import com.google.common.base.Objects;
 public class Step {
     private int id;
 
-    private int task_id;
+    private int taskId;
 
     private String description;
 
@@ -22,7 +22,7 @@ public class Step {
 
     public Step(int id, int task_id, String description, boolean finished) {
         this.id = id;
-        this.task_id = task_id;
+        this.taskId = task_id;
         this.description = description;
         this.finished = finished;
     }
@@ -32,7 +32,7 @@ public class Step {
     }
 
     public int getTask_id() {
-        return task_id;
+        return taskId;
     }
 
     public String getDescription() {
@@ -47,7 +47,7 @@ public class Step {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("id", id)
-                .add("task_id", task_id)
+                .add("task_id", taskId)
                 .add("description", description)
                 .add("finished", finished)
                 .toString();
@@ -55,7 +55,7 @@ public class Step {
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id, task_id, description, finished);
+        return Objects.hashCode(id, taskId, description, finished);
     }
 
     @Override
@@ -68,7 +68,7 @@ public class Step {
         }
         final Step other = (Step) obj;
         return Objects.equal(this.id, other.id)
-                && Objects.equal(this.task_id, other.task_id)
+                && Objects.equal(this.taskId, other.taskId)
                 && Objects.equal(this.description, other.description)
                 && Objects.equal(this.finished, other.finished);
     }
