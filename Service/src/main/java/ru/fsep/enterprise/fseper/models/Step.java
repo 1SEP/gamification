@@ -9,5 +9,9 @@ package ru.fsep.enterprise.fseper.models;
  */
 
 public class Step {
+    private int id;
+    private int task_id;
+    private String description;
+    private boolean finished;
     // TODO: make body by wiki
 }

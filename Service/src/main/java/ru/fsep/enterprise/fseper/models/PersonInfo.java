@@ -1,5 +1,8 @@
 package ru.fsep.enterprise.fseper.models;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
+
 import java.net.URL;
 
 /**
@@ -65,5 +68,40 @@ public class PersonInfo {
         return photo;
     }
 
-    // TODO : add equals, toString and hashCode implementations
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(firstName, lastName, rating, birthday, post, role, photo);
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("firstName", firstName)
+                .add("lastName", lastName)
+                .add("rating", rating)
+                .add("birthday", birthday)
+                .add("post", post)
+                .add("role", role)
+                .add("photo", photo)
+                .toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final PersonInfo other = (PersonInfo) obj;
+        return Objects.equal(this.firstName, other.firstName)
+                && Objects.equal(this.lastName, other.lastName)
+                && Objects.equal(this.rating, other.rating)
+                && Objects.equal(this.birthday, other.birthday)
+                && Objects.equal(this.post, other.post)
+                && Objects.equal(this.role, other.role)
+                && Objects.equal(this.photo, other.photo);
+    }
+// TODO : add equals, toString and hashCode implementations
 }
