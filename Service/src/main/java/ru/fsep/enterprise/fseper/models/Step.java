@@ -17,6 +17,29 @@ public class Step {
     private String description;
     private boolean finished;
 
+    public Step(int id, int task_id, String description, boolean finished) {
+        this.id = id;
+        this.task_id = task_id;
+        this.description = description;
+        this.finished = finished;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getTask_id() {
+        return task_id;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public boolean isFinished() {
+        return finished;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
@@ -25,13 +48,6 @@ public class Step {
                 .add("description", description)
                 .add("finished", finished)
                 .toString();
-    }
-
-    public Step(int id, int task_id, String description, boolean finished) {
-        this.id = id;
-        this.task_id = task_id;
-        this.description = description;
-        this.finished = finished;
     }
 
     @Override

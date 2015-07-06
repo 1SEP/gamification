@@ -17,14 +17,43 @@ import java.util.List;
 public class Task {
     private int id;
     private boolean privated;
+    private String description;
+    private Date dueDate;
+    private List<Step> steps;
+    private boolean finished;
 
     public Task(int id, boolean privated, String description, Date dueDate, List<Step> steps, boolean finished) {
         this.id = id;
         this.privated = privated;
         this.description = description;
         this.dueDate = dueDate;
+
         this.steps = steps;
         this.finished = finished;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public boolean isPrivated() {
+        return privated;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Date getDueDate() {
+        return dueDate;
+    }
+
+    public List<Step> getSteps() {
+        return steps;
+    }
+
+    public boolean isFinished() {
+        return finished;
     }
 
     @Override
@@ -60,11 +89,5 @@ public class Task {
                 && Objects.equal(this.steps, other.steps)
                 && Objects.equal(this.finished, other.finished);
     }
-
-    private String description;
-    private Date dueDate;
-    private List<Step> steps;
-    private boolean finished;
-
     // TODO: make body by wiki
 }
