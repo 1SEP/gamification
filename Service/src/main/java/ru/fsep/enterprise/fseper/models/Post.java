@@ -66,6 +66,4 @@ public class Post {
     public String getDescription() {
         return description;
     }
-
-    // TODO : add equals, toString and hashCode implementations
 }

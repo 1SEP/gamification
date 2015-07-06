@@ -13,8 +13,11 @@ import com.google.common.base.Objects;
 
 public class Step {
     private int id;
+
     private int task_id;
+
     private String description;
+
     private boolean finished;
 
     public Step(int id, int task_id, String description, boolean finished) {
@@ -69,5 +72,4 @@ public class Step {
                 && Objects.equal(this.description, other.description)
                 && Objects.equal(this.finished, other.finished);
     }
-    // TODO: make body by wiki
 }

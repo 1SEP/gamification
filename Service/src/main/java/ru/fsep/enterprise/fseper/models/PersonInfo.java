@@ -103,5 +103,4 @@ public class PersonInfo {
                 && Objects.equal(this.role, other.role)
                 && Objects.equal(this.photo, other.photo);
     }
-// TODO : add equals, toString and hashCode implementations
 }

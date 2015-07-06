@@ -16,10 +16,15 @@ import java.util.List;
 
 public class Task {
     private int id;
+
     private boolean privated;
+
     private String description;
+
     private Date dueDate;
+
     private List<Step> steps;
+
     private boolean finished;
 
     public Task(int id, boolean privated, String description, Date dueDate, List<Step> steps, boolean finished) {
@@ -89,5 +94,4 @@ public class Task {
                 && Objects.equal(this.steps, other.steps)
                 && Objects.equal(this.finished, other.finished);
     }
-    // TODO: make body by wiki
 }

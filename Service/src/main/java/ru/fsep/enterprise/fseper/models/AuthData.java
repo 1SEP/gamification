@@ -55,5 +55,4 @@ public class AuthData {
                 .add("login", login)
                 .toString();
     }
-// TODO : add equals, toString and hashCode implementations
 }
