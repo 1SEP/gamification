@@ -9,5 +9,6 @@ package ru.fsep.enterprise.fseper.models;
  */
 
 public class Task {
+    
     // TODO: make body by wiki
 }
