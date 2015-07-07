@@ -2,30 +2,35 @@ package ru.fsep.enterprise.fseper.service;
 
 import ru.fsep.enterprise.fseper.models.User;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Ôëþð on 07.07.2015.
  */
 public class UsersServiceFacadeImpl implements UsersServiceFacade {
-    UsersDAO usersDAO;
-    public void addUser(User user) {
-        usersDAO.addUser(user);
+    UsersDao usersDao;
+
+    public UsersServiceFacadeImpl(UsersDao usersDao) {
+        this.usersDao = usersDao;
     }
 
-    public User getUser(String id) {
-        return usersDAO.getUser(id);
+    public void logIn(User user) {
+        usersDao.logIn(user);
     }
 
-    public User updateUser(String id) {
-        return usersDAO.updateUser(id);
+    public User getUser(String userId) {
+        return usersDao.getUser(userId);
     }
 
-    public void removeUser(String id) {
-        usersDAO.updateUser(id);
+    public User updateUser(String userId) {
+        return usersDao.updateUser(userId);
     }
 
-    public ArrayList<User> getUserList() {
-        return usersDAO.getUsersList();
+    public void removeUser(String userId) {
+        usersDao.removeUser(userId);
+    }
+
+    public List<User> getUserList() {
+        return usersDao.getUsersList();
     }
 }
