@@ -12,15 +12,15 @@ public class UsersDaoImpl implements UsersDao {
     public void logIn(User user) {
     }
 
-    public User getUser(String userId) {
+    public User getUser(int userId) {
         return null;
     }
 
-    public User updateUser(String userId) {
+    public User updateUser(int userId) {
         return null;
     }
 
-    public void removeUser(String userId) {
+    public void removeUser(int userId) {
     }
 
     public List<User> getUsersList() {

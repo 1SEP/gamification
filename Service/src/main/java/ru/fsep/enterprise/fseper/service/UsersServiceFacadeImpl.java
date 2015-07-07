@@ -8,7 +8,7 @@ import java.util.List;
  * Created by Ôëþð on 07.07.2015.
  */
 public class UsersServiceFacadeImpl implements UsersServiceFacade {
-    UsersDao usersDao;
+    private UsersDao usersDao;
 
     public UsersServiceFacadeImpl(UsersDao usersDao) {
         this.usersDao = usersDao;
@@ -18,15 +18,15 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
         usersDao.logIn(user);
     }
 
-    public User getUser(String userId) {
+    public User getUser(int userId) {
         return usersDao.getUser(userId);
     }
 
-    public User updateUser(String userId) {
+    public User updateUser(int userId) {
         return usersDao.updateUser(userId);
     }
 
-    public void removeUser(String userId) {
+    public void removeUser(int userId) {
         usersDao.removeUser(userId);
     }
 

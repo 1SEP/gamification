@@ -8,8 +8,8 @@ import java.util.List;
  */
 public interface UsersDao {
     void logIn(User user);
-    User getUser(String userId);
-    User updateUser(String userId);
-    void removeUser(String userId);
+    User getUser(int userId);
+    User updateUser(int userId);
+    void removeUser(int userId);
     List<User> getUsersList();
 }
