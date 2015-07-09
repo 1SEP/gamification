@@ -6,7 +6,7 @@ CREATE TABLE auth_data (
 
 
 CREATE TABLE person_info (
-  info_id INT PRIMARY KEY,
+  id INT PRIMARY KEY,
   first_name VARCHAR,
   last_name VARCHAR,
   rating DOUBLE PRECISION,
@@ -22,7 +22,7 @@ CREATE TABLE posts(
 );
 
 CREATE TABLE post (
-  post_id INT PRIMARY KEY,
+  id INT PRIMARY KEY,
   name VARCHAR,
   description VARCHAR
 ) ;
@@ -33,7 +33,7 @@ CREATE TABLE tasks (
 );
 
 CREATE TABLE task (
-  task_id INT PRIMARY KEY ,
+  id INT PRIMARY KEY ,
   privated BOOLEAN,
   description VARCHAR,
   due_data DATE,
@@ -42,7 +42,7 @@ CREATE TABLE task (
 ) ;
 
 CREATE TABLE step (
-  step_id INT PRIMARY KEY ,
+  id INT PRIMARY KEY ,
   task_id INT REFERENCES task,
   description VARCHAR,
   finished BOOLEAN
@@ -55,7 +55,7 @@ CREATE TABLE steps (
 );
 
 CREATE TABLE users (
-  user_id INT PRIMARY KEY ,
+  id INT PRIMARY KEY ,
   login VARCHAR REFERENCES auth_data,
   info_id INT REFERENCES person_info,
   tasks_id INT REFERENCES tasks
