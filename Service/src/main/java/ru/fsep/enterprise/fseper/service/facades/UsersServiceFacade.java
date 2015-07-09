@@ -21,7 +21,7 @@ public interface UsersServiceFacade {
     void addPost(Post post);
     void removePost(int postId);
     void updatePost(int postId);
-    List<Post> getPostList();
+    List<Post> getPosts();
     void assignmentTask(Task task, int userId);
     Task getTask(int taskId);
     void updateTask(int taskId);

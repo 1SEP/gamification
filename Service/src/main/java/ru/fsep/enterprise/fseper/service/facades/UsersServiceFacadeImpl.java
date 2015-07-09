@@ -3,7 +3,7 @@ package ru.fsep.enterprise.fseper.service.facades;
 import ru.fsep.enterprise.fseper.models.Post;
 import ru.fsep.enterprise.fseper.models.Task;
 import ru.fsep.enterprise.fseper.models.User;
-import ru.fsep.enterprise.fseper.service.dao.PostDao;
+import ru.fsep.enterprise.fseper.service.dao.PostsDao;
 import ru.fsep.enterprise.fseper.service.dao.TasksDao;
 import ru.fsep.enterprise.fseper.service.dao.UsersDao;
 
@@ -14,12 +14,12 @@ import java.util.List;
  */
 public class UsersServiceFacadeImpl implements UsersServiceFacade {
     private UsersDao usersDao;
-    private PostDao postDao;
+    private PostsDao postsDao;
     private TasksDao tasksDao;
 
-    public UsersServiceFacadeImpl(UsersDao usersDao, PostDao postDao, TasksDao tasksDao) {
+    public UsersServiceFacadeImpl(UsersDao usersDao, PostsDao postsDao, TasksDao tasksDao) {
         this.usersDao = usersDao;
-        this.postDao = postDao;
+        this.postsDao = postsDao;
         this.tasksDao = tasksDao;
     }
 
@@ -60,19 +60,19 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
     }
 
     public void addPost(Post post) {
-        postDao.addPost(post);
+        postsDao.addPost(post);
     }
 
     public void removePost(int postId) {
-        postDao.removePost(postId);
+        postsDao.removePost(postId);
     }
 
     public void updatePost(int postId) {
-        postDao.updatePost(postId);
+        postsDao.updatePost(postId);
     }
 
-    public List<Post> getPostList() {
-        return postDao.getPostList();
+    public List<Post> getPosts() {
+        return postsDao.getPosts();
     }
 
     public void assignmentTask(Task task, int userId) {
