@@ -1,4 +1,4 @@
-package ru.fsep.enterprise.fseper.service;
+package ru.fsep.enterprise.fseper.service.jdbc.utils;
 
 /**
  * Created by Ôëşğ on 09.07.2015.
