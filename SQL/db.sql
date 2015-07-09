@@ -1,3 +1,7 @@
+CREATE SEQUENCE auto_id_users;
+CREATE SEQUENCE auto_id_posts;
+CREATE SEQUENCE auto_id_tasks;
+CREATE SEQUENCE auto_id_steps;
 
 CREATE TABLE auth_data (
   login VARCHAR PRIMARY KEY,
@@ -5,24 +9,13 @@ CREATE TABLE auth_data (
 );
 
 
-CREATE TABLE person_info (
-  id INT PRIMARY KEY,
-  first_name VARCHAR,
-  last_name VARCHAR,
-  rating DOUBLE PRECISION,
-  bithday DATE,
-  posts_id INT REFERENCES posts(post_id),
-  role VARCHAR,
-  photo VARCHAR
-) ;
-
-CREATE TABLE posts(
-  info_id INT REFERENCES person_info,
+CREATE TABLE posts (
+  info_id INT REFERENCES users,
   post_id INT REFERENCES post
 );
 
 CREATE TABLE post (
-  id INT PRIMARY KEY,
+  id INT PRIMARY KEY DEFAULT nextval('auto_id_posts'),
   name VARCHAR,
   description VARCHAR
 ) ;
@@ -33,7 +26,7 @@ CREATE TABLE tasks (
 );
 
 CREATE TABLE task (
-  id INT PRIMARY KEY ,
+  id INT PRIMARY KEY DEFAULT nextval('auto_id_steps'),
   privated BOOLEAN,
   description VARCHAR,
   due_data DATE,
@@ -42,7 +35,7 @@ CREATE TABLE task (
 ) ;
 
 CREATE TABLE step (
-  id INT PRIMARY KEY ,
+  id INT PRIMARY KEY DEFAULT nextval('auto_id_steps'),
   task_id INT REFERENCES task,
   description VARCHAR,
   finished BOOLEAN
@@ -55,8 +48,14 @@ CREATE TABLE steps (
 );
 
 CREATE TABLE users (
-  id INT PRIMARY KEY ,
+  id INT PRIMARY KEY DEFAULT nextval('auto_id_users'),
   login VARCHAR REFERENCES auth_data,
-  info_id INT REFERENCES person_info,
+  first_name VARCHAR,
+  last_name VARCHAR,
+  rating DOUBLE PRECISION,
+  bithday DATE,
+  posts_id INT REFERENCES posts(post_id),
+  role VARCHAR,
+  photo VARCHAR,
   tasks_id INT REFERENCES tasks
 );
