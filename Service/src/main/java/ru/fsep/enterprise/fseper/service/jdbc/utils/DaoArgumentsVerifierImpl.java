@@ -1,4 +1,4 @@
-package ru.fsep.enterprise.fseper.service;
+package ru.fsep.enterprise.fseper.service.jdbc.utils;
 
 public class DaoArgumentsVerifierImpl implements DaoArgumentsVerifier {
 
@@ -11,7 +11,7 @@ public class DaoArgumentsVerifierImpl implements DaoArgumentsVerifier {
             "SELECT COUNT (*) FROM USERS WHERE (ID = :userId)";
 
     public void verifyUser(int userId) {
-        
+
     }
 
     public void verifyTask(int taskId) {
