@@ -20,6 +20,8 @@ public interface UsersServiceFacade {
     List<User> getSortedUsersByRating();
     void addPost(Post post);
     void removePost(int postId);
+    void updatePost(int postId);
+    List<Post> getPostList();
     void assignmentTask(Task task);
     Task getTask(int taskId);
     void updateTask(int taskId);

@@ -67,6 +67,14 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
         postDao.removePost(postId);
     }
 
+    public void updatePost(int postId) {
+        postDao.updatePost(postId);
+    }
+
+    public List<Post> getPostList() {
+        return postDao.getPostList();
+    }
+
     public void assignmentTask(Task task) {
         tasksDao.assignmentTask(task);
     }
