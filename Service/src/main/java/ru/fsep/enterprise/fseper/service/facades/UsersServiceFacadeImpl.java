@@ -1,4 +1,4 @@
-package ru.fsep.enterprise.fseper.service.serviceFacades;
+package ru.fsep.enterprise.fseper.service.facades;
 
 import ru.fsep.enterprise.fseper.models.Post;
 import ru.fsep.enterprise.fseper.models.Task;
@@ -39,8 +39,8 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
         usersDao.removeUser(userId);
     }
 
-    public List<User> getUserList() {
-        return usersDao.getUsersList();
+    public List<User> getUsers() {
+        return usersDao.getUsers();
     }
 
     public List<User> getUsersByName() {
@@ -75,9 +75,10 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
         return postDao.getPostList();
     }
 
-    public void assignmentTask(Task task) {
-        tasksDao.assignmentTask(task);
+    public void assignmentTask(Task task, int userId) {
+        tasksDao.assignmentTask(task, userId);
     }
+
 
     public Task getTask(int taskId) {
         return tasksDao.getTask(taskId);
@@ -91,15 +92,16 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
         tasksDao.removeTask(taskId);
     }
 
-    public List<Task> getPrivatedTaskList() {
-        return tasksDao.getPrivatedTaskList();
+    public List<Task> getPrivatedTasks() {
+        return tasksDao.getPrivatedTasks();
     }
 
-    public List<Task> getFinishedTaskList() {
-        return tasksDao.getFinishedTaskList();
+    public List<Task> getFinishedTasks() {
+        return tasksDao.getFinishedTasks();
     }
 
-    public List<Task> getTaskListByDate() {
-        return tasksDao.getTaskListByDate();
+    public List<Task> getTasksByDate() {
+        return tasksDao.getTasksByDate();
     }
+
 }
