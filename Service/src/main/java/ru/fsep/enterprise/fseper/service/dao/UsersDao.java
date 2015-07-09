@@ -11,7 +11,7 @@ public interface UsersDao {
     User getUser(int userId);
     User updateUser(int userId);
     void removeUser(int userId);
-    List<User> getUsersList();
+    List<User> getUsers();
     List<User> getUsersByName();
     List<User> getUsersByPost();
     List<User> getSortedUsers();
