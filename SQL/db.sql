@@ -45,7 +45,6 @@ CREATE TABLE users (
   id INT PRIMARY KEY DEFAULT nextval('auto_id_users'),
   login VARCHAR,
   password_hash VARCHAR,
-  login VARCHAR REFERENCES auth_data,
   first_name VARCHAR,
   last_name VARCHAR,
   rating DOUBLE PRECISION,
