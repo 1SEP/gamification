@@ -4,6 +4,7 @@ import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
 import java.net.URL;
+import java.util.List;
 
 /**
  * 05.07.15
@@ -23,19 +24,18 @@ public class PersonInfo {
 
     private String birthday;
 
-    private String post;
+    private List<Post> posts;
 
     private String role;
 
     private URL photo;
 
-    public PersonInfo(String firstName, String lastName, double rating, String birthday, String post, String role,
-                      URL photo) {
+    public PersonInfo(String firstName, String lastName, double rating, String birthday, List<Post> posts, String role, URL photo) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.rating = rating;
         this.birthday = birthday;
-        this.post = post;
+        this.posts = posts;
         this.role = role;
         this.photo = photo;
     }
@@ -56,8 +56,8 @@ public class PersonInfo {
         return birthday;
     }
 
-    public String getPost() {
-        return post;
+    public List<Post> getPosts() {
+        return posts;
     }
 
     public String getRole() {
@@ -69,38 +69,34 @@ public class PersonInfo {
     }
 
     @Override
-    public int hashCode() {
-        return Objects.hashCode(firstName, lastName, rating, birthday, post, role, photo);
-    }
-
-    @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("firstName", firstName)
                 .add("lastName", lastName)
                 .add("rating", rating)
                 .add("birthday", birthday)
-                .add("post", post)
+                .add("posts", posts)
                 .add("role", role)
                 .add("photo", photo)
                 .toString();
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        final PersonInfo other = (PersonInfo) obj;
-        return Objects.equal(this.firstName, other.firstName)
-                && Objects.equal(this.lastName, other.lastName)
-                && Objects.equal(this.rating, other.rating)
-                && Objects.equal(this.birthday, other.birthday)
-                && Objects.equal(this.post, other.post)
-                && Objects.equal(this.role, other.role)
-                && Objects.equal(this.photo, other.photo);
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PersonInfo that = (PersonInfo) o;
+        return Objects.equal(rating, that.rating) &&
+                Objects.equal(firstName, that.firstName) &&
+                Objects.equal(lastName, that.lastName) &&
+                Objects.equal(birthday, that.birthday) &&
+                Objects.equal(posts, that.posts) &&
+                Objects.equal(role, that.role) &&
+                Objects.equal(photo, that.photo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(firstName, lastName, rating, birthday, posts, role, photo);
     }
 }

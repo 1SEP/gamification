@@ -7,6 +7,7 @@ import java.util.List;
  * Created by дыў№ on 06.07.2015.
  */
 public interface UsersDao {
+    void logIn(User user);
     User getUser(int userId);
     User updateUser(int userId);
     void removeUser(int userId);
