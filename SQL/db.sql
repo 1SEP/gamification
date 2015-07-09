@@ -3,12 +3,6 @@ CREATE SEQUENCE auto_id_posts;
 CREATE SEQUENCE auto_id_tasks;
 CREATE SEQUENCE auto_id_steps;
 
-CREATE TABLE auth_data (
-  login VARCHAR PRIMARY KEY,
-  password_hash VARCHAR
-);
-
-
 CREATE TABLE posts (
   info_id INT REFERENCES users,
   post_id INT REFERENCES post
@@ -49,6 +43,8 @@ CREATE TABLE steps (
 
 CREATE TABLE users (
   id INT PRIMARY KEY DEFAULT nextval('auto_id_users'),
+  login VARCHAR,
+  password_hash VARCHAR,
   login VARCHAR REFERENCES auth_data,
   first_name VARCHAR,
   last_name VARCHAR,
