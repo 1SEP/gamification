@@ -10,6 +10,6 @@ import java.util.List;
 public interface PostsDao {
     void addPost(Post post);
     void removePost(int postId);
-    void updatePost(int postId);
+    void updatePost(Post post);
     List<Post> getPosts();
 }

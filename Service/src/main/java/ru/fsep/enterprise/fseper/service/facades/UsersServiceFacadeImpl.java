@@ -7,6 +7,7 @@ import ru.fsep.enterprise.fseper.service.dao.PostsDao;
 import ru.fsep.enterprise.fseper.service.dao.TasksDao;
 import ru.fsep.enterprise.fseper.service.dao.UsersDao;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -31,8 +32,8 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
         return usersDao.getUser(userId);
     }
 
-    public User updateUser(int userId) {
-        return usersDao.updateUser(userId);
+    public User updateUser(User user) {
+        return usersDao.updateUser(user);
     }
 
     public void removeUser(int userId) {
@@ -43,13 +44,14 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
         return usersDao.getUsers();
     }
 
-    public List<User> getUsersByName() {
-        return usersDao.getUsersByName();
+    public List<User> getUsersByName(String firstname, String lastname, String patronymic) {
+        return usersDao.getUsersByName(firstname,lastname, patronymic);
     }
 
-    public List<User> getUsersByPost() {
-        return usersDao.getUsersByPost();
+    public List<User> getUsersByPost(Post post) {
+        return usersDao.getUsersByPost(post);
     }
+
 
     public List<User> getSortedUsers() {
         return usersDao.getSortedUsers();
@@ -67,8 +69,8 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
         postsDao.removePost(postId);
     }
 
-    public void updatePost(int postId) {
-        postsDao.updatePost(postId);
+    public void updatePost(Post post) {
+        postsDao.updatePost(post);
     }
 
     public List<Post> getPosts() {
@@ -84,8 +86,8 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
         return tasksDao.getTask(taskId);
     }
 
-    public void updateTask(int taskId) {
-        tasksDao.updateTask(taskId);
+    public void updateTask(Task task) {
+        tasksDao.updateTask(task);
     }
 
     public void removeTask(int taskId) {
@@ -100,8 +102,9 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
         return tasksDao.getFinishedTasks();
     }
 
-    public List<Task> getTasksByDate() {
-        return tasksDao.getTasksByDate();
+    public List<Task> getTasksByDate(Date date) {
+        return tasksDao.getTasksByDate(date);
     }
+
 
 }
