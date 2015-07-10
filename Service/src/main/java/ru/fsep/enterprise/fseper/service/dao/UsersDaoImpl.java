@@ -13,7 +13,6 @@ public class UsersDaoImpl implements UsersDao {
     private DaoArgumentsVerifier daoArgumentsVerifier;
 
     public void logIn(User user) {
-
     }
 
     public User getUser(int userId) {
@@ -25,7 +24,6 @@ public class UsersDaoImpl implements UsersDao {
     }
 
     public void removeUser(int userId) {
-
     }
 
     public List<User> getUsers() {
