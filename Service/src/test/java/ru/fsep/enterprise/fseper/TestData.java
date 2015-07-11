@@ -4,7 +4,6 @@ import ru.fsep.enterprise.fseper.models.*;
 
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -59,7 +58,7 @@ public class TestData {
         List<Step> steps = new ArrayList<Step>();
         String description = "step by step perform";
         steps.add(1,new Step(1, 1, description, false));
-        description = "seconds step of task";
+        description = "second step of task";
         steps.add(2, new Step(2, 1, description, false));
         return steps;
     }
