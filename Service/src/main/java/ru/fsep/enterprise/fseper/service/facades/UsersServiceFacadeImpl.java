@@ -1,5 +1,7 @@
 package ru.fsep.enterprise.fseper.service.facades;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.fsep.enterprise.fseper.models.Post;
 import ru.fsep.enterprise.fseper.models.Task;
 import ru.fsep.enterprise.fseper.models.User;
@@ -13,16 +15,14 @@ import java.util.List;
 /**
  * Created by Ôëþð on 07.07.2015.
  */
+@Service
 public class UsersServiceFacadeImpl implements UsersServiceFacade {
+    @Autowired
     private UsersDao usersDao;
+    @Autowired
     private PostsDao postsDao;
+    @Autowired
     private TasksDao tasksDao;
-
-    public UsersServiceFacadeImpl(UsersDao usersDao, PostsDao postsDao, TasksDao tasksDao) {
-        this.usersDao = usersDao;
-        this.postsDao = postsDao;
-        this.tasksDao = tasksDao;
-    }
 
     public void logIn(User user) {
         usersDao.logIn(user);
