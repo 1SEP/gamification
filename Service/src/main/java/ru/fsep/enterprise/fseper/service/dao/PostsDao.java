@@ -5,7 +5,7 @@ import ru.fsep.enterprise.fseper.models.Post;
 import java.util.List;
 
 /**
- * Created by Ôëþð on 09.07.2015.
+ * Created by Ã”Ã«Ã¾Ã° on 09.07.2015.
  */
 public interface PostDao {
     void addPost(Post post);
