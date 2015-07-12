@@ -14,7 +14,7 @@ public interface UsersDao {
     User updateUser(User user);
     void removeUser(int userId);
     List<User> getUsers();
-    List<User> getUsersByName(String firstname, String lastname, String patronymic);
+    List<User> getUsersByName(String firstname, String lastname);
     List<User> getUsersByPost(Post post);
     List<User> getSortedUsers();
     List<User> getSortedUsersByRating();

@@ -44,8 +44,8 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
         return usersDao.getUsers();
     }
 
-    public List<User> getUsersByName(String firstname, String lastname, String patronymic) {
-        return usersDao.getUsersByName(firstname,lastname, patronymic);
+    public List<User> getUsersByName(String firstname, String lastname) {
+        return usersDao.getUsersByName(firstname,lastname);
     }
 
     public List<User> getUsersByPost(Post post) {

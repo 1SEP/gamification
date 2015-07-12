@@ -29,7 +29,7 @@ public class UsersDaoImpl implements UsersDao {
         return null;
     }
 
-    public List<User> getUsersByName(String firstname, String lastname, String patronymic) {
+    public List<User> getUsersByName(String firstname, String lastname) {
         return null;
     }
 

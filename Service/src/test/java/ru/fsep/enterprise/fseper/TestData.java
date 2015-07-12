@@ -15,19 +15,15 @@ import java.util.List;
 public class TestData {
     public static final User USER= new User(1, initAuthData(), initPersonInfo(), initTasks());
 
-    public User initUser(){
-        return new User(1, initAuthData(), initPersonInfo(), initTasks());
-    }
-
     static public List<Post> initPosts() {
         List<Post> posts = new ArrayList<Post>();
         String post = "It director";
         String description = "He creates new steps of company development in IT";
-        posts.add(1, new Post(1, post, description));
+        posts.add(new Post(1, post, description));
 
         post = "Team Lead";
         description = "He is mentor of developer's crew";
-        posts.add(2, new Post(1,post, description));
+        posts.add(new Post(2, post, description));
         return posts;
     }
     static public List<Task> initTasks(){
@@ -35,19 +31,19 @@ public class TestData {
         String description = "create controller";
         Calendar c = Calendar.getInstance();
         Date date = c.getTime();
-        tasks.add(1, new Task(1, true, description, date, initSteps(), false));
+        tasks.add(new Task(1, true, description, date, initSteps(), false));
         description = "refactor models";
-        tasks.add(2, new Task(1, true, description, date, initSteps(), false));
+        tasks.add( new Task(1, true, description, date, initSteps(), false));
         return tasks;
     }
     static  public PersonInfo initPersonInfo(){
         PersonInfo personInfo;
         URL photo = null;
-        try {
-            photo = new URL("C:\\Users\\Flyur\\gamification\\Service\\src\\test\\java\\resources");
-        } catch (MalformedURLException e) {
-            e.printStackTrace();
-        }
+//        try {
+//            photo = new URL("C:\\Users\\Flyur\\gamification\\Service\\src\\test\\java\\resources");
+//        } catch (MalformedURLException e) {
+//            e.printStackTrace();
+//        }
         String surname = "Komarov";
         String name = "Nikita";
         String birthDay = "13.12.1990";
@@ -61,9 +57,9 @@ public class TestData {
     static  public List<Step> initSteps(){
         List<Step> steps = new ArrayList<Step>();
         String description = "step by step perform";
-        steps.add(1,new Step(1, 1, description, false));
+        steps.add(new Step(1, 1, description, false));
         description = "second step of task";
-        steps.add(2, new Step(2, 1, description, false));
+        steps.add(new Step(2, 1, description, false));
         return steps;
     }
 }
