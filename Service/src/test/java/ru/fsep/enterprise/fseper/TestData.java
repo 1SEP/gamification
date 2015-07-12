@@ -15,6 +15,10 @@ import java.util.List;
 public class TestData {
     public static final User USER= new User(1, initAuthData(), initPersonInfo(), initTasks());
 
+    public User initUser(){
+        return new User(1, initAuthData(), initPersonInfo(), initTasks());
+    }
+
     static public List<Post> initPosts() {
         List<Post> posts = new ArrayList<Post>();
         String post = "It director";

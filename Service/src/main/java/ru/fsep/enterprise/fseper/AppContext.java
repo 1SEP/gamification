@@ -1,3 +1,5 @@
+package ru.fsep.enterprise.fseper;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -7,7 +9,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
  */
 @Configuration
 @ComponentScan(basePackages = "ru.fsep.enterprise.fseper")
-public class AppConfig {
+public class AppContext {
     @Bean
     public javax.sql.DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
