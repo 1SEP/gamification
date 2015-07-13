@@ -17,16 +17,31 @@ public class UsersDaoImpl implements UsersDao {
     private ParamsMapper paramsMapper;
     private DaoArgumentsVerifier verifier;
 
-    //SQL queries
+    public UsersDaoImpl(SqlQueryExecutor sqlQueryExecutor, ParamsMapper paramsMapper, DaoArgumentsVerifier verifier) {
+        this.sqlQueryExecutor = sqlQueryExecutor;
+        this.paramsMapper = paramsMapper;
+        this.verifier = verifier;
+    }
+
+    //language - SQL
     public static final String SQL_GET_USER_BY_ID = "SELECT * FROM users WHERE  id = :userId;";
+    //language - SQL
     public static final String SQL_DELETE_USER_BY_ID = "DELETE FROM users WHERE id = :userId;";
+    //language - SQL
     public static final String SQL_UPDATE_USER = ";";//incomplete
-    public static final String SQL_GET_ALL_USERS = "SELECT * FROM users;";
+    //language - SQL
+    public static final String SQL_GET_ALL_USERS = "SELECT * FROM users ;";
+    //language - SQL
+    public static final String SQL_GET_ALL_SORTED_USERS = "SELECT * FROM users ORDER BY first_name, last_name;";
+    //language - SQL
     public static final String SQL_GET_ALL_USERS_BY_NAME = "SELECT * FROM users WHERE (first_name = : firstName) " +
-            "AND (last_name = :lastname) AND (patronymic = :patronymic);";
+            "AND (last_name = :lastname) AND (patronymic = :patronymic) ORDER BY first_name, last_name, patronymic;";
+    //language - SQL
     public static final String SQL_INSERT_USER = "INSERT INTO users(id) VALUES (:id);";
-    public static final String SQL_GET_ALL_SORTED_USERS_BY_RATING = "SELECT * FROM users";//incomplete
-    public static final String SQL_GEL_USERS_BY_POST = "SELECT * FROM users WHERE post";//incomplete
+    //language - SQL
+    public static final String SQL_GET_ALL_SORTED_USERS_BY_RATING = "SELECT * FROM users ORDER BY rating";
+    //language - SQL
+    public static final String SQL_GEL_USERS_BY_POST = "SELECT * FROM users ORDER BY post";//incomplete
 
     public void logIn(User user) {
         verifier.verifyUser(user.getId());
@@ -48,7 +63,6 @@ public class UsersDaoImpl implements UsersDao {
         sqlQueryExecutor.updateQuery(SQL_UPDATE_USER, paramMap);
         return user;
     }
-
 
     public void removeUser(int userId) {
         verifier.verifyUser(userId);
@@ -74,7 +88,7 @@ public class UsersDaoImpl implements UsersDao {
     }
 
     public List<User> getSortedUsers() {
-        List<User> users = sqlQueryExecutor.queryForObjects(SQL_GET_ALL_USERS, new BeanPropertyRowMapper<User>(User.class));
+        List<User> users = sqlQueryExecutor.queryForObjects(SQL_GET_ALL_SORTED_USERS, new BeanPropertyRowMapper<User>(User.class));
         return users;
     }
 

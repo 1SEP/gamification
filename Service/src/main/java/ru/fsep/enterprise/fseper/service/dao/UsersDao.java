@@ -5,7 +5,7 @@ import ru.fsep.enterprise.fseper.models.User;
 import java.util.List;
 
 /**
- * Created by дыў№ on 06.07.2015.
+ * Created by Marsel Sidikov and Ildar Almakayev (First Software Engineering Platform))
  */
 public interface UsersDao {
     void logIn(User user);
