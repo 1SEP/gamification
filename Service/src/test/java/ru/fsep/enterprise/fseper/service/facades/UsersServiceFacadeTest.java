@@ -37,15 +37,15 @@ public class UsersServiceFacadeTest {
     public void setUp() throws Exception{
         usersServiceFacade = mock(UsersServiceFacadeImpl.class);
         user = TestData.USER;
-        userId = TestData.USER.getId();
-        taskId = TestData.USER.getTasks().get(0).getId();
+        userId = user.getId();
+        taskId = user.getTasks().get(0).getId();
     }
     @Test
     public void partOfUserService() throws Exception{
         List<Post> posts;
-        posts = TestData.USER.getPersonInfo().getPosts();
-        String firstName = TestData.USER.getPersonInfo().getFirstName();
-        String lastName = TestData.USER.getPersonInfo().getLastName();
+        posts = user.getPersonInfo().getPosts();
+        String firstName = user.getPersonInfo().getFirstName();
+        String lastName = user.getPersonInfo().getLastName();
         usersServiceFacade.logIn(user);
         usersServiceFacade.getUser(userId);
         usersServiceFacade.updateUser(user);
@@ -68,8 +68,8 @@ public class UsersServiceFacadeTest {
     }
     @Test
     public void partOfTaskService() throws  Exception{
-        task = TestData.USER.getTasks().get(1);
-        Date date = TestData.USER.getTasks().get(1).getDueDate();
+        task = user.getTasks().get(1);
+        Date date = task.getDueDate();
         usersServiceFacade.assignmentTask(task, userId);
         usersServiceFacade.getTask(taskId);
         usersServiceFacade.removeTask(taskId);
@@ -88,7 +88,7 @@ public class UsersServiceFacadeTest {
     public void partOfPostService() throws  Exception{
         Post post = TestData.USER.getPersonInfo().getPosts().get(0);
 
-        int postId = TestData.USER.getPersonInfo().getPosts().get(0).getId();
+        int postId = post.getId();
         usersServiceFacade.addPost(post);
         usersServiceFacade.removePost(postId);
         usersServiceFacade.updatePost(post);
