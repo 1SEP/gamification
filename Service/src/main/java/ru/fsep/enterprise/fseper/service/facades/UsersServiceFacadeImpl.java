@@ -86,6 +86,10 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
         return tasksDao.getTask(taskId);
     }
 
+    public List<Task> getTasks(int userId) {
+        return tasksDao.getTasks(userId);
+    }
+
     public void updateTask(Task task) {
         tasksDao.updateTask(task);
     }
@@ -94,12 +98,12 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
         tasksDao.removeTask(taskId);
     }
 
-    public List<Task> getPrivatedTasks() {
-        return tasksDao.getPrivatedTasks();
+    public List<Task> getPrivatedTasks(int userId) {
+        return tasksDao.getPrivatedTasks(userId);
     }
 
-    public List<Task> getFinishedTasks() {
-        return tasksDao.getFinishedTasks();
+    public List<Task> getFinishedTasks(int userId) {
+        return tasksDao.getFinishedTasks(userId);
     }
 
     public List<Task> getTasksByDate(Date date) {

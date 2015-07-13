@@ -30,16 +30,5 @@ public class AppContext {
 //
 //        return  dataSource;
 //    }
-    @Bean
-    public UsersDao usersdao(){
-        return new UsersDaoImpl();
-    }
-    @Bean
-    public PostsDao postsDao(){
-        return new PostsDaoImpl();
-    }
-    @Bean
-    public TasksDao tasksDao(){
-        return new TasksDaoImpl();
-    }
+
 }
