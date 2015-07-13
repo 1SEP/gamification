@@ -1,8 +1,9 @@
-package ru.fsep.enterprise.fseper.service.facades;
+package ru.fsep.enterprise.fseper.service.dao.service.facades;
 
-import ru.fsep.enterprise.fseper.models.Post;
-import ru.fsep.enterprise.fseper.models.Task;
-import ru.fsep.enterprise.fseper.models.User;
+import ru.fsep.enterprise.fseper.service.dao.models.Post;
+import ru.fsep.enterprise.fseper.service.dao.models.Task;
+import ru.fsep.enterprise.fseper.service.dao.models.User;
+
 import java.util.List;
 
 /**

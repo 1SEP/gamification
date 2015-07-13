@@ -1,4 +1,4 @@
-package ru.fsep.enterprise.fseper.models;
+package ru.fsep.enterprise.fseper.service.dao.models;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
@@ -30,7 +30,8 @@ public class PersonInfo {
 
     private URL photo;
 
-    public PersonInfo(String firstName, String lastName, double rating, String birthday, List<Post> posts, String role, URL photo) {
+    public PersonInfo(String firstName, String lastName, double rating,
+                      String birthday, List<Post> posts, String role, URL photo) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.rating = rating;

@@ -1,6 +1,6 @@
-package ru.fsep.enterprise.fseper.service.dao;
+package ru.fsep.enterprise.fseper.service.dao.service.dao;
 
-import ru.fsep.enterprise.fseper.models.Task;
+import ru.fsep.enterprise.fseper.service.dao.models.Task;
 
 import java.util.List;
 

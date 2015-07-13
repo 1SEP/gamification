@@ -1,39 +1,29 @@
-package ru.fsep.enterprise.fseper.models;
+package ru.fsep.enterprise.fseper.service.dao.models;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
-import java.util.Date;
-import java.util.List;
-
 /**
  * 05.07.15
- * Task
+ * Step
  *
  * @author Marsel Sidikov, Ramil Fakhrutdinov (First Software Engineering Platform)
  * @version v1.0
  */
 
-public class Task {
+public class Step {
     private int id;
 
-    private boolean privated;
+    private int taskId;
 
     private String description;
 
-    private Date dueDate;
-
-    private List<Step> steps;
-
     private boolean finished;
 
-    public Task(int id, boolean privated, String description, Date dueDate, List<Step> steps, boolean finished) {
+    public Step(int id, int task_id, String description, boolean finished) {
         this.id = id;
-        this.privated = privated;
+        this.taskId = task_id;
         this.description = description;
-        this.dueDate = dueDate;
-
-        this.steps = steps;
         this.finished = finished;
     }
 
@@ -41,20 +31,12 @@ public class Task {
         return id;
     }
 
-    public boolean isPrivated() {
-        return privated;
+    public int getTask_id() {
+        return taskId;
     }
 
     public String getDescription() {
         return description;
-    }
-
-    public Date getDueDate() {
-        return dueDate;
-    }
-
-    public List<Step> getSteps() {
-        return steps;
     }
 
     public boolean isFinished() {
@@ -65,17 +47,15 @@ public class Task {
     public String toString() {
         return MoreObjects.toStringHelper(this)
                 .add("id", id)
-                .add("privated", privated)
+                .add("task_id", taskId)
                 .add("description", description)
-                .add("dueDate", dueDate)
-                .add("steps", steps)
                 .add("finished", finished)
                 .toString();
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(id, privated, description, dueDate, steps, finished);
+        return Objects.hashCode(id, taskId, description, finished);
     }
 
     @Override
@@ -86,12 +66,10 @@ public class Task {
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        final Task other = (Task) obj;
+        final Step other = (Step) obj;
         return Objects.equal(this.id, other.id)
-                && Objects.equal(this.privated, other.privated)
+                && Objects.equal(this.taskId, other.taskId)
                 && Objects.equal(this.description, other.description)
-                && Objects.equal(this.dueDate, other.dueDate)
-                && Objects.equal(this.steps, other.steps)
                 && Objects.equal(this.finished, other.finished);
     }
 }
