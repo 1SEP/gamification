@@ -26,6 +26,13 @@ public class TasksController {
         return ResponseBuilder.buildResponseGet(task);
     }
 
+    @RequestMapping(value = "/tasks.json", method = RequestMethod.GET)
+    public ResponseEntity<ResponseObjectDto> getTasks()
+    {
+        List<Task> tasks = usersServiceFacade.getTasks();
+        return ResponseBuilder.buildResponseGet(tasks);
+    }
+
     @RequestMapping(value = "/tasks/assignments", method = RequestMethod.POST)
     public ResponseEntity<ResponseObjectDto> assignmentsTask(Task task, int userId)
     {
@@ -34,13 +41,6 @@ public class TasksController {
     }
 
     @RequestMapping(value = "tasks/{task-id}", method = RequestMethod.PUT)
-    public ResponseEntity<ResponseObjectDto> updateTask(Task task)
-    {
-        usersServiceFacade.updateTask(task);
-        return ResponseBuilder.buildResponsePut(task);
-    }
-
-    @RequestMapping(value = "tasks.json", method = RequestMethod.GET)
     public ResponseEntity<ResponseObjectDto> updateTask(Task task)
     {
         usersServiceFacade.updateTask(task);
@@ -75,6 +75,6 @@ public class TasksController {
     {
         List<Task> tasks;
         tasks = usersServiceFacade.getTasksByDate(date);
-        return ResponseBuilder.buildResponseGet(date);
+        return ResponseBuilder.buildResponseGet(tasks);
     }
 }

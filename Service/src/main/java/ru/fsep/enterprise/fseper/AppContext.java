@@ -37,9 +37,6 @@ public class AppContext {
     public UsersServiceFacade usersServiceFacade(){
         return new UsersServiceFacadeImpl();
     }
-<<<<<<< HEAD
-
-=======
     @Bean
     public UsersDao usersDao(){
         return new UsersDaoImpl();
@@ -52,5 +49,4 @@ public class AppContext {
     public PostsDao postsDao(){
         return new PostsDaoImpl();
     }
->>>>>>> origin/service
 }
