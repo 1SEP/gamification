@@ -70,18 +70,26 @@ public class UsersServiceFacadeTest {
         usersServiceFacade.assignmentTask(task, userId);
         usersServiceFacade.getTask(taskId);
         usersServiceFacade.removeTask(taskId);
-        usersServiceFacade.getPrivatedTasks();
-        usersServiceFacade.getFinishedTasks();
+        usersServiceFacade.getPrivatedTasks(userId);
+        usersServiceFacade.getFinishedTasks(userId);
         usersServiceFacade.getTasksByDate(date);
         usersServiceFacade.updateTask(task);
+<<<<<<< HEAD
+=======
+        usersServiceFacade.getTasks(userId);
+>>>>>>> origin/service
 
         verify(usersServiceFacade).assignmentTask(task, userId);
         verify(usersServiceFacade).getTask(taskId);
         verify(usersServiceFacade).removeTask(taskId);
-        verify(usersServiceFacade).getPrivatedTasks();
-        verify(usersServiceFacade).getFinishedTasks();
+        verify(usersServiceFacade).getPrivatedTasks(userId);
+        verify(usersServiceFacade).getFinishedTasks(userId);
         verify(usersServiceFacade).getTasksByDate(date);
         verify(usersServiceFacade).updateTask(task);
+<<<<<<< HEAD
+=======
+        verify(usersServiceFacade).getTasks(userId);
+>>>>>>> origin/service
     }
     @Test
     public void partOfPostService() throws  Exception{

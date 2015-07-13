@@ -33,6 +33,7 @@ public class AppContext {
 //
 //        return  dataSource;
 //    }
+<<<<<<< HEAD
     @Bean
     public UsersDao usersdao(){
         return new UsersDaoImpl();
@@ -49,4 +50,7 @@ public class AppContext {
     public UsersServiceFacade usersServiceFacade(){
         return new UsersServiceFacadeImpl();
     }
+=======
+
+>>>>>>> origin/service
 }

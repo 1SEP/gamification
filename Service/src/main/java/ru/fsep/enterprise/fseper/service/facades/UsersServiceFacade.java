@@ -26,9 +26,10 @@ public interface UsersServiceFacade {
     List<Post> getPosts();
     void assignmentTask(Task task, int userId);
     Task getTask(int taskId);
+    List<Task> getTasks(int userId);
     void updateTask(Task task);
     void removeTask(int taskId);
-    List<Task> getPrivatedTasks();
-    List<Task> getFinishedTasks();
+    List<Task> getPrivatedTasks(int userId);
+    List<Task> getFinishedTasks(int userId);
     List<Task> getTasksByDate(Date date);
 }
