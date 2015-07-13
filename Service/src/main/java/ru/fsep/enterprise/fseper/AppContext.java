@@ -7,6 +7,7 @@ import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import ru.fsep.enterprise.fseper.service.dao.*;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
+import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacadeImpl;
 
 import javax.sql.DataSource;
 
@@ -43,5 +44,9 @@ public class AppContext {
     @Bean
     public TasksDao tasksDao(){
         return new TasksDaoImpl();
+    }
+    @Bean
+    public UsersServiceFacade usersServiceFacade(){
+        return new UsersServiceFacadeImpl();
     }
 }

@@ -73,6 +73,7 @@ public class UsersServiceFacadeTest {
         usersServiceFacade.getPrivatedTasks();
         usersServiceFacade.getFinishedTasks();
         usersServiceFacade.getTasksByDate(date);
+        usersServiceFacade.updateTask(task);
 
         verify(usersServiceFacade).assignmentTask(task, userId);
         verify(usersServiceFacade).getTask(taskId);
@@ -80,6 +81,7 @@ public class UsersServiceFacadeTest {
         verify(usersServiceFacade).getPrivatedTasks();
         verify(usersServiceFacade).getFinishedTasks();
         verify(usersServiceFacade).getTasksByDate(date);
+        verify(usersServiceFacade).updateTask(task);
     }
     @Test
     public void partOfPostService() throws  Exception{
