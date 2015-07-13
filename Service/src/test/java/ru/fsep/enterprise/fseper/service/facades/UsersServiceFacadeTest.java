@@ -74,10 +74,8 @@ public class UsersServiceFacadeTest {
         usersServiceFacade.getFinishedTasks(userId);
         usersServiceFacade.getTasksByDate(date);
         usersServiceFacade.updateTask(task);
-<<<<<<< HEAD
-=======
         usersServiceFacade.getTasks(userId);
->>>>>>> origin/service
+
 
         verify(usersServiceFacade).assignmentTask(task, userId);
         verify(usersServiceFacade).getTask(taskId);
@@ -86,10 +84,7 @@ public class UsersServiceFacadeTest {
         verify(usersServiceFacade).getFinishedTasks(userId);
         verify(usersServiceFacade).getTasksByDate(date);
         verify(usersServiceFacade).updateTask(task);
-<<<<<<< HEAD
-=======
         verify(usersServiceFacade).getTasks(userId);
->>>>>>> origin/service
     }
     @Test
     public void partOfPostService() throws  Exception{
