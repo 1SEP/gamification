@@ -70,33 +70,33 @@ public class UsersServiceFacadeTest {
         usersServiceFacade.assignmentTask(task, userId);
         usersServiceFacade.getTask(taskId);
         usersServiceFacade.removeTask(taskId);
-        usersServiceFacade.getPrivatedTasks(userId);
-        usersServiceFacade.getFinishedTasks(userId);
+        usersServiceFacade.getPrivatedTasks();
+        usersServiceFacade.getFinishedTasks();
         usersServiceFacade.getTasksByDate(date);
         usersServiceFacade.updateTask(task);
-        usersServiceFacade.getTasks(userId);
+        usersServiceFacade.getTasks();
 
 
         verify(usersServiceFacade).assignmentTask(task, userId);
         verify(usersServiceFacade).getTask(taskId);
         verify(usersServiceFacade).removeTask(taskId);
-        verify(usersServiceFacade).getPrivatedTasks(userId);
-        verify(usersServiceFacade).getFinishedTasks(userId);
+        verify(usersServiceFacade).getPrivatedTasks();
+        verify(usersServiceFacade).getFinishedTasks();
         verify(usersServiceFacade).getTasksByDate(date);
         verify(usersServiceFacade).updateTask(task);
-        verify(usersServiceFacade).getTasks(userId);
+        verify(usersServiceFacade).getTasks();
     }
     @Test
     public void partOfPostService() throws  Exception{
         Post post = TestData.USER.getPersonInfo().getPosts().get(0);
 
         int postId = post.getId();
-        usersServiceFacade.addPost(post);
+        usersServiceFacade.addPost(post, userId);
         usersServiceFacade.removePost(postId);
         usersServiceFacade.updatePost(post);
         usersServiceFacade.getPosts();
 
-        verify(usersServiceFacade).addPost(post);
+        verify(usersServiceFacade).addPost(post, userId);
         verify(usersServiceFacade).removePost(postId);
         verify(usersServiceFacade).updatePost(post);
         verify(usersServiceFacade).getPosts();

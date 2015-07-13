@@ -8,7 +8,7 @@ import java.util.List;
  * Created by дыў№ on 09.07.2015.
  */
 public interface PostsDao {
-    void addPost(Post post);
+    void addPost(Post post, int userId);
     void removePost(int postId);
     void updatePost(Post post);
     List<Post> getPosts();
