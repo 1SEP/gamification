@@ -20,16 +20,16 @@ public interface UsersServiceFacade {
     List<User> getUsersByPost(Post post);
     List<User> getSortedUsers();
     List<User> getSortedUsersByRating();
-    void addPost(Post post);
+    void addPost(Post post, int userId);
     void removePost(int postId);
     void updatePost(Post post);
     List<Post> getPosts();
     void assignmentTask(Task task, int userId);
     Task getTask(int taskId);
-    List<Task> getTasks(int userId);
     void updateTask(Task task);
     void removeTask(int taskId);
-    List<Task> getPrivatedTasks(int userId);
-    List<Task> getFinishedTasks(int userId);
+    List<Task> getTasks();
+    List<Task> getPrivatedTasks();
+    List<Task> getFinishedTasks();
     List<Task> getTasksByDate(Date date);
 }

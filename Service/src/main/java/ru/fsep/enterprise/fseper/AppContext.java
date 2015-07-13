@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import ru.fsep.enterprise.fseper.service.dao.*;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
+import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacadeImpl;
 
 import javax.sql.DataSource;
 
@@ -30,5 +31,20 @@ public class AppContext {
 //
 //        return  dataSource;
 //    }
-
+    @Bean
+    public UsersServiceFacade usersServiceFacade(){
+        return new UsersServiceFacadeImpl();
+    }
+    @Bean
+    public UsersDao usersDao(){
+        return new UsersDaoImpl();
+    }
+    @Bean
+    public TasksDao tasksDao(){
+        return new TasksDaoImpl();
+    }
+    @Bean
+    public PostsDao postsDao(){
+        return new PostsDaoImpl();
+    }
 }
