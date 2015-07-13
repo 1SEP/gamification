@@ -6,6 +6,7 @@ import ru.fsep.enterprise.fseper.service.jdbc.utils.ParamsMapper;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.SqlQueryExecutor;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Rauf on 13.07.2015.
@@ -35,7 +36,9 @@ public class PostsDaoImpl implements PostsDao {
             "SELECT * FROM post;";
 
     public void addPost(Post post) {
-
+        verifier.verifyPost(post.getId());
+        Map<String,Object> paramMap = paramsMapper.asMap(,);
+        sqlQueryExecutor.
     }
 
     public void removePost(int postId) {

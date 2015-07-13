@@ -17,4 +17,8 @@ public class DaoArgumentsVerifierImpl implements DaoArgumentsVerifier {
     public void verifyTask(int taskId) {
 
     }
+
+    public void verifyPost(int postId) {
+
+    }
 }
