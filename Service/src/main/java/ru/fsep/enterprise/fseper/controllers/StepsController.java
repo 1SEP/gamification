@@ -20,14 +20,14 @@ import java.util.List;
 public class StepsController {
     @Autowired
     UsersServiceFacade usersServiceFacade;
-    @RequestMapping(value = "/tasks/{task-id}/steps", method = RequestMethod.POST)
+    @RequestMapping(value = "/tasks/{task-id}/steps", method = RequestMethod.GET)
     public ResponseEntity<ResponseObjectDto> getSteps(@PathVariable("task-id") int id)
     {
         List<Step> steps = usersServiceFacade.getTask(id).getSteps();
         return ResponseBuilder.buildResponseGet(steps);
     }
 
-    @RequestMapping(value = "task/{task-id}/steps/{step-id}", method = RequestMethod.GET)
+    @RequestMapping(value = "task/{task-id}/steps/{step-id}.json", method = RequestMethod.GET)
     public ResponseEntity<ResponseObjectDto> getStep(@PathVariable("task-id") int taskId, @PathVariable ("step-id") int stepId)
     {
         List<Step> steps = usersServiceFacade.getTask(taskId).getSteps();
@@ -49,7 +49,7 @@ public class StepsController {
         return ResponseBuilder.buildResponseGet(step);
     }
 
-    @RequestMapping(value = "task/{task-id}/steps/", method = RequestMethod.POST)
+    @RequestMapping(value = "task/{task-id}/steps", method = RequestMethod.POST)
     public ResponseEntity<ResponseObjectDto> addStep(@PathVariable("task-id") int taskId, Step step)
     {
         Task task = usersServiceFacade.getTask(taskId);
@@ -67,6 +67,17 @@ public class StepsController {
                 steps.remove(i);
                 steps.add(i, step);
             }
+        }
+        return ResponseBuilder.buildResponseGet(step);
+    }
+
+    @RequestMapping(value = "task/{task-id}/steps/{step-id}.json", method = RequestMethod.DELETE)
+    public ResponseEntity<ResponseObjectDto> removeStep(@PathVariable("task-id") int taskId, @PathVariable ("step-id") int stepId)
+    {
+        List<Step> steps = usersServiceFacade.getTask(taskId).getSteps();
+        Step step = null;
+        for (int i=0; i < steps.size(); i++) {
+            if (stepId == steps.get(i).getId()) steps.remove(i);
         }
         return ResponseBuilder.buildResponseGet(step);
     }

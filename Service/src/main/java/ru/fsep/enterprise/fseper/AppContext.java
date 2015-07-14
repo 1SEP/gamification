@@ -5,6 +5,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import ru.fsep.enterprise.fseper.service.dao.*;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacadeImpl;
@@ -17,7 +18,7 @@ import javax.sql.DataSource;
 @Configuration
 @EnableWebMvc
 @ComponentScan(basePackages = "ru.fsep.enterprise.fseper")
-public class AppContext {
+public class AppContext extends WebMvcConfigurerAdapter {
 //    @Bean
 //    public DataSource dataSource() {
 //        DriverManagerDataSource dataSource = new DriverManagerDataSource();

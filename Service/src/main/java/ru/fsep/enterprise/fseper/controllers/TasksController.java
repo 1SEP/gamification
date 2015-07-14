@@ -19,21 +19,21 @@ public class TasksController {
     @Autowired
     private UsersServiceFacade usersServiceFacade;
 
-    @RequestMapping(value = "/tasks/{task-id}", method = RequestMethod.GET)
+    @RequestMapping(value = "tasks/{task-id}.json", method = RequestMethod.GET)
     public ResponseEntity<ResponseObjectDto> getTask(@PathVariable("task-id") int id)
     {
         Task task = usersServiceFacade.getTask(id);
         return ResponseBuilder.buildResponseGet(task);
     }
 
-    @RequestMapping(value = "/tasks.json", method = RequestMethod.GET)
+    @RequestMapping(value = "tasks.json", method = RequestMethod.GET)
     public ResponseEntity<ResponseObjectDto> getTasks()
     {
         List<Task> tasks = usersServiceFacade.getTasks();
         return ResponseBuilder.buildResponseGet(tasks);
     }
 
-    @RequestMapping(value = "/tasks/assignments", method = RequestMethod.POST)
+    @RequestMapping(value = "tasks/assignments", method = RequestMethod.POST)
     public ResponseEntity<ResponseObjectDto> assignmentsTask(Task task, int userId)
     {
         usersServiceFacade.assignmentTask(task, userId);
@@ -48,13 +48,13 @@ public class TasksController {
     }
 
     @RequestMapping(value = "tasks/{task-id}", method = RequestMethod.DELETE)
-    public ResponseEntity.BodyBuilder removeTask(int taskId)
+    public ResponseEntity.BodyBuilder removeTask(@PathVariable("task-id") int taskId)
     {
         usersServiceFacade.removeTask(taskId);
         return ResponseEntity.ok();
     }
 
-    @RequestMapping(value = "/tasks.json/filter=privated", method = RequestMethod.GET)
+    @RequestMapping(value = "tasks.json/filter=privated", method = RequestMethod.GET)
     public ResponseEntity<ResponseObjectDto> getPrivatedTasks()
     {
         List<Task> tasks;
@@ -62,7 +62,7 @@ public class TasksController {
         return ResponseBuilder.buildResponseGet(tasks);
     }
 
-    @RequestMapping(value = "/tasks.json/filter=finished", method = RequestMethod.GET)
+    @RequestMapping(value = "tasks.json/filter=finished", method = RequestMethod.GET)
     public ResponseEntity<ResponseObjectDto> getFinishedTasks()
     {
         List<Task> tasks;
@@ -70,11 +70,11 @@ public class TasksController {
         return ResponseBuilder.buildResponseGet(tasks);
     }
 
-    @RequestMapping(value = "/tasks.json/filter=dueDate", method = RequestMethod.GET)
-    public ResponseEntity<ResponseObjectDto> getTasksByDate(Date date)
+    @RequestMapping(value = "tasks.json/filter={dueDate}", method = RequestMethod.GET)
+    public ResponseEntity<ResponseObjectDto> getTasksByDate(@PathVariable("dueDate") Date dueDate)
     {
         List<Task> tasks;
-        tasks = usersServiceFacade.getTasksByDate(date);
+        tasks = usersServiceFacade.getTasksByDate(dueDate);
         return ResponseBuilder.buildResponseGet(tasks);
     }
 }
