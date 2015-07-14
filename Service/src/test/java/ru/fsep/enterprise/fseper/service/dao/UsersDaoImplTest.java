@@ -82,7 +82,7 @@ public class UsersDaoImplTest {
 
     @Test
     public void testUpdateUser() throws Exception {
-        User expected = new User(1, null, null, null);
+        User expected = USER;
         User actual = usersDaoImplTest.updateUser(USER);
         verify(daoArgumentsVerifierMock).verifyUser(1);
         assertEquals(expected, actual);
@@ -103,10 +103,10 @@ public class UsersDaoImplTest {
 
     @Test
     public void testGetUsersByName() throws Exception {
-        //передавай правильный список User -> USER_LIST
+        String name = USER.getPersonInfo().getFirstName();
+        String surname = USER.getPersonInfo().getLastName();
+        List<User> actual = usersDaoImplTest.getUsersByName(name, surname);
         List<User> expected = LIST_OF_USERS;
-        List<User> actual = usersDaoImplTest.getUsersByName(NAME, SURNAME);
-//        System.out.println(actual.get(0));
         assertEquals(expected, actual);
     }
 
