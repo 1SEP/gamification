@@ -69,8 +69,8 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
         postsDao.removePost(postId);
     }
 
-    public void updatePost(Post post) {
-        postsDao.updatePost(post);
+    public Post updatePost(Post post) {
+        return postsDao.updatePost(post);
     }
 
     public List<Post> getPosts(int userId) {
@@ -90,8 +90,8 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
         return tasksDao.getTasks(userId);
     }
 
-    public void updateTask(Task task) {
-        tasksDao.updateTask(task);
+    public Task updateTask(Task task) {
+        return tasksDao.updateTask(task);
     }
 
     public void removeTask(int taskId) {

@@ -22,11 +22,11 @@ public interface UsersServiceFacade {
     List<User> getSortedUsersByRating();
     void addPost(Post post, int userId);
     void removePost(int postId);
-    void updatePost(Post post);
+    Post updatePost(Post post);
     List<Post> getPosts(int userId);
     void assignmentTask(Task task, int userId);
     Task getTask(int taskId);
-    void updateTask(Task task);
+    Task updateTask(Task task);
     void removeTask(int taskId);
     List<Task> getTasks(int userId);
     List<Task> getPrivatedTasks(int userId);
