@@ -31,7 +31,6 @@ public class SqlQueryExecutorImpl implements SqlQueryExecutor {
         return jdbcTemplate.query(sql,rowMapper);
     }
 
-    @Override
     public <T> List<T> queryForObjects(String sql, Map<String, Object> paramMap, RowMapper<T> rowMapper) {
         return namedParameterJdbcTemplate.query(sql, paramMap, rowMapper);
     }
@@ -45,12 +44,10 @@ public class SqlQueryExecutorImpl implements SqlQueryExecutor {
         namedParameterJdbcTemplate.update(sql,paramMap);
     }
 
-    @Override
     public int queryForInt(String sql, Map<String, Object> paramMap) {
         return namedParameterJdbcTemplate.queryForInt(sql, paramMap);
     }
 
-    @Override
     public int queryForInt(String sql) {
         return jdbcTemplate.queryForInt(sql);
     }

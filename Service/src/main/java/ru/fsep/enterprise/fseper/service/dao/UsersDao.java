@@ -1,7 +1,7 @@
-package ru.fsep.enterprise.fseper.service.dao.service.dao;
+package ru.fsep.enterprise.fseper.service.dao;
 
-import ru.fsep.enterprise.fseper.service.dao.models.Post;
-import ru.fsep.enterprise.fseper.service.dao.models.User;
+import ru.fsep.enterprise.fseper.models.Post;
+import ru.fsep.enterprise.fseper.models.User;
 
 import java.util.List;
 

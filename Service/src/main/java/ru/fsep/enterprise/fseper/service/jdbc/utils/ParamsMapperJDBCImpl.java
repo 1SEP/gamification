@@ -1,4 +1,4 @@
-package ru.fsep.enterprise.fseper.service.dao.service.jdbc.utils;
+package ru.fsep.enterprise.fseper.service.jdbc.utils;
 
 import java.util.HashMap;
 import java.util.List;

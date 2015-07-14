@@ -1,4 +1,4 @@
-package ru.fsep.enterprise.fseper.service.dao.service.jdbc.utils;
+package ru.fsep.enterprise.fseper.service.jdbc.utils;
 
 import org.springframework.jdbc.core.RowMapper;
 

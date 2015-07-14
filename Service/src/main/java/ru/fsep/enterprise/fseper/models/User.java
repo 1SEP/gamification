@@ -1,4 +1,4 @@
-package ru.fsep.enterprise.fseper.service.dao.models;
+package ru.fsep.enterprise.fseper.models;
 
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;

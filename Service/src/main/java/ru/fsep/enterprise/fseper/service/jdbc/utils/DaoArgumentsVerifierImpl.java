@@ -1,4 +1,4 @@
-package ru.fsep.enterprise.fseper.service.dao.service.jdbc.utils;
+package ru.fsep.enterprise.fseper.service.jdbc.utils;
 
 public class DaoArgumentsVerifierImpl implements DaoArgumentsVerifier {
 
@@ -15,6 +15,10 @@ public class DaoArgumentsVerifierImpl implements DaoArgumentsVerifier {
     }
 
     public void verifyTask(int taskId) {
+
+    }
+
+    public void verifyPost(int postId) {
 
     }
 }
