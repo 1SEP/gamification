@@ -17,11 +17,11 @@ import java.util.List;
  */
 @Service
 public class UsersServiceFacadeImpl implements UsersServiceFacade {
-    @Autowired
+//    @Autowired
     private UsersDao usersDao;
-    @Autowired
+//    @Autowired
     private PostsDao postsDao;
-    @Autowired
+//    @Autowired
     private TasksDao tasksDao;
 
     public void logIn(User user) {
@@ -106,8 +106,8 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
         return tasksDao.getFinishedTasks(userId);
     }
 
-    public List<Task> getTasksByDate(Date date) {
-        return tasksDao.getTasksByDate(date);
+    public List<Task> getTasksByDate(int userId, Date date) {
+        return tasksDao.getTasksByDate(userId, date);
     }
 
 

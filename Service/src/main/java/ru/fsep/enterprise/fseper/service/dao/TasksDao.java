@@ -16,5 +16,5 @@ public interface TasksDao {
     List<Task> getTasks(int userId);
     List<Task> getPrivatedTasks(int userId);
     List<Task> getFinishedTasks(int userId);
-    List<Task> getTasksByDate(Date date);
+    List<Task> getTasksByDate(int userId, Date date);
 }
