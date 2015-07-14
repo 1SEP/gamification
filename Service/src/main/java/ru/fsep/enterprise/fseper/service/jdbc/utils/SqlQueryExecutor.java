@@ -1,6 +1,13 @@
 package ru.fsep.enterprise.fseper.service.jdbc.utils;
 
 import java.util.List;
+
+<<<<<<< HEAD
+=======
+import org.springframework.jdbc.core.RowMapper;
+
+>>>>>>> origin/UserDao
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -14,3 +21,4 @@ public interface SqlQueryExecutor {
     int queryForInt(String sql, Map<String, Object> paramMap);
     int queryForInt(String sql);
 }
+

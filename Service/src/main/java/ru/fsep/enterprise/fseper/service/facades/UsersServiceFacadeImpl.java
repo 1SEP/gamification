@@ -1,5 +1,7 @@
 package ru.fsep.enterprise.fseper.service.facades;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ru.fsep.enterprise.fseper.models.Post;
 import ru.fsep.enterprise.fseper.models.Task;
 import ru.fsep.enterprise.fseper.models.User;
@@ -7,21 +9,20 @@ import ru.fsep.enterprise.fseper.service.dao.PostsDao;
 import ru.fsep.enterprise.fseper.service.dao.TasksDao;
 import ru.fsep.enterprise.fseper.service.dao.UsersDao;
 
+import java.util.Date;
 import java.util.List;
 
 /**
  * Created by Ôëþð on 07.07.2015.
  */
+@Service
 public class UsersServiceFacadeImpl implements UsersServiceFacade {
+    @Autowired
     private UsersDao usersDao;
+    @Autowired
     private PostsDao postsDao;
+    @Autowired
     private TasksDao tasksDao;
-
-    public UsersServiceFacadeImpl(UsersDao usersDao, PostsDao postsDao, TasksDao tasksDao) {
-        this.usersDao = usersDao;
-        this.postsDao = postsDao;
-        this.tasksDao = tasksDao;
-    }
 
     public void logIn(User user) {
         usersDao.logIn(user);
@@ -31,8 +32,8 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
         return usersDao.getUser(userId);
     }
 
-    public User updateUser(int userId) {
-        return usersDao.updateUser(userId);
+    public User updateUser(User user) {
+        return usersDao.updateUser(user);
     }
 
     public void removeUser(int userId) {
@@ -43,13 +44,14 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
         return usersDao.getUsers();
     }
 
-    public List<User> getUsersByName() {
-        return usersDao.getUsersByName();
+    public List<User> getUsersByName(String firstname, String lastname) {
+        return usersDao.getUsersByName(firstname,lastname);
     }
 
-    public List<User> getUsersByPost() {
-        return usersDao.getUsersByPost();
+    public List<User> getUsersByPost(Post post) {
+        return usersDao.getUsersByPost(post);
     }
+
 
     public List<User> getSortedUsers() {
         return usersDao.getSortedUsers();
@@ -59,20 +61,20 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
         return usersDao.getSortedUsersByRating();
     }
 
-    public void addPost(Post post) {
-        postsDao.addPost(post);
+    public void addPost(Post post, int userId) {
+        postsDao.addPost(post, userId);
     }
 
     public void removePost(int postId) {
         postsDao.removePost(postId);
     }
 
-    public void updatePost(int postId) {
-        postsDao.updatePost(postId);
+    public void updatePost(Post post) {
+        postsDao.updatePost(post);
     }
 
-    public List<Post> getPosts() {
-        return postsDao.getPosts();
+    public List<Post> getPosts(int userId) {
+        return postsDao.getPosts(userId);
     }
 
     public void assignmentTask(Task task, int userId) {
@@ -84,24 +86,29 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
         return tasksDao.getTask(taskId);
     }
 
-    public void updateTask(int taskId) {
-        tasksDao.updateTask(taskId);
+    public List<Task> getTasks(int userId) {
+        return tasksDao.getTasks(userId);
+    }
+
+    public void updateTask(Task task) {
+        tasksDao.updateTask(task);
     }
 
     public void removeTask(int taskId) {
         tasksDao.removeTask(taskId);
     }
 
-    public List<Task> getPrivatedTasks() {
-        return tasksDao.getPrivatedTasks();
+    public List<Task> getPrivatedTasks(int userId) {
+        return tasksDao.getPrivatedTasks(userId);
     }
 
-    public List<Task> getFinishedTasks() {
-        return tasksDao.getFinishedTasks();
+    public List<Task> getFinishedTasks(int userId) {
+        return tasksDao.getFinishedTasks(userId);
     }
 
-    public List<Task> getTasksByDate() {
-        return tasksDao.getTasksByDate();
+    public List<Task> getTasksByDate(Date date) {
+        return tasksDao.getTasksByDate(date);
     }
+
 
 }
