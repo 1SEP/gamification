@@ -26,15 +26,15 @@ public class TasksController {
         return ResponseBuilder.buildResponseGet(task);
     }
 
-    @RequestMapping(value = "tasks.json", method = RequestMethod.GET)
-    public ResponseEntity<ResponseObjectDto> getTasks()
+    @RequestMapping(value = "users/{users-id}/tasks.json", method = RequestMethod.GET)
+    public ResponseEntity<ResponseObjectDto> getTasks(@PathVariable("users-id") int userId)
     {
-        List<Task> tasks = usersServiceFacade.getTasks();
+        List<Task> tasks = usersServiceFacade.getTasks(userId);
         return ResponseBuilder.buildResponseGet(tasks);
     }
 
-    @RequestMapping(value = "tasks/assignments", method = RequestMethod.POST)
-    public ResponseEntity<ResponseObjectDto> assignmentsTask(Task task, int userId)
+    @RequestMapping(value = "users/{user-id}/tasks/assignments", method = RequestMethod.POST)
+    public ResponseEntity<ResponseObjectDto> assignmentsTask(Task task, @PathVariable("user-id") int userId)
     {
         usersServiceFacade.assignmentTask(task, userId);
         return ResponseBuilder.buildResponsePut(task);
@@ -54,19 +54,19 @@ public class TasksController {
         return ResponseEntity.ok();
     }
 
-    @RequestMapping(value = "tasks.json/filter=privated", method = RequestMethod.GET)
-    public ResponseEntity<ResponseObjectDto> getPrivatedTasks()
+    @RequestMapping(value = "users/{user-id}/tasks.json/filter=privated", method = RequestMethod.GET)
+    public ResponseEntity<ResponseObjectDto> getPrivatedTasks(@PathVariable("user-id") int userId)
     {
         List<Task> tasks;
-        tasks = usersServiceFacade.getPrivatedTasks();
+        tasks = usersServiceFacade.getPrivatedTasks(userId);
         return ResponseBuilder.buildResponseGet(tasks);
     }
 
-    @RequestMapping(value = "tasks.json/filter=finished", method = RequestMethod.GET)
-    public ResponseEntity<ResponseObjectDto> getFinishedTasks()
+    @RequestMapping(value = "users/{user-id}}/tasks.json/filter=finished", method = RequestMethod.GET)
+    public ResponseEntity<ResponseObjectDto> getFinishedTasks(@PathVariable("user-id") int userId)
     {
         List<Task> tasks;
-        tasks = usersServiceFacade.getFinishedTasks();
+        tasks = usersServiceFacade.getFinishedTasks(userId);
         return ResponseBuilder.buildResponseGet(tasks);
     }
 

@@ -72,7 +72,7 @@ public class UsersServiceFacadeTest {
         usersServiceFacade.removeTask(taskId);
         usersServiceFacade.getPrivatedTasks(userId);
         usersServiceFacade.getFinishedTasks(userId);
-        usersServiceFacade.getTasksByDate(date);
+        usersServiceFacade.getTasksByDate(userId, date);
         usersServiceFacade.updateTask(task);
         usersServiceFacade.getTasks(userId);
 
@@ -82,7 +82,7 @@ public class UsersServiceFacadeTest {
         verify(usersServiceFacade).removeTask(taskId);
         verify(usersServiceFacade).getPrivatedTasks(userId);
         verify(usersServiceFacade).getFinishedTasks(userId);
-        verify(usersServiceFacade).getTasksByDate(date);
+        verify(usersServiceFacade).getTasksByDate(userId, date);
         verify(usersServiceFacade).updateTask(task);
         verify(usersServiceFacade).getTasks(userId);
     }
