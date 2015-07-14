@@ -23,13 +23,13 @@ public interface UsersServiceFacade {
     void addPost(Post post, int userId);
     void removePost(int postId);
     void updatePost(Post post);
-    List<Post> getPosts();
+    List<Post> getPosts(int userId);
     void assignmentTask(Task task, int userId);
     Task getTask(int taskId);
     void updateTask(Task task);
     void removeTask(int taskId);
-    List<Task> getTasks();
-    List<Task> getPrivatedTasks();
-    List<Task> getFinishedTasks();
+    List<Task> getTasks(int userId);
+    List<Task> getPrivatedTasks(int userId);
+    List<Task> getFinishedTasks(int userId);
     List<Task> getTasksByDate(Date date);
 }

@@ -35,16 +35,4 @@ public class AppContext {
     public UsersServiceFacade usersServiceFacade(){
         return new UsersServiceFacadeImpl();
     }
-    @Bean
-    public UsersDao usersDao(){
-        return new UsersDaoImpl();
-    }
-    @Bean
-    public TasksDao tasksDao(){
-        return new TasksDaoImpl();
-    }
-    @Bean
-    public PostsDao postsDao(){
-        return new PostsDaoImpl();
-    }
 }

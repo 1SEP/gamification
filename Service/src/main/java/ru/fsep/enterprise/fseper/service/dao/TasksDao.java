@@ -13,8 +13,8 @@ public interface TasksDao {
     Task getTask(int taskId);
     void updateTask(Task task);
     void removeTask(int taskId);
-    List<Task> getTasks();
-    List<Task> getPrivatedTasks();
-    List<Task> getFinishedTasks();
+    List<Task> getTasks(int userId);
+    List<Task> getPrivatedTasks(int userId);
+    List<Task> getFinishedTasks(int userId);
     List<Task> getTasksByDate(Date date);
 }
