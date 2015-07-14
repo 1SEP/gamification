@@ -1,17 +1,11 @@
-CREATE SEQUENCE auto_id_users;
 CREATE SEQUENCE auto_id_posts;
 CREATE SEQUENCE auto_id_tasks;
 CREATE SEQUENCE auto_id_steps;
-
-CREATE TABLE auth_data (
-  login VARCHAR PRIMARY KEY,
-  password_hash VARCHAR
-);
-
+CREATE SEQUENCE auto_id_users;
 
 CREATE TABLE posts (
-  info_id INT REFERENCES users,
-  post_id INT REFERENCES post
+  info_id INT ,
+  post_id INT 
 );
 
 CREATE TABLE post (
@@ -21,8 +15,8 @@ CREATE TABLE post (
 ) ;
 
 CREATE TABLE tasks (
-  task_id INT REFERENCES task,
-  user_id INT REFERENCES users
+  task_id INT ,
+  user_id INT 
 );
 
 CREATE TABLE task (
@@ -30,32 +24,43 @@ CREATE TABLE task (
   privated BOOLEAN,
   description VARCHAR,
   due_data DATE,
-  steps_id INT REFERENCES steps,
-  finished BOOLEAN 
+  steps_id INT ,
+  finished BOOLEAN
 ) ;
 
 CREATE TABLE step (
   id INT PRIMARY KEY DEFAULT nextval('auto_id_steps'),
-  task_id INT REFERENCES task,
+  task_id INT,
   description VARCHAR,
   finished BOOLEAN
 ) ;
 
 CREATE TABLE steps (
-  step_id INT REFERENCES step,
-  task_id INT REFERENCES task
-
+  step_id INT ,
+  task_id INT
 );
 
 CREATE TABLE users (
   id INT PRIMARY KEY DEFAULT nextval('auto_id_users'),
-  login VARCHAR REFERENCES auth_data,
+  login VARCHAR,
+  password_hash VARCHAR,
   first_name VARCHAR,
   last_name VARCHAR,
   rating DOUBLE PRECISION,
   bithday DATE,
-  posts_id INT REFERENCES posts(post_id),
+  posts_id INT ,
   role VARCHAR,
   photo VARCHAR,
-  tasks_id INT REFERENCES tasks
+  tasks_id INT 
 );
+
+ALTER TABLE posts ADD CONSTRAINT auth_fk1 FOREIGN KEY (info_id) REFERENCES users;
+ALTER TABLE posts ADD CONSTRAINT auth_fk2 FOREIGN KEY (post_id) REFERENCES post;
+ALTER TABLE tasks ADD CONSTRAINT auth_fk3 FOREIGN KEY (task_id) REFERENCES task;
+ALTER TABLE tasks ADD CONSTRAINT auth_fk4 FOREIGN KEY (user_id) REFERENCES users;
+ALTER TABLE task ADD CONSTRAINT auth_fk5 FOREIGN KEY (steps_id) REFERENCES steps;
+ALTER TABLE step ADD CONSTRAINT auth_fk6 FOREIGN KEY (task_id) REFERENCES task;
+ALTER TABLE steps ADD CONSTRAINT auth_fk7 FOREIGN KEY (step_id) REFERENCES step;
+ALTER TABLE steps ADD CONSTRAINT auth_fk8 FOREIGN KEY (task_id) REFERENCES task;
+ALTER TABLE users ADD CONSTRAINT auth_fk9 FOREIGN KEY (posts_id) REFERENCES posts;
+ALTER TABLE users ADD CONSTRAINT auth_fk10 FOREIGN KEY (tasks_id) REFERENCES tasks;
