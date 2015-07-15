@@ -41,7 +41,9 @@ public class UsersDaoImpl implements UsersDao {
     public static final String SQL_GET_ALL_USERS_BY_NAME = "SELECT * FROM users WHERE (first_name = : firstName) " +
             "AND (last_name = :lastName) ORDER BY first_name, last_name;";
     //language=SQL
-    public static final String SQL_INSERT_USER = "INSERT INTO users(id) VALUES (:userId);";
+    public static final String SQL_INSERT_USER = "INSERT INTO users(id, first_name, last_name, birthday, rating, " +
+            "photo, role, login, password_hash) " +
+            "VALUES (:userId, :firstName, :lastName, :birthday, :rating, :photo, :role, :login, :password);";
     //language=SQL
     public static final String SQL_GET_ALL_SORTED_USERS_BY_RATING = "SELECT * FROM users ORDER BY rating;";
     //language=SQL
@@ -50,7 +52,20 @@ public class UsersDaoImpl implements UsersDao {
 
     public void logIn(User user) {
         daoArgumentsVerifier.verifyUser(user.getId());
-        Map<String, Object> paramMap = paramsMapper.asMap(asList("userId"), asList(user.getId()));
+        int userId = user.getId();
+        PersonInfo personInfo = user.getPersonInfo();
+        String firstName = personInfo.getFirstName();
+        String lastName = personInfo.getLastName();
+        String birthday = personInfo.getBirthday();
+        double rating = personInfo.getRating();
+        URL photo = personInfo.getPhoto();
+        String role = personInfo.getRole();
+        AuthData authData = user.getAuthData();
+        String login = authData.getLogin();
+        String passwordHash = authData.getPasswordHash();
+        Map<String, Object> paramMap = paramsMapper.asMap(asList("userId", "firstName", "lastName", "birthday",
+                        "rating", "photo", "role", "login", "password"),
+                asList(userId, firstName, lastName, birthday, rating, photo, role, login, passwordHash));
         sqlQueryExecutor.updateQuery(SQL_INSERT_USER, paramMap);
     }
 

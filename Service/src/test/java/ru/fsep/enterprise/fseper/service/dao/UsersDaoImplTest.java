@@ -12,7 +12,7 @@ import java.util.List;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
-import static org.mockito.MockitoAnnotations.*;
+import static org.mockito.MockitoAnnotations.initMocks;
 import static ru.fsep.enterprise.fseper.service.dao.TestData.*;
 
 public class UsersDaoImplTest {
