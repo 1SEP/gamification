@@ -2,11 +2,12 @@ package ru.fsep.enterprise.fseper.service.dao;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
-import ru.fsep.enterprise.fseper.models.Post;
-import ru.fsep.enterprise.fseper.models.User;
+import ru.fsep.enterprise.fseper.models.*;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.DaoArgumentsVerifier;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.ParamsMapper;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.SqlQueryExecutor;
+
+import java.net.URL;
 import java.util.*;
 import static java.util.Arrays.asList;
 
@@ -29,20 +30,23 @@ public class UsersDaoImpl implements UsersDao {
     //language=SQL
     public static final String SQL_DELETE_USER_BY_ID = "DELETE FROM users WHERE id = :userId;";
     //language=SQL
-    public static final String SQL_UPDATE_USER = "UPDATE users SET firstName = :firstName WHERE id = :id;";//incomplete
+    public static final String SQL_UPDATE_USER = "UPDATE users SET first_name = :firstName, last_name = :firstName, " +
+            "birthday = :birthday, rating = :rating, photo = :photo, role = :role, login = :login, password_hash = :password," +
+            " WHERE id = :userId;";
     //language=SQL
     public static final String SQL_GET_ALL_USERS = "SELECT * FROM users;";
     //language=SQL
     public static final String SQL_GET_ALL_SORTED_USERS = "SELECT * FROM users ORDER BY first_name, last_name;";
     //language=SQL
     public static final String SQL_GET_ALL_USERS_BY_NAME = "SELECT * FROM users WHERE (first_name = : firstName) " +
-            "AND (last_name = :lastname) ORDER BY first_name, last_name;";
+            "AND (last_name = :lastName) ORDER BY first_name, last_name;";
     //language=SQL
-    public static final String SQL_INSERT_USER = "INSERT INTO users(id) VALUES (:id);";
+    public static final String SQL_INSERT_USER = "INSERT INTO users(id) VALUES (:userId);";
     //language=SQL
     public static final String SQL_GET_ALL_SORTED_USERS_BY_RATING = "SELECT * FROM users ORDER BY rating;";
     //language=SQL
-    public static final String SQL_GET_USERS_BY_POST = "SELECT * FROM users where (post_id = :postId);";
+    public static final String SQL_GET_USERS_BY_POST = "SELECT * FROM users where (post.id = :postId) " +
+            "AND (post.name = :postName) AND (post.description = :postDescription);";
 
     public void logIn(User user) {
         daoArgumentsVerifier.verifyUser(user.getId());
@@ -59,15 +63,27 @@ public class UsersDaoImpl implements UsersDao {
 
     public User updateUser(User user) {
         daoArgumentsVerifier.verifyUser(user.getId());
-        Map<String, Object> paramMap = paramsMapper.asMap(asList("id", "person_info", "author_data", "tasks"),
-                asList(user.getId(), user.getPersonInfo(), user.getAuthData(), user.getTasks()));
+        int userId = user.getId();
+        PersonInfo personInfo = user.getPersonInfo();
+        String firstName = personInfo.getFirstName();
+        String lastName = personInfo.getLastName();
+        String birthday = personInfo.getBirthday();
+        double rating = personInfo.getRating();
+        URL photo = personInfo.getPhoto();
+        String role = personInfo.getRole();
+        AuthData authData = user.getAuthData();
+        String login = authData.getLogin();
+        String passwordHash = authData.getPasswordHash();
+        Map<String, Object> paramMap = paramsMapper.asMap(asList("userId", "firstName", "lastName", "birthday",
+                        "rating", "photo", "role", "login", "password"),
+                asList(userId, firstName, lastName, birthday, rating, photo, role, login, passwordHash));
         sqlQueryExecutor.updateQuery(SQL_UPDATE_USER, paramMap);
         return user;
     }
 
     public void removeUser(int userId) {
         daoArgumentsVerifier.verifyUser(userId);
-        Map<String, Object> paramMap = paramsMapper.asMap(asList("id"), asList(userId));
+        Map<String, Object> paramMap = paramsMapper.asMap(asList("userId"), asList(userId));
         sqlQueryExecutor.updateQuery(SQL_DELETE_USER_BY_ID, paramMap);
     }
 
@@ -82,6 +98,7 @@ public class UsersDaoImpl implements UsersDao {
         List<User> users = sqlQueryExecutor.queryForObjects(SQL_GET_ALL_USERS_BY_NAME, paramMap,
                 USER_ROW_MAPPER);
         return users;
+
     }
 
     public List<User> getUsersByPost(Post post) {

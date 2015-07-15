@@ -5,9 +5,6 @@ import ru.fsep.enterprise.fseper.models.*;
 import java.net.URL;
 import java.util.*;
 
-/**
- * Created by Marsel Sidikov and Ildar Almakayev (First Software Engineering Platform))
- */
 public class TestData {
     static final int USER_ID = 1;
     static final User USER = new User(USER_ID, initAuthData(), initPersonInfo(), initTasks());
@@ -22,6 +19,7 @@ public class TestData {
 
     private static Map<String, Object> getPostMap() {
         Map<String, Object> result = new HashMap<String, Object>();
+
         result.put("postId", POST.getId());
         result.put("postName", POST.getName());
         result.put("postDesciption", POST.getDescription());
@@ -30,7 +28,6 @@ public class TestData {
 
     private static Map<String, Object> createUserMap() {
         Map<String, Object> map = new HashMap<String, Object>();
-
         return map;
     }
 
@@ -45,7 +42,6 @@ public class TestData {
         String post = "It director";
         String description = "He creates new steps of company development in IT";
         posts.add(new Post(1, post, description));
-
         post = "Team Lead";
         description = "He is mentor of developer's crew";
         posts.add(new Post(2, post, description));
@@ -58,10 +54,8 @@ public class TestData {
         Calendar c = Calendar.getInstance();
         Date date = c.getTime();
         tasks.add(new Task(1, true, description, date, initSteps(), false));
-
         description = "refactor models";
         tasks.add(new Task(1, true, description, date, initSteps(), false));
-
         return tasks;
     }
 
