@@ -23,7 +23,7 @@ public class PostsDaoImpl implements PostsDao {
     private ParamsMapper paramsMapper;
     private DaoArgumentsVerifier daoArgumentsVerifier;
 
-    public static final RowMapper<User> USER_ROW_MAPPER = new BeanPropertyRowMapper<User>(User.class);
+    public static final RowMapper<Post> USER_ROW_MAPPER = new BeanPropertyRowMapper<Post>(Post.class);
 
     public PostsDaoImpl(SqlQueryExecutor sqlQueryExecutor, ParamsMapper paramsMapper, DaoArgumentsVerifier verifier) {
         this.sqlQueryExecutor = sqlQueryExecutor;
@@ -57,15 +57,15 @@ public class PostsDaoImpl implements PostsDao {
 
     public void updatePost(Post post) {
         daoArgumentsVerifier.verifyPost(post.getId());
-        Map<String, Object> paramMap = paramsMapper.asMap(asList("//hzhzhzhz"),
-                asList("//hzhzhz"));
+        Map<String, Object> paramMap = paramsMapper.asMap(asList("id", "name", "description"),
+                asList(post.getId(),post.getName(),post.getDescription()));
         sqlQueryExecutor.updateQuery(SQL_UPDATE_POST, paramMap);
     }
 
     public List<Post> getPosts(int userId) {
         daoArgumentsVerifier.verifyUser(userId);
-        Map<String, Object> paramMap = paramsMapper.asMap(asList("//hzhzhz"),
-                asList("//hzhzhhzhz"));
+        Map<String, Object> paramMap = paramsMapper.asMap(asList("id"),
+                asList(userId));
         List<Post> posts = sqlQueryExecutor.queryForObjects(SQL_GET_POSTS, paramMap,
                 USER_ROW_MAPPER);
         return posts;
