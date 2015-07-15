@@ -27,7 +27,15 @@ public class UsersDaoImplTest {
 
     private void stubbingDaoArgumentsVerifierMock() {
         doThrow(IllegalArgumentException.class).when(daoArgumentsVerifierMock).verifyUser(anyInt());
-        doNothing().when(daoArgumentsVerifierMock).verifyUser(USER_ID);
+//        doNothing().when(daoArgumentsVerifierMock).verifyUser(USER_ID);
+
+        doThrow(IllegalArgumentException.class).when(daoArgumentsVerifierMock).verifyPost(anyInt());
+//        doNothing().when(daoArgumentsVerifierMock).verifyPost(POST.getId());
+
+        String firstName = USER.getPersonInfo().getFirstName();
+        String lastName = USER.getPersonInfo().getLastName();
+        doThrow(IllegalArgumentException.class).when(daoArgumentsVerifierMock).verifyFirstNameAndLastName(anyString(), anyString());
+//        doNothing().when(daoArgumentsVerifierMock).verifyFirstNameAndLastName(firstName, lastName);
     }
 
     private void stubbingParamsMapperMock() {
@@ -66,7 +74,7 @@ public class UsersDaoImplTest {
         usersDaoImplTest = new UsersDaoImpl(sqlQueryExecutorMock, paramsMapperMock, daoArgumentsVerifierMock);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testGetUser() throws Exception {
         User actual = usersDaoImplTest.getUser(USER_ID);
         User expected = USER;
@@ -74,21 +82,21 @@ public class UsersDaoImplTest {
         assertEquals(expected, actual);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testLogIn() throws Exception {
         usersDaoImplTest.logIn(USER);
         verify(daoArgumentsVerifierMock).verifyUser(USER_ID);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testUpdateUser() throws Exception {
         User expected = USER;
         User actual = usersDaoImplTest.updateUser(USER);
-        verify(daoArgumentsVerifierMock).verifyUser(1);
+        verify(daoArgumentsVerifierMock).verifyUser(USER_ID);
         assertEquals(expected, actual);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testRemoveUser() throws Exception {
         usersDaoImplTest.removeUser(USER_ID);
         verify(daoArgumentsVerifierMock).verifyUser(USER_ID);
@@ -101,16 +109,17 @@ public class UsersDaoImplTest {
         assertEquals(expected, actual);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testGetUsersByName() throws Exception {
         String name = USER.getPersonInfo().getFirstName();
         String surname = USER.getPersonInfo().getLastName();
         List<User> actual = usersDaoImplTest.getUsersByName(name, surname);
         List<User> expected = LIST_OF_USERS;
+        verify(daoArgumentsVerifierMock).verifyFirstNameAndLastName(name, surname);
         assertEquals(expected, actual);
     }
 
-    @Test
+    @Test(expected = IllegalArgumentException.class)
     public void testGetUsersByPost() throws Exception {
         List<User> actual = usersDaoImplTest.getUsersByPost(POST);
         List<User> expected = LIST_OF_USERS;

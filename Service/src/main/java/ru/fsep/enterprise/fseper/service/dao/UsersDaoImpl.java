@@ -108,6 +108,7 @@ public class UsersDaoImpl implements UsersDao {
     }
 
     public List<User> getUsersByName(String firstName, String lastName) {
+        daoArgumentsVerifier.verifyFirstNameAndLastName(firstName, lastName);
         Map<String, Object> paramMap = paramsMapper.asMap(asList("firstName", "lastName"),
                 asList(firstName, lastName));
         List<User> users = sqlQueryExecutor.queryForObjects(SQL_GET_ALL_USERS_BY_NAME, paramMap,

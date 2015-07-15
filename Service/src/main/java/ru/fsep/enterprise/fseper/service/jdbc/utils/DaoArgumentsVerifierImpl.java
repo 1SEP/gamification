@@ -10,7 +10,12 @@ public class DaoArgumentsVerifierImpl implements DaoArgumentsVerifier {
     private static final String SQL_COUNT_USERS_BY_ID =
             "SELECT COUNT (*) FROM USERS WHERE (ID = :userId)";
 
+
     public void verifyUser(int userId) {
+
+    }
+
+    public void verifyFirstNameAndLastName(String firstName, String lastName) {
 
     }
 
