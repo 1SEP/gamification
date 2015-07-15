@@ -5,7 +5,8 @@ CREATE SEQUENCE auto_id_users;
 
 CREATE TABLE posts (
   info_id INT ,
-  post_id INT 
+  post_id INT,
+  PRIMARY KEY(info_id,post_id)
 );
 
 CREATE TABLE post (
@@ -16,8 +17,9 @@ CREATE TABLE post (
 
 CREATE TABLE tasks (
   task_id INT ,
-  user_id INT 
-);
+  user_id INT,
+  PRIMARY KEY(task_id,user_id)
+  );
 
 CREATE TABLE task (
   id INT PRIMARY KEY DEFAULT nextval('auto_id_steps'),
@@ -30,15 +32,10 @@ CREATE TABLE task (
 
 CREATE TABLE step (
   id INT PRIMARY KEY DEFAULT nextval('auto_id_steps'),
-  task_id INT,
   description VARCHAR,
   finished BOOLEAN
 ) ;
 
-CREATE TABLE steps (
-  step_id INT ,
-  task_id INT
-);
 
 CREATE TABLE users (
   id INT PRIMARY KEY DEFAULT nextval('auto_id_users'),
@@ -47,20 +44,15 @@ CREATE TABLE users (
   first_name VARCHAR,
   last_name VARCHAR,
   rating DOUBLE PRECISION,
-  bithday DATE,
-  posts_id INT ,
+  birthday DATE,
   role VARCHAR,
-  photo VARCHAR,
-  tasks_id INT 
+  photo VARCHAR
 );
 
-ALTER TABLE posts ADD CONSTRAINT auth_fk1 FOREIGN KEY (info_id) REFERENCES users;
-ALTER TABLE posts ADD CONSTRAINT auth_fk2 FOREIGN KEY (post_id) REFERENCES post;
-ALTER TABLE tasks ADD CONSTRAINT auth_fk3 FOREIGN KEY (task_id) REFERENCES task;
-ALTER TABLE tasks ADD CONSTRAINT auth_fk4 FOREIGN KEY (user_id) REFERENCES users;
-ALTER TABLE task ADD CONSTRAINT auth_fk5 FOREIGN KEY (steps_id) REFERENCES steps;
-ALTER TABLE step ADD CONSTRAINT auth_fk6 FOREIGN KEY (task_id) REFERENCES task;
-ALTER TABLE steps ADD CONSTRAINT auth_fk7 FOREIGN KEY (step_id) REFERENCES step;
-ALTER TABLE steps ADD CONSTRAINT auth_fk8 FOREIGN KEY (task_id) REFERENCES task;
-ALTER TABLE users ADD CONSTRAINT auth_fk9 FOREIGN KEY (posts_id) REFERENCES posts;
-ALTER TABLE users ADD CONSTRAINT auth_fk10 FOREIGN KEY (tasks_id) REFERENCES tasks;
+
+
+ALTER TABLE posts ADD CONSTRAINT auth_fk1 FOREIGN KEY (info_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE ;
+ALTER TABLE posts ADD CONSTRAINT auth_fk2 FOREIGN KEY (post_id) REFERENCES post(id) ON UPDATE CASCADE ON DELETE CASCADE ;
+ALTER TABLE tasks ADD CONSTRAINT auth_fk3 FOREIGN KEY (task_id) REFERENCES task(id) ON UPDATE CASCADE ON DELETE CASCADE ;
+ALTER TABLE tasks ADD CONSTRAINT auth_fk4 FOREIGN KEY (user_id) REFERENCES users(id) ON UPDATE CASCADE ON DELETE CASCADE ;
+ALTER TABLE task ADD CONSTRAINT auth_fk7 FOREIGN KEY (steps_id) REFERENCES step(id) ON UPDATE CASCADE ON DELETE CASCADE ;
