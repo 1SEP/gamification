@@ -9,7 +9,7 @@ import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Dto
-public class TaskDto {
+public class TaskDto implements DataTransferObject{
     @DtoField  (converter = "IntegerToString")
     private int id;
     @DtoField (converter = "BooleanToString")
@@ -22,4 +22,28 @@ public class TaskDto {
     private StepsDto steps;
     @DtoField (converter = "BooleanToString")
     private String finished;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setPrivated(String privated) {
+        this.privated = privated;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public void setDueDate(String dueDate) {
+        this.dueDate = dueDate;
+    }
+
+    public void setSteps(StepsDto steps) {
+        this.steps = steps;
+    }
+
+    public void setFinished(String finished) {
+        this.finished = finished;
+    }
 }
