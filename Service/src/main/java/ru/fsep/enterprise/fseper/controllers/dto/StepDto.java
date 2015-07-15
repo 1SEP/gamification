@@ -5,21 +5,17 @@ import com.inspiresoftware.lib.dto.geda.annotations.Dto;
 import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
 
 /**
- * Created by Ôëþð on 14.07.2015.
+ * Created by Ôëþð on 15.07.2015.
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Dto
-public class TaskDto {
-    @DtoField  (converter = "IntegerToString")
+public class StepDto {
+    @DtoField (converter = "IntegerToString")
     private int id;
-    @DtoField (converter = "BooleanToString")
-    private String privated;
+    @DtoField (converter = "IntegerToString")
+    private String taskId;
     @DtoField
     private String description;
-    @DtoField (converter = "DateToString")
-    private String dueDate;
-    @DtoField
-    private StepsDto steps;
     @DtoField (converter = "BooleanToString")
     private String finished;
 }

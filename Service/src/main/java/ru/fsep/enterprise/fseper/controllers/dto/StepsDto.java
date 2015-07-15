@@ -5,6 +5,6 @@ import java.util.List;
 /**
  * Created by дыў№ on 15.07.2015.
  */
-public class TasksDto {
-    List<TaskDto> taskDtos;
+public class StepsDto {
+    List<StepDto> stepDtos;
 }
