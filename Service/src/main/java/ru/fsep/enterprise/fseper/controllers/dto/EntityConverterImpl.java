@@ -1,5 +1,7 @@
 package ru.fsep.enterprise.fseper.controllers.dto;
 
+import com.inspiresoftware.lib.dto.geda.adapter.BeanFactory;
+import com.inspiresoftware.lib.dto.geda.adapter.ValueConverter;
 import org.springframework.stereotype.Component;
 import ru.fsep.enterprise.fseper.models.Task;
 import ru.fsep.enterprise.fseper.models.User;
@@ -15,7 +17,17 @@ public class EntityConverterImpl implements EntityConverter {
 
     private final String INT_TO_STR_USER_ADAPTER_ID = "IntegerToString";
     private final String DOUBLE_TO_STR_USER_ADAPTER_RATING = "DoubleToString";
-    private final String URL_TO_STR_USER_ADAPTER_NAME = "DoubleToString";
+    private final String URL_TO_STR_USER_ADAPTER_URL = "UrlToString";
+
+    private final ValueConverter integerToStringConverter = new ValueConverter() {
+        public Object convertToDto(Object o, BeanFactory beanFactory) {
+            return String.valueOf(o);
+        }
+
+        public Object convertToEntity(Object o, Object o1, BeanFactory beanFactory) {
+            return null;
+        }
+    };
 
     public TaskDto fromTask(Task entity) {
         return null;
@@ -26,7 +38,6 @@ public class EntityConverterImpl implements EntityConverter {
     }
 
     public UserDto fromUser(User entity) {
-
         return null;
     }
 
@@ -34,3 +45,6 @@ public class EntityConverterImpl implements EntityConverter {
         return null;
     }
 }
+
+
+
