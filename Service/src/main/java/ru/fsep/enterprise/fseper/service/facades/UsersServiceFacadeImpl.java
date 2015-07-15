@@ -106,13 +106,8 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
         return tasksDao.getFinishedTasks(userId);
     }
 
-<<<<<<< HEAD
     public List<Task> getTasksByDate(int usersId, Date date) {
         return tasksDao.getTasksByDate(usersId, date);
-=======
-    public List<Task> getTasksByDate(int userId, Date date) {
-        return tasksDao.getTasksByDate(userId, date);
->>>>>>> service
     }
 
 
