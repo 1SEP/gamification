@@ -27,7 +27,7 @@ public class UsersDaoImplTest {
 
     private void stubbingDaoArgumentsVerifierMock() {
         doThrow(IllegalArgumentException.class).when(daoArgumentsVerifierMock).verifyUser(anyInt());
-//        doNothing().when(daoArgumentsVerifierMock).verifyUser(USER_ID);
+        doNothing().when(daoArgumentsVerifierMock).verifyUser(USER_ID);
 
         doThrow(IllegalArgumentException.class).when(daoArgumentsVerifierMock).verifyPost(anyInt());
 //        doNothing().when(daoArgumentsVerifierMock).verifyPost(POST.getId());
@@ -74,14 +74,19 @@ public class UsersDaoImplTest {
         usersDaoImplTest = new UsersDaoImpl(sqlQueryExecutorMock, paramsMapperMock, daoArgumentsVerifierMock);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test
     public void testGetUser() throws Exception {
         User actual = usersDaoImplTest.getUser(USER_ID);
         User expected = USER;
         verify(daoArgumentsVerifierMock).verifyUser(USER_ID);
         assertEquals(expected, actual);
     }
-
+    
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetUserForIncorrectId() throws Exception {
+        usersDaoImplTest.getUser(2);
+    }
+    
     @Test(expected = IllegalArgumentException.class)
     public void testLogIn() throws Exception {
         usersDaoImplTest.logIn(USER);
