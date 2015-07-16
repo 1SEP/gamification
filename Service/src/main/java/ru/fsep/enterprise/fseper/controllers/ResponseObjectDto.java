@@ -3,7 +3,7 @@ package ru.fsep.enterprise.fseper.controllers;
 /**
  * Created by дыў№ on 13.07.2015.
  */
-public class ResponseObjectDto {
+public class ResponseObjectDto implements DataTransferObject {
     private String code;
     private String status;
     private Object data;
