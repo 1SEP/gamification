@@ -8,7 +8,7 @@ import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Dto
-public class TaskDto implements DataTransferObject{
+public class TaskDto {
     @DtoField  (converter = "IntegerAndStringConvert")
     private int id;
     @DtoField (converter = "BooleanAndStringConvert")

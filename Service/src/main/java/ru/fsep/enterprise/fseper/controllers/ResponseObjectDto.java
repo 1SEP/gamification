@@ -3,12 +3,12 @@ package ru.fsep.enterprise.fseper.controllers;
 /**
  * Created by Ôëþð on 13.07.2015.
  */
-public class ResponseObjectDto implements DataTransferObject {
+public class ResponseObjectDto {
     private String code;
     private String status;
-    private DataTransferObject data;
+    private Object data;
 
-    public ResponseObjectDto(String code, String status, DataTransferObject data) {
+    public ResponseObjectDto(String code, String status, Object data) {
         this.code = code;
         this.status = status;
         this.data = data;
@@ -22,7 +22,7 @@ public class ResponseObjectDto implements DataTransferObject {
         return status;
     }
 
-    public DataTransferObject getData() {
+    public Object getData() {
         return data;
     }
 }
