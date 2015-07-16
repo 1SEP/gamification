@@ -1,9 +1,7 @@
 package ru.fsep.enterprise.fseper.service.jdbc.utils;
 
 import ru.fsep.enterprise.fseper.service.exceptions.UserNotFoundException;
-
 import java.util.Map;
-
 import static java.util.Arrays.asList;
 
 public class DaoArgumentsVerifierImpl implements DaoArgumentsVerifier {
