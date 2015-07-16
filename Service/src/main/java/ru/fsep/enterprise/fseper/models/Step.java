@@ -27,6 +27,10 @@ public class Step {
         this.finished = finished;
     }
 
+    public Step() {
+
+    }
+
     public int getId() {
         return id;
     }

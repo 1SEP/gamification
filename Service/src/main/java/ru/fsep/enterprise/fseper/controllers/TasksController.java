@@ -40,14 +40,15 @@ public class TasksController {
     @RequestMapping(value = "users/{user-id}/tasks/assignments", method = RequestMethod.POST)
     public ResponseEntity<ResponseObjectDto> assignmentsTask(@RequestBody TaskDto taskDto, @PathVariable("user-id") int userId)
     {
-        Task task = null;
-        usersServiceFacade.assignmentTask( task, userId);
+        Task task = tasksAndStepsConverter.toTask(taskDto);
+        usersServiceFacade.assignmentTask(task, userId);
         return ResponseBuilder.buildResponsePut(task);
     }
 
     @RequestMapping(value = "tasks/{task-id}", method = RequestMethod.PUT)
-    public ResponseEntity<ResponseObjectDto> updateTask(Task task)
+    public ResponseEntity<ResponseObjectDto> updateTask(@RequestBody TaskDto taskDto)
     {
+        Task task = tasksAndStepsConverter.toTask(taskDto);
         usersServiceFacade.updateTask(task);
         return ResponseBuilder.buildResponsePut(task);
     }

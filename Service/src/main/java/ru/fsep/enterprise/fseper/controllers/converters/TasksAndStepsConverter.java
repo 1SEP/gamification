@@ -17,4 +17,9 @@ public interface TasksAndStepsConverter {
     TasksDto fromTasks(List<Task> entities);
     StepDto fromStep(Step entity);
     StepsDto fromSteps(List<Step> entities);
+    Task toTask(TaskDto taskDto);
+    List<Task> toTasks(TasksDto tasksDto);
+    Step toStep(StepDto stepDto);
+    List<Step> toSteps(StepsDto stepsDto);
+
 }

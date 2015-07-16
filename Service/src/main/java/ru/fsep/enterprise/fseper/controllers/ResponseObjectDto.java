@@ -6,9 +6,9 @@ package ru.fsep.enterprise.fseper.controllers;
 public class ResponseObjectDto implements DataTransferObject {
     private String code;
     private String status;
-    private Object data;
+    private DataTransferObject data;
 
-    public ResponseObjectDto(String code, String status, Object data) {
+    public ResponseObjectDto(String code, String status, DataTransferObject data) {
         this.code = code;
         this.status = status;
         this.data = data;
@@ -22,7 +22,7 @@ public class ResponseObjectDto implements DataTransferObject {
         return status;
     }
 
-    public Object getData() {
+    public DataTransferObject getData() {
         return data;
     }
 }

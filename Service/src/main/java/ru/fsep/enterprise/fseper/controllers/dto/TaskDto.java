@@ -9,17 +9,17 @@ import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Dto
 public class TaskDto implements DataTransferObject{
-    @DtoField  (converter = "IntegerToString")
+    @DtoField  (converter = "IntegerAndStringConvert")
     private int id;
-    @DtoField (converter = "BooleanToString")
+    @DtoField (converter = "BooleanAndStringConvert")
     private String privated;
     @DtoField
     private String description;
-    @DtoField (converter = "DateToString")
+    @DtoField (converter = "DateAndStringConvert")
     private String dueDate;
     @DtoField
     private StepsDto steps;
-    @DtoField (converter = "BooleanToString")
+    @DtoField (converter = "BooleanAndStringConvert")
     private String finished;
 
     public void setId(int id) {

@@ -13,21 +13,18 @@ import ru.fsep.enterprise.fseper.models.Task;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created by Ôëþð on 15.07.2015.
  */
 public class TasksAndStepsConverterImpl implements TasksAndStepsConverter {
 
-    private final String INT_TO_STR_ADAPTER_NAME = "IntegerToString";
-    private final String BOOL_TO_STR_ADAPTER_NAME = "BooleanToString";
-    private final String DATE_TO_STR_SDSPTER_NAME = "DateToString";
+    private final String INT_STR_ADAPTER_NAME = "IntegerAndStringConvert";
+    private final String BOOL_STR_ADAPTER_NAME = "BooleanAndStringConvert";
+    private final String DATE_STR_SDSPTER_NAME = "DateAndStringConvert";
 
-    private final ValueConverter integerToStringConverter = new ValueConverter() {
+    private final ValueConverter integerAndStringConverter = new ValueConverter() {
         public Object convertToDto(Object o, BeanFactory beanFactory) {
             return String.valueOf(o);
         }
@@ -37,7 +34,7 @@ public class TasksAndStepsConverterImpl implements TasksAndStepsConverter {
         }
     };
 
-    private final ValueConverter booleanToStringConverter = new ValueConverter() {
+    private final ValueConverter booleanAndStringConverter = new ValueConverter() {
         public Object convertToDto(Object o, BeanFactory beanFactory) {
             return String.valueOf(o);
         }
@@ -47,7 +44,7 @@ public class TasksAndStepsConverterImpl implements TasksAndStepsConverter {
         }
     };
 
-    private final ValueConverter dateToStringConverter = new ValueConverter() {
+    private final ValueConverter dateAndStringConverter = new ValueConverter() {
         public Object convertToDto(Object o, BeanFactory beanFactory) {
             return String.valueOf(o);
         }
@@ -68,9 +65,9 @@ public class TasksAndStepsConverterImpl implements TasksAndStepsConverter {
     public TaskDto fromTask(Task entity) {
         TaskDto taskDto = new TaskDto();
         Map<String, Object> adapters = new HashMap<String, Object>();
-        adapters.put(INT_TO_STR_ADAPTER_NAME, integerToStringConverter);
-        adapters.put(BOOL_TO_STR_ADAPTER_NAME, booleanToStringConverter);
-        adapters.put(DATE_TO_STR_SDSPTER_NAME, dateToStringConverter);
+        adapters.put(INT_STR_ADAPTER_NAME, integerAndStringConverter);
+        adapters.put(BOOL_STR_ADAPTER_NAME, booleanAndStringConverter);
+        adapters.put(DATE_STR_SDSPTER_NAME, dateAndStringConverter);
         taskAssembler.assembleDto(taskDto, entity, adapters, null);
         return taskDto;
     }
@@ -88,8 +85,8 @@ public class TasksAndStepsConverterImpl implements TasksAndStepsConverter {
     public StepDto fromStep(Step entity) {
         StepDto stepDto  = new StepDto();
         Map<String, Object> adapters = new HashMap<String, Object>();
-        adapters.put(INT_TO_STR_ADAPTER_NAME, integerToStringConverter);
-        adapters.put(BOOL_TO_STR_ADAPTER_NAME, booleanToStringConverter);
+        adapters.put(INT_STR_ADAPTER_NAME, integerAndStringConverter);
+        adapters.put(BOOL_STR_ADAPTER_NAME, booleanAndStringConverter);
         stepAssembler.assembleDto(stepDto, entity, adapters, null);
         return stepDto;
     }
@@ -104,5 +101,42 @@ public class TasksAndStepsConverterImpl implements TasksAndStepsConverter {
         return stepsDto;
     }
 
+    public Task toTask(TaskDto taskDto) {
+        Task task = new Task();
+        Map<String, Object> adapters = new HashMap<String, Object>();
+        adapters.put(INT_STR_ADAPTER_NAME, integerAndStringConverter);
+        adapters.put(BOOL_STR_ADAPTER_NAME, booleanAndStringConverter);
+        adapters.put(DATE_STR_SDSPTER_NAME, dateAndStringConverter);
+        taskAssembler.assembleEntity(taskDto, task, adapters, null);
+        return task;
+    }
 
+    public List<Task> toTasks(TasksDto tasksDto) {
+        List<Task> tasks = new LinkedList<Task>();
+        TaskDto taskDto;
+        for(int i=0; i< tasks.size(); i++){
+            taskDto = tasksDto.getTaskDtos().get(i);
+            tasks.add(toTask(taskDto));
+        }
+        return tasks;
+    }
+
+    public Step toStep(StepDto stepDto) {
+        Step step = new Step();
+        Map<String, Object> adapters = new HashMap<String, Object>();
+        adapters.put(INT_STR_ADAPTER_NAME, integerAndStringConverter);
+        adapters.put(BOOL_STR_ADAPTER_NAME, booleanAndStringConverter);
+        stepAssembler.assembleEntity(stepDto, step, adapters, null);
+        return step;
+    }
+
+    public List<Step> toSteps(StepsDto stepsDto) {
+        List<Step> steps = new LinkedList<Step>();
+        StepDto stepDto;
+        for(int i=0; i < steps.size(); i++){
+            stepDto = stepsDto.getStepDtos().get(i);
+            steps.add(toStep(stepDto));
+        }
+        return steps;
+    }
 }

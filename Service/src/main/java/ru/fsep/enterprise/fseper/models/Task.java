@@ -37,6 +37,11 @@ public class Task {
         this.finished = finished;
     }
 
+    public Task() {
+
+    }
+
+
     public int getId() {
         return id;
     }
