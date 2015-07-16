@@ -77,6 +77,7 @@ public class UsersDaoImpl implements UsersDao {
     }
 
     public User updateUser(User user) {
+        // verifyUser(user); verifyUserById(user.getId());
         daoArgumentsVerifier.verifyUser(user.getId());
         int userId = user.getId();
         PersonInfo personInfo = user.getPersonInfo();
