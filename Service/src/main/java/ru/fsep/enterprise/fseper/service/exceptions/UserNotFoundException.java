@@ -16,7 +16,7 @@ public class UserNotFoundException extends RuntimeException {
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
-                .add("MESSAGE:", message)
+                .add("Message:", message)
                 .toString();
     }
 

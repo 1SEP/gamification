@@ -1,8 +1,13 @@
 package ru.fsep.enterprise.fseper.service.jdbc.utils;
 
+import ru.fsep.enterprise.fseper.models.Post;
+import ru.fsep.enterprise.fseper.models.User;
+
 public interface DaoArgumentsVerifier {
-    void verifyUser(int userId);
-    void verifyFirstNameAndLastName(String firstName, String lastName);
+    void verifyUser(User user);
+    void verifyUserById(int userId);
+    void verifyUserByName(String firstName, String lastName);
     void verifyTask(int taskId);
-    void verifyPost(int postId);
+    void verifyPostById(int postId);
+    void verifyPost(Post post);
 }

@@ -7,10 +7,21 @@ import java.util.*;
 
 public class TestData {
     static final int USER_ID = 1;
+    static final int INCORRECT_USER_ID = 2;
+    public static final String INCORRECT_FIRSTNAME = "Incorrect first name";
+    public static final String INCORRECT_LASTNAME = "Incorrect incorrect last name";
     static final User USER = new User(USER_ID, initAuthData(), initPersonInfo(), initTasks());
+    static final User INCORRECT_USER = new User(INCORRECT_USER_ID, initAuthData(), initPersonInfo(), initTasks());
     static final Map<String, Object> USER_MAP = createUserMap();
     static final List<User> LIST_OF_USERS = getListOfUsers();
     static final Post POST = getPost();
+    public static final Post INCORRECT_POST = getIncorrectPost();
+    public static final int INCORRECT_POST_ID = 2;
+
+    private static Post getIncorrectPost() {
+        return new Post(INCORRECT_POST_ID, "Incorrect post name", "incorrect post description");
+    }
+
     static final Map<String, Object> POST_MAP = getPostMap();
 
     private static Post getPost() {
