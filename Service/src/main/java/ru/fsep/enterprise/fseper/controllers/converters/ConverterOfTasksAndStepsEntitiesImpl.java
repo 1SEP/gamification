@@ -18,7 +18,7 @@ import java.util.*;
 /**
  * Created by Ôëþð on 15.07.2015.
  */
-public class TasksAndStepsConverterImpl implements TasksAndStepsConverter {
+public class ConverterOfTasksAndStepsEntitiesImpl implements ConverterOfTasksAndStepsEntities {
 
     private final String INT_STR_ADAPTER_NAME = "IntegerAndStringConvert";
     private final String BOOL_STR_ADAPTER_NAME = "BooleanAndStringConvert";

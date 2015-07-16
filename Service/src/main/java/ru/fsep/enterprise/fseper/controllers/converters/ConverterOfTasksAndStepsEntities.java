@@ -12,7 +12,7 @@ import java.util.List;
 /**
  * Created by дыў№ on 15.07.2015.
  */
-public interface TasksAndStepsConverter {
+public interface ConverterOfTasksAndStepsEntities {
     TaskDto fromTask(Task entity);
     TasksDto fromTasks(List<Task> entities);
     StepDto fromStep(Step entity);

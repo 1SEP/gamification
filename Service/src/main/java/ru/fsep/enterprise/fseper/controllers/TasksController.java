@@ -4,12 +4,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.fsep.enterprise.fseper.controllers.converters.TasksAndStepsConverter;
+import ru.fsep.enterprise.fseper.controllers.converters.ConverterOfTasksAndStepsEntities;
 import ru.fsep.enterprise.fseper.controllers.dto.TaskDto;
 import ru.fsep.enterprise.fseper.controllers.dto.TasksDto;
 import ru.fsep.enterprise.fseper.models.Task;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,12 +21,12 @@ public class TasksController {
     @Autowired
     private UsersServiceFacade usersServiceFacade;
     @Autowired
-    private TasksAndStepsConverter tasksAndStepsConverter;
+    private ConverterOfTasksAndStepsEntities converterOfTasksAndStepsEntities;
     @RequestMapping(value = "tasks/{task-id}.json", method = RequestMethod.GET)
     public ResponseEntity<ResponseObjectDto> getTask(@PathVariable("task-id") int id)
     {
         Task task = usersServiceFacade.getTask(id);
-        TaskDto taskDto = tasksAndStepsConverter.fromTask(task);
+        TaskDto taskDto = converterOfTasksAndStepsEntities.fromTask(task);
         return ResponseBuilder.buildResponseGet(taskDto);
     }
 
@@ -33,24 +34,24 @@ public class TasksController {
     public ResponseEntity<ResponseObjectDto> getTasks(@PathVariable("users-id") int userId)
     {
         List<Task> tasks = usersServiceFacade.getTasks(userId);
-        TasksDto tasksDto = tasksAndStepsConverter.fromTasks(tasks);
+        TasksDto tasksDto = converterOfTasksAndStepsEntities.fromTasks(tasks);
         return ResponseBuilder.buildResponseGet(tasksDto);
     }
 
     @RequestMapping(value = "users/{user-id}/tasks/assignments", method = RequestMethod.POST)
     public ResponseEntity<ResponseObjectDto> assignmentsTask(@RequestBody TaskDto taskDto, @PathVariable("user-id") int userId)
     {
-        Task task = tasksAndStepsConverter.toTask(taskDto);
+        Task task = converterOfTasksAndStepsEntities.toTask(taskDto);
         usersServiceFacade.assignmentTask(task, userId);
-        return ResponseBuilder.buildResponsePut(task);
+        return ResponseBuilder.buildResponsePut(taskDto);
     }
 
     @RequestMapping(value = "tasks/{task-id}", method = RequestMethod.PUT)
     public ResponseEntity<ResponseObjectDto> updateTask(@RequestBody TaskDto taskDto)
     {
-        Task task = tasksAndStepsConverter.toTask(taskDto);
+        Task task = converterOfTasksAndStepsEntities.toTask(taskDto);
         usersServiceFacade.updateTask(task);
-        return ResponseBuilder.buildResponsePut(task);
+        return ResponseBuilder.buildResponsePut(taskDto);
     }
 
     @RequestMapping(value = "tasks/{task-id}", method = RequestMethod.DELETE)
@@ -65,7 +66,8 @@ public class TasksController {
     {
         List<Task> tasks;
         tasks = usersServiceFacade.getPrivatedTasks(userId);
-        return ResponseBuilder.buildResponseGet(tasks);
+        TasksDto tasksDto = converterOfTasksAndStepsEntities.fromTasks(tasks);
+        return ResponseBuilder.buildResponseGet(tasksDto);
     }
 
     @RequestMapping(value = "users/{user-id}}/tasks.json/filter=finished", method = RequestMethod.GET)
@@ -73,14 +75,17 @@ public class TasksController {
     {
         List<Task> tasks;
         tasks = usersServiceFacade.getFinishedTasks(userId);
-        return ResponseBuilder.buildResponseGet(tasks);
+        TasksDto tasksDto = converterOfTasksAndStepsEntities.fromTasks(tasks);
+        return ResponseBuilder.buildResponseGet(tasksDto);
     }
-//
-//    @RequestMapping(value = "tasks.json/filter={dueDate}", method = RequestMethod.GET)
-//    public ResponseEntity<ResponseObjectDto> getTasksByDate(@PathVariable("dueDate") Date dueDate)
-//    {
-//        List<Task> tasks;
-//        tasks = usersServiceFacade.getTasksByDate(dueDate);
-//        return ResponseBuilder.buildResponseGet(tasks);
-//    }
+
+    @RequestMapping(value = "users/{user-id}/tasks.json/filter={dueDate}", method = RequestMethod.GET)
+    public ResponseEntity<ResponseObjectDto> getTasksByDate(@PathVariable("dueDate") Date dueDate,
+                                                            @PathVariable("user-id") int userId)
+    {
+        List<Task> tasks;
+        tasks = usersServiceFacade.getTasksByDate(userId, dueDate);
+        TasksDto tasksDto = converterOfTasksAndStepsEntities.fromTasks(tasks);
+        return ResponseBuilder.buildResponseGet(tasksDto);
+    }
 }
