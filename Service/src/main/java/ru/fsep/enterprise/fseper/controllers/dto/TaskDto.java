@@ -1,12 +1,8 @@
 package ru.fsep.enterprise.fseper.controllers.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
-<<<<<<< HEAD
 import com.inspiresoftware.lib.dto.geda.annotations.Dto;
 import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
-=======
->>>>>>> 9ebed1eff7e81ca669fbdbe604095f43e7b5eb1b
-
 /**
  * Created by дыў№ on 14.07.2015.
  */

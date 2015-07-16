@@ -21,7 +21,7 @@ import java.util.Map;
 /**
  * Created by Ôëþð on 15.07.2015.
  */
-public class EntityConverterImpl implements EntityConverter {
+public class TasksAndStepsConverterImpl implements EntityConverter {
 
     private final String INT_TO_STR_ADAPTER_NAME = "IntegerToString";
     private final String BOOL_TO_STR_ADAPTER_NAME = "BooleanToString";
@@ -103,4 +103,6 @@ public class EntityConverterImpl implements EntityConverter {
         stepsDto.setStepDtos(stepDtos);
         return stepsDto;
     }
+
+
 }

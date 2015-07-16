@@ -1,19 +1,15 @@
 package ru.fsep.enterprise.fseper.controllers;
 
-import com.inspiresoftware.lib.dto.geda.adapter.ValueConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.fsep.enterprise.fseper.controllers.converters.EntityConverter;
-import ru.fsep.enterprise.fseper.controllers.converters.EntityConverterImpl;
 import ru.fsep.enterprise.fseper.controllers.dto.TaskDto;
 import ru.fsep.enterprise.fseper.controllers.dto.TasksDto;
 import ru.fsep.enterprise.fseper.models.Task;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
 
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
