@@ -1,4 +1,4 @@
-package ru.fsep.enterprise.fseper.controllers;
+package ru.fsep.enterprise.fseper.controllers.dto;
 
 /**
  * Created by Ôëşğ on 13.07.2015.
