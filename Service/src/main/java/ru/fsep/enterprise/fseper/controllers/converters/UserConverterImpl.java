@@ -4,7 +4,9 @@ import com.inspiresoftware.lib.dto.geda.adapter.BeanFactory;
 import com.inspiresoftware.lib.dto.geda.adapter.ValueConverter;
 import com.inspiresoftware.lib.dto.geda.assembler.Assembler;
 import com.inspiresoftware.lib.dto.geda.assembler.DTOAssembler;
+import javafx.geometry.Pos;
 import ru.fsep.enterprise.fseper.controllers.dto.*;
+import ru.fsep.enterprise.fseper.models.PersonInfo;
 import ru.fsep.enterprise.fseper.models.Post;
 import ru.fsep.enterprise.fseper.models.User;
 
@@ -54,34 +56,62 @@ public class UserConverterImpl implements UserConverter{
 
     private final Assembler postAssembler = DTOAssembler.newAssembler(PostDto.class, Post.class);
 
-    public UserDto fromUser(User entity) {
-        return null;
-    }
-
-    public UsersDto fromUsers(List<User> entities) {
-        return null;
-    }
-
     public PostDto fromPost(Post entity) {
         PostDto postDto = new PostDto();
         Map<String, Object> adapters = new HashMap<String, Object>();
         adapters.put(INT_TO_STR_ADAPTER_NAME, integerToStringConverter);
 
         postAssembler.assembleDto(postDto, entity, adapters, null);
-
         return postDto;
     }
 
     public PostsDto fromPosts(List<Post> entities) {
-        int i = 0;
-        while (!entities.isEmpty()){
-            PostDto postDto = new PostDto();
-            Map<String, Object> adapters = new HashMap<String, Object>();
-            adapters.put(INT_TO_STR_ADAPTER_NAME, integerToStringConverter);
-
-            postAssembler.assembleDto(postDto, entities.get(i), adapters, null);
-            i++;
+        List<PostDto> postsDto = new LinkedList<PostDto>();
+        for (Post post : entities) {
+            postsDto.add(fromPost(post));
         }
-        return null;
+        PostsDto postsDtoOut = new PostsDto();
+        postsDtoOut.setPosts(postsDto);
+        return postsDtoOut;
+    }
+
+    public PersonInfoDto fromPersonInfo(PersonInfo entity){
+        PersonInfoDto PIDto = new PersonInfoDto();
+        Map<String, Object> adapter = new HashMap<String, Object>();
+        adapter.put(DOOBLE_TO_STR_ADAPTER_NAME, doubleToStringConverter);
+        adapter.put(URL_TO_STR_ADAPTER_NAME, urlToStringConverter);
+
+        BeanFactory bean = new BeanFactory() {
+            public Class getClazz(String s) {
+                return null;
+            }
+
+            public Object get(String s) {
+                return null;
+            }
+        };
+        postAssembler.assembleDto(PIDto, entity, adapter, bean);
+        PIDto.setPosts(fromPosts(entity.getPosts()));
+        return PIDto;
+    }
+
+    public UserDto fromUser(User entity){
+        UserDto userDto = new UserDto();
+        userDto.setId(String.valueOf(entity.getId()));
+        userDto.setPersonInfo(fromPersonInfo(entity.getPersonInfo()));
+        ConverterOfTasksAndStepsEntitiesImpl converterForTask = new ConverterOfTasksAndStepsEntitiesImpl();
+        userDto.setTasks(converterForTask.fromTasks(entity.getTasks()));
+        return userDto;
+    }
+
+    public UsersDto fromUsers(List<User> entities){
+        List<UserDto> usersDto = new LinkedList<UserDto>();
+        for (User user : entities) {
+            usersDto.add(fromUser(user));
+        }
+        UsersDto usersDtoOut = new UsersDto();
+        usersDtoOut.setUsers(usersDto);
+        return usersDtoOut;
     }
 }
+

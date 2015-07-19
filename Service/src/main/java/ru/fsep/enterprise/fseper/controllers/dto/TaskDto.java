@@ -1,20 +1,19 @@
 package ru.fsep.enterprise.fseper.controllers.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.inspiresoftware.lib.dto.geda.annotations.Dto;
+import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
 
 /**
  * Author Ôëþð on 14.07.2015
  */
-<<<<<<< HEAD
-@JsonInclude
-public class TaskDto {
-=======
+
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Dto
 public class TaskDto {
     @DtoField  (converter = "IntegerAndStringConvert")
     private int id;
-    @DtoField (converter = "BooleanAndStringConvert")
+    @DtoField(converter = "BooleanAndStringConvert")
     private String privated;
     @DtoField
     private String description;
@@ -48,5 +47,4 @@ public class TaskDto {
     public void setFinished(String finished) {
         this.finished = finished;
     }
->>>>>>> 76281bb412d7a39f4a7b894191fe41963867097e
 }
