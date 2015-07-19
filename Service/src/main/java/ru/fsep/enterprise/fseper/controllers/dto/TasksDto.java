@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by дыў№ on 15.07.2015.
  */
-public class TasksDto implements DataTransferObject{
+public class TasksDto {
     List<TaskDto> taskDtos;
 
     public List<TaskDto> getTaskDtos() {

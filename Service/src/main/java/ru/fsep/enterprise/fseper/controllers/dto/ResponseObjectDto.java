@@ -1,9 +1,9 @@
-package ru.fsep.enterprise.fseper.controllers;
+package ru.fsep.enterprise.fseper.controllers.dto;
 
 /**
  * Created by Ôëþð on 13.07.2015.
  */
-public class ResponseObjectDto implements DataTransferObject {
+public class ResponseObjectDto {
     private String code;
     private String status;
     private Object data;

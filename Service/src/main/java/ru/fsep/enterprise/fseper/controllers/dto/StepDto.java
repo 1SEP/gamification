@@ -9,7 +9,7 @@ import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Dto
-public class StepDto implements DataTransferObject{
+public class StepDto {
     @DtoField (converter = "IntegerToString")
     private int id;
     @DtoField (converter = "IntegerToString")

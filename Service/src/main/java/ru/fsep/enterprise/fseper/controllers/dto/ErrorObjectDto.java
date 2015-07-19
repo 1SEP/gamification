@@ -1,9 +1,9 @@
-package ru.fsep.enterprise.fseper.controllers;
+package ru.fsep.enterprise.fseper.controllers.dto;
 
 /**
  * Created by Fedorov on 14.07.2015.
  */
-public class ErrorObjectDto implements DataTransferObject {
+public class ErrorObjectDto {
     private String code;
     private String status;
     private String message;
