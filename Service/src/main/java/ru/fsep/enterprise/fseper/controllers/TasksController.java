@@ -4,12 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-<<<<<<< HEAD
 import ru.fsep.enterprise.fseper.controllers.converters.TasksAndStepsConverter;
-=======
 import ru.fsep.enterprise.fseper.controllers.converters.ConverterOfTasksAndStepsEntities;
 import ru.fsep.enterprise.fseper.controllers.dto.ResponseObjectDto;
->>>>>>> 76281bb412d7a39f4a7b894191fe41963867097e
 import ru.fsep.enterprise.fseper.controllers.dto.TaskDto;
 import ru.fsep.enterprise.fseper.controllers.dto.TasksDto;
 import ru.fsep.enterprise.fseper.models.Task;
@@ -26,20 +23,13 @@ public class TasksController {
     @Autowired
     private UsersServiceFacade usersServiceFacade;
     @Autowired
-<<<<<<< HEAD
     private TasksAndStepsConverter tasksAndStepsConverter;
-=======
     private ConverterOfTasksAndStepsEntities converterOfTasksAndStepsEntities;
->>>>>>> 76281bb412d7a39f4a7b894191fe41963867097e
     @RequestMapping(value = "tasks/{task-id}.json", method = RequestMethod.GET)
     public ResponseEntity<ResponseObjectDto> getTask(@PathVariable("task-id") int id)
     {
         Task task = usersServiceFacade.getTask(id);
-<<<<<<< HEAD
-        TaskDto taskDto = tasksAndStepsConverter.fromTask(task);
-=======
         TaskDto taskDto = converterOfTasksAndStepsEntities.fromTask(task);
->>>>>>> 76281bb412d7a39f4a7b894191fe41963867097e
         return ResponseBuilder.buildResponseGet(taskDto);
     }
 
@@ -47,11 +37,7 @@ public class TasksController {
     public ResponseEntity<ResponseObjectDto> getTasks(@PathVariable("users-id") int userId)
     {
         List<Task> tasks = usersServiceFacade.getTasks(userId);
-<<<<<<< HEAD
-        TasksDto tasksDto = tasksAndStepsConverter.fromTasks(tasks);
-=======
         TasksDto tasksDto = converterOfTasksAndStepsEntities.fromTasks(tasks);
->>>>>>> 76281bb412d7a39f4a7b894191fe41963867097e
         return ResponseBuilder.buildResponseGet(tasksDto);
     }
 

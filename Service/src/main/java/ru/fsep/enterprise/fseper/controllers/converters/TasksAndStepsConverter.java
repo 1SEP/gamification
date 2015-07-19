@@ -10,7 +10,7 @@ import ru.fsep.enterprise.fseper.models.Task;
 import java.util.List;
 
 /**
- * Author дыў№ on 15.07.2015
+ * Author дыў№ on 1507.2015
  .
  */
 public interface TasksAndStepsConverter {
