@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.fsep.enterprise.fseper.controllers.converters.EntityConverter;
+import ru.fsep.enterprise.fseper.controllers.converters.TasksAndStepsConverter;
 import ru.fsep.enterprise.fseper.controllers.dto.TaskDto;
 import ru.fsep.enterprise.fseper.controllers.dto.TasksDto;
 import ru.fsep.enterprise.fseper.models.Task;
@@ -20,12 +20,12 @@ public class TasksController {
     @Autowired
     private UsersServiceFacade usersServiceFacade;
     @Autowired
-    private EntityConverter entityConverter;
+    private TasksAndStepsConverter tasksAndStepsConverter;
     @RequestMapping(value = "tasks/{task-id}.json", method = RequestMethod.GET)
     public ResponseEntity<ResponseObjectDto> getTask(@PathVariable("task-id") int id)
     {
         Task task = usersServiceFacade.getTask(id);
-        TaskDto taskDto = entityConverter.fromTask(task);
+        TaskDto taskDto = tasksAndStepsConverter.fromTask(task);
         return ResponseBuilder.buildResponseGet(taskDto);
     }
 
@@ -33,7 +33,7 @@ public class TasksController {
     public ResponseEntity<ResponseObjectDto> getTasks(@PathVariable("users-id") int userId)
     {
         List<Task> tasks = usersServiceFacade.getTasks(userId);
-        TasksDto tasksDto = entityConverter.fromTasks(tasks);
+        TasksDto tasksDto = tasksAndStepsConverter.fromTasks(tasks);
         return ResponseBuilder.buildResponseGet(tasksDto);
     }
 

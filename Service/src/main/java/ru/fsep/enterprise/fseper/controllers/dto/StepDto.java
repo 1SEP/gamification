@@ -5,7 +5,7 @@ import com.inspiresoftware.lib.dto.geda.annotations.Dto;
 import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
 
 /**
- * Created by дыў№ on 15.07.2015.
+ * Author дыў№ on 15.07.2015
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Dto
