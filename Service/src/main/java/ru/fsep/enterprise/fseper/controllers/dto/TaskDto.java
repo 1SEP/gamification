@@ -22,7 +22,7 @@ public class TaskDto {
     @DtoField (converter = "BooleanAndStringConvert")
     private String finished;
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
