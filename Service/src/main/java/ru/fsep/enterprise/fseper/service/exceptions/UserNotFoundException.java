@@ -10,7 +10,8 @@ public class UserNotFoundException extends RuntimeException {
     }
 
     public UserNotFoundException(String firstName, String lastName){
-        this.message = "User(s) with this name <" + firstName + "> and surname <" + lastName + "> was(were) not found";
+        this.message = "User(s) with this name <" + firstName + "> " +
+                "and surname <" + lastName + "> was(were) not found";
     }
 
     @Override

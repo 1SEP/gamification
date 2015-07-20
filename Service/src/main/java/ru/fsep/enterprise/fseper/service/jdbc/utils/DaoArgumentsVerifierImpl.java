@@ -2,6 +2,7 @@ package ru.fsep.enterprise.fseper.service.jdbc.utils;
 
 import ru.fsep.enterprise.fseper.models.Post;
 import ru.fsep.enterprise.fseper.models.User;
+import ru.fsep.enterprise.fseper.service.exceptions.PostsNotFoundException;
 import ru.fsep.enterprise.fseper.service.exceptions.UserNotFoundException;
 import java.util.Map;
 import static java.util.Arrays.asList;
@@ -51,12 +52,11 @@ public class DaoArgumentsVerifierImpl implements DaoArgumentsVerifier {
         Map<String, Object> paramMap = paramsMapper.asMap(asList("postId"), asList(postId));
         int countOfPosts = sqlQueryExecutor.queryForInt(SQL_COUNT_OF_POST_BY_POSTID, paramMap);
         if (countOfPosts == 0) {
-            //TODO
+            throw new PostsNotFoundException(postId);
         }
     }
 
     public void verifyPost(Post post) {
         verifyPostById(post.getId());
-        //TODO
     }
 }

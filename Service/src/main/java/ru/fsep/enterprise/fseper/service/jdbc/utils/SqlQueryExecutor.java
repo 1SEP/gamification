@@ -1,18 +1,10 @@
 package ru.fsep.enterprise.fseper.service.jdbc.utils;
 
-import java.util.List;
-
-<<<<<<< HEAD
-=======
 import org.springframework.jdbc.core.RowMapper;
 
->>>>>>> origin/UserDao
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Ôëþð on 09.07.2015.
- */
 public interface SqlQueryExecutor {
     <T> List<T> queryForObjects(String sql, RowMapper<T> rowMapper);
     <T> List<T> queryForObjects(String sql, Map<String, Object> paramMap, RowMapper<T> rowMapper);

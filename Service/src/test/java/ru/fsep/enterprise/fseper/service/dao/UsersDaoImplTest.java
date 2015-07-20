@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import ru.fsep.enterprise.fseper.models.User;
+import ru.fsep.enterprise.fseper.service.exceptions.PostsNotFoundException;
 import ru.fsep.enterprise.fseper.service.exceptions.UserNotFoundException;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.DaoArgumentsVerifier;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.ParamsMapper;
@@ -39,7 +40,7 @@ public class UsersDaoImplTest {
         doThrow(UserNotFoundException.class).when(daoArgumentsVerifierMock).verifyUserByName(anyString(), anyString());
         doNothing().when(daoArgumentsVerifierMock).verifyUserByName(firstName, lastName);
 
-        doThrow(IllegalArgumentException.class).when(daoArgumentsVerifierMock).verifyPost(INCORRECT_POST);
+        doThrow(PostsNotFoundException.class).when(daoArgumentsVerifierMock).verifyPost(INCORRECT_POST);
         doNothing().when(daoArgumentsVerifierMock).verifyPost(POST);
     }
 
@@ -157,7 +158,7 @@ public class UsersDaoImplTest {
         assertEquals(expected, actual);
     }
 
-    @Test(expected = IllegalArgumentException.class)
+    @Test(expected = PostsNotFoundException.class)
     public void testGetUsersByIncorrectPost() {
         usersDaoImplTest.getUsersByPost(INCORRECT_POST);
     }
