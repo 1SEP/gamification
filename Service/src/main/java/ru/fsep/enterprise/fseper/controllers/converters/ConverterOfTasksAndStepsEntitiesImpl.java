@@ -68,6 +68,7 @@ public class ConverterOfTasksAndStepsEntitiesImpl implements ConverterOfTasksAnd
         adapters.put(INT_STR_ADAPTER_NAME, integerAndStringConverter);
         adapters.put(BOOL_STR_ADAPTER_NAME, booleanAndStringConverter);
         adapters.put(DATE_STR_ADAPTER_NAME, dateAndStringConverter);
+        DtoBeanFactory bean = new DtoBeanFactory();
         taskAssembler.assembleDto(taskDto, entity, adapters, null);
         return taskDto;
     }
