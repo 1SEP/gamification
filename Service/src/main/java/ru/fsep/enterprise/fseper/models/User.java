@@ -23,7 +23,7 @@ public class User {
 
     private List<Task> tasks;
 
-    public User(int id, AuthData authData, PersonInfo personInfo, List<Task> tasks) {
+    public User(Object id, AuthData authData, PersonInfo personInfo, List<Task> tasks) {
         this.id = id;
         this.authData = authData;
         this.personInfo = personInfo;

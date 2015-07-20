@@ -140,7 +140,13 @@ public class UserConverterImpl implements UserConverter {
     }
 
     public PersonInfo toPersonInfo (PersonInfoDto dto) {
-        PersonInfo personInfo = new PersonInfo(dto.getFirstName(),dto.getLastName(), Double.parseDouble(dto.getRating()), dto.getBirthday(), toPosts(dto.getPosts()), dto.getRole(),(URL) urlToStringConverter.convertToEntity(dto.getPhoto(),URL_TO_STR_ADAPTER_NAME, null));
+        PersonInfo personInfo = new PersonInfo(dto.getFirstName(),
+                dto.getLastName(),
+                Double.parseDouble(dto.getRating()),
+                dto.getBirthday(),
+                toPosts(dto.getPosts()),
+                dto.getRole(),
+                (URL) urlToStringConverter.convertToEntity(dto.getPhoto(),URL_TO_STR_ADAPTER_NAME, null));
 //        Map<String, Object> adapter = new HashMap<String, Object>();
 //        adapter.put(DOUBLE_TO_STR_ADAPTER_NAME, doubleToStringConverter);
 //        adapter.put(URL_TO_STR_ADAPTER_NAME, urlToStringConverter);
@@ -152,7 +158,10 @@ public class UserConverterImpl implements UserConverter {
 
     public User toUser (UserDto dto){
 
-        return new User(integerToStringConverter.convertToEntity(dto.getId(), INT_TO_STR_ADAPTER_NAME, null), null, toPersonInfo(dto.getPersonInfo()))
+        return new User(integerToStringConverter.convertToEntity(dto.getId(), INT_TO_STR_ADAPTER_NAME, null),
+                null,
+                toPersonInfo(dto.getPersonInfo()),
+                null);
     }
 
 }
