@@ -4,6 +4,7 @@ import com.inspiresoftware.lib.dto.geda.adapter.BeanFactory;
 import com.inspiresoftware.lib.dto.geda.adapter.ValueConverter;
 import com.inspiresoftware.lib.dto.geda.assembler.Assembler;
 import com.inspiresoftware.lib.dto.geda.assembler.DTOAssembler;
+import org.springframework.stereotype.Component;
 import ru.fsep.enterprise.fseper.controllers.dto.StepDto;
 import ru.fsep.enterprise.fseper.controllers.dto.StepsDto;
 import ru.fsep.enterprise.fseper.controllers.dto.TaskDto;
@@ -18,7 +19,7 @@ import java.util.*;
 /**
  * Created by Ôëþð on 15.07.2015.
  */
-public class ConverterOfTasksAndStepsEntitiesImpl implements ConverterOfTasksAndStepsEntities {
+public class TasksAndStepsConverterImpl implements TasksAndStepsConverter {
 
     private final String INT_STR_ADAPTER_NAME = "IntegerAndStringConvert";
     private final String BOOL_STR_ADAPTER_NAME = "BooleanAndStringConvert";
@@ -68,7 +69,8 @@ public class ConverterOfTasksAndStepsEntitiesImpl implements ConverterOfTasksAnd
         adapters.put(INT_STR_ADAPTER_NAME, integerAndStringConverter);
         adapters.put(BOOL_STR_ADAPTER_NAME, booleanAndStringConverter);
         adapters.put(DATE_STR_ADAPTER_NAME, dateAndStringConverter);
-        DtoBeanFactory bean = new DtoBeanFactory();
+        //DtoBeanFactory bean = new DtoBeanFactory();
+        taskDto.setSteps(fromSteps(entity.getSteps()));
         taskAssembler.assembleDto(taskDto, entity, adapters, null);
         return taskDto;
     }
@@ -108,6 +110,7 @@ public class ConverterOfTasksAndStepsEntitiesImpl implements ConverterOfTasksAnd
         adapters.put(INT_STR_ADAPTER_NAME, integerAndStringConverter);
         adapters.put(BOOL_STR_ADAPTER_NAME, booleanAndStringConverter);
         adapters.put(DATE_STR_ADAPTER_NAME, dateAndStringConverter);
+        task.setSteps(toSteps(taskDto.getSteps()));
         taskAssembler.assembleEntity(taskDto, task, adapters, null);
         return task;
     }

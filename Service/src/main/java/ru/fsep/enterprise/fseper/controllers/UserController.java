@@ -3,7 +3,7 @@ package ru.fsep.enterprise.fseper.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.fsep.enterprise.fseper.controllers.converters.ConverterOfTasksAndStepsEntities;
+import ru.fsep.enterprise.fseper.controllers.converters.TasksAndStepsConverter;
 import ru.fsep.enterprise.fseper.controllers.dto.ResponseObjectDto;
 import ru.fsep.enterprise.fseper.controllers.dto.TaskDto;
 import ru.fsep.enterprise.fseper.controllers.dto.TasksDto;
@@ -23,19 +23,19 @@ public class UserController {
     @Autowired
     UsersServiceFacade usersServiceFacade;
     @Autowired
-    ConverterOfTasksAndStepsEntities converterOfTasksAndStepsEntities;
+    private TasksAndStepsConverter tasksAndStepsConverter;
     @RequestMapping(value = "{users-id}/tasks.json", method = RequestMethod.GET)
     public ResponseEntity<ResponseObjectDto> getTasks(@PathVariable("users-id") int userId)
     {
         List<Task> tasks = usersServiceFacade.getTasks(userId);
-        TasksDto tasksDto = converterOfTasksAndStepsEntities.fromTasks(tasks);
+        TasksDto tasksDto = tasksAndStepsConverter.fromTasks(tasks);
         return ResponseBuilder.buildResponseGet(tasksDto);
     }
 
     @RequestMapping(value = "{user-id}/tasks/assignments", method = RequestMethod.POST)
     public ResponseEntity<ResponseObjectDto> assignmentsTask(@RequestBody TaskDto taskDto, @PathVariable("user-id") int userId)
     {
-        Task task = converterOfTasksAndStepsEntities.toTask(taskDto);
+        Task task = tasksAndStepsConverter.toTask(taskDto);
         usersServiceFacade.assignmentTask(task, userId);
         return ResponseBuilder.buildResponsePut(taskDto);
     }
@@ -45,7 +45,7 @@ public class UserController {
     {
         List<Task> tasks;
         tasks = usersServiceFacade.getPrivatedTasks(userId);
-        TasksDto tasksDto = converterOfTasksAndStepsEntities.fromTasks(tasks);
+        TasksDto tasksDto = tasksAndStepsConverter.fromTasks(tasks);
         return ResponseBuilder.buildResponseGet(tasksDto);
     }
 
@@ -54,7 +54,7 @@ public class UserController {
     {
         List<Task> tasks;
         tasks = usersServiceFacade.getFinishedTasks(userId);
-        TasksDto tasksDto = converterOfTasksAndStepsEntities.fromTasks(tasks);
+        TasksDto tasksDto = tasksAndStepsConverter.fromTasks(tasks);
         return ResponseBuilder.buildResponseGet(tasksDto);
     }
 
@@ -64,7 +64,7 @@ public class UserController {
     {
         List<Task> tasks;
         tasks = usersServiceFacade.getTasksByDate(userId, dueDate);
-        TasksDto tasksDto = converterOfTasksAndStepsEntities.fromTasks(tasks);
+        TasksDto tasksDto = tasksAndStepsConverter.fromTasks(tasks);
         return ResponseBuilder.buildResponseGet(tasksDto);
     }
 }

@@ -1,5 +1,6 @@
 package ru.fsep.enterprise.fseper;
 
+import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
@@ -12,6 +13,6 @@ import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacadeImpl;
 public class AppTestContext {
     @Bean
     public UsersServiceFacade usersServiceFacade(){
-        return new UsersServiceFacadeImpl();
+        return Mockito.mock(UsersServiceFacade.class);
     }
 }

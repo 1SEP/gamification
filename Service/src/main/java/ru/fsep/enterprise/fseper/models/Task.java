@@ -66,6 +66,10 @@ public class Task {
         return finished;
     }
 
+    public void setSteps(List<Step> steps) {
+        this.steps = steps;
+    }
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this)
