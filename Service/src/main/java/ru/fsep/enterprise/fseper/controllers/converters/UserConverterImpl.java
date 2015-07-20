@@ -5,10 +5,12 @@ import com.inspiresoftware.lib.dto.geda.adapter.ValueConverter;
 import com.inspiresoftware.lib.dto.geda.assembler.Assembler;
 import com.inspiresoftware.lib.dto.geda.assembler.DTOAssembler;
 import ru.fsep.enterprise.fseper.controllers.dto.*;
-import ru.fsep.enterprise.fseper.models.PersonInfo;
-import ru.fsep.enterprise.fseper.models.Post;
-import ru.fsep.enterprise.fseper.models.User;
+import ru.fsep.enterprise.fseper.models.*;
 
+<<<<<<< HEAD
+=======
+import java.net.URL;
+>>>>>>> 4e21058cc50d10ec5273629fdd0ecbea9a334e2b
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -20,7 +22,7 @@ import java.util.Map;
 public class UserConverterImpl implements UserConverter {
 
     private final static String INT_TO_STR_ADAPTER_NAME = "IntegerToString";
-    private final static String DOOBLE_TO_STR_ADAPTER_NAME = "DoubleToString";
+    private final static String DOUBLE_TO_STR_ADAPTER_NAME = "DoubleToString";
     private final static String URL_TO_STR_ADAPTER_NAME = "UrlToString";
 
 
@@ -40,8 +42,13 @@ public class UserConverterImpl implements UserConverter {
         }
 
         public Object convertToEntity(Object o, Object o1, BeanFactory beanFactory) {
-            // TODO
-            return null;
+            URL url = null;
+            try{
+                url = new URL((String) o);
+            }catch (Exception e){
+                System.out.println(e);
+            }
+            return url;
         }
     };
 
@@ -66,9 +73,9 @@ public class UserConverterImpl implements UserConverter {
         return postDto;
     }
 
-    public PostsDto fromPosts(List<Post> entities) {
+    public PostsDto fromPosts(Posts entities) {
         List<PostDto> postsDto = new LinkedList<PostDto>();
-        for (Post post : entities) {
+        for (Post post : entities.getPosts()) {
             postsDto.add(fromPost(post));
         }
         PostsDto postsDtoOut = new PostsDto();
@@ -79,7 +86,7 @@ public class UserConverterImpl implements UserConverter {
     public PersonInfoDto fromPersonInfo(PersonInfo entity) {
         PersonInfoDto PIDto = new PersonInfoDto();
         Map<String, Object> adapter = new HashMap<String, Object>();
-        adapter.put(DOOBLE_TO_STR_ADAPTER_NAME, doubleToStringConverter);
+        adapter.put(DOUBLE_TO_STR_ADAPTER_NAME, doubleToStringConverter);
         adapter.put(URL_TO_STR_ADAPTER_NAME, urlToStringConverter);
 
         BeanFactory bean = new BeanFactory() {
@@ -118,14 +125,52 @@ public class UserConverterImpl implements UserConverter {
     public Post toPost(PostDto dto) {
         Post post = new Post();
         Map<String, Object> adapter = new HashMap<String, Object>();
+        adapter.put(INT_TO_STR_ADAPTER_NAME, integerToStringConverter);
+
+        postAssembler.assembleEntity(dto, post, adapter, null);
 
         return post;
     }
 
+<<<<<<< HEAD
     public List<Post> toPosts(PostsDto dto) {
         List<Post> listOfPost = new LinkedList<Post>();
-
-        return null;
+=======
+    public Posts toPosts(PostsDto dtos) {
+        Posts posts = new Posts();
+        List<Post> listPost = new LinkedList<Post>();
+        for (PostDto postDto : dtos.getPosts()) {
+            listPost.add(toPost(postDto));
+        }
+        posts.setPosts(listPost);
+        return posts;
     }
+>>>>>>> 4e21058cc50d10ec5273629fdd0ecbea9a334e2b
+
+    public PersonInfo toPersonInfo (PersonInfoDto dto) {
+        PersonInfo personInfo = new PersonInfo(dto.getFirstName(),
+                dto.getLastName(),
+                Double.parseDouble(dto.getRating()),
+                dto.getBirthday(),
+                toPosts(dto.getPosts()),
+                dto.getRole(),
+                (URL) urlToStringConverter.convertToEntity(dto.getPhoto(),URL_TO_STR_ADAPTER_NAME, null));
+//        Map<String, Object> adapter = new HashMap<String, Object>();
+//        adapter.put(DOUBLE_TO_STR_ADAPTER_NAME, doubleToStringConverter);
+//        adapter.put(URL_TO_STR_ADAPTER_NAME, urlToStringConverter);
+//
+//        postAssembler.assembleEntity(dto, personInfo, adapter, null);
+
+        return personInfo;
+    }
+
+    public User toUser (UserDto dto){
+
+        return new User(integerToStringConverter.convertToEntity(dto.getId(), INT_TO_STR_ADAPTER_NAME, null),
+                null,
+                toPersonInfo(dto.getPersonInfo()),
+                null);
+    }
+
 }
 

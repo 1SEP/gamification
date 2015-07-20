@@ -17,6 +17,8 @@ public class AuthData {
 
     private String login;
 
+    public AuthData(){}
+
     public AuthData(String passwordHash, String login) {
         this.passwordHash = passwordHash;
         this.login = login;
