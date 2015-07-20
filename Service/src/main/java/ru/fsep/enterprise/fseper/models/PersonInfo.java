@@ -24,7 +24,7 @@ public class PersonInfo {
 
     private String birthday;
 
-    private Posts posts;
+    private List<Post> posts;
 
     private String role;
 
@@ -32,7 +32,7 @@ public class PersonInfo {
 
     public PersonInfo(){}
 
-    public PersonInfo(String firstName, String lastName, double rating, String birthday,Posts posts, String role, URL photo) {
+    public PersonInfo(String firstName, String lastName, double rating, String birthday,List<Post> posts, String role, URL photo) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.rating = rating;
@@ -58,8 +58,8 @@ public class PersonInfo {
         return birthday;
     }
 
-    public Posts getPosts() {
-        return posts;
+    public List<Post> getPosts() {
+        return this.posts;
     }
 
     public String getRole() {
