@@ -22,7 +22,7 @@ public class ConverterOfTasksAndStepsEntitiesImpl implements ConverterOfTasksAnd
 
     private final String INT_STR_ADAPTER_NAME = "IntegerAndStringConvert";
     private final String BOOL_STR_ADAPTER_NAME = "BooleanAndStringConvert";
-    private final String DATE_STR_SDSPTER_NAME = "DateAndStringConvert";
+    private final String DATE_STR_ADAPTER_NAME = "DateAndStringConvert";
 
     private final ValueConverter integerAndStringConverter = new ValueConverter() {
         public Object convertToDto(Object o, BeanFactory beanFactory) {
@@ -67,7 +67,7 @@ public class ConverterOfTasksAndStepsEntitiesImpl implements ConverterOfTasksAnd
         Map<String, Object> adapters = new HashMap<String, Object>();
         adapters.put(INT_STR_ADAPTER_NAME, integerAndStringConverter);
         adapters.put(BOOL_STR_ADAPTER_NAME, booleanAndStringConverter);
-        adapters.put(DATE_STR_SDSPTER_NAME, dateAndStringConverter);
+        adapters.put(DATE_STR_ADAPTER_NAME, dateAndStringConverter);
         taskAssembler.assembleDto(taskDto, entity, adapters, null);
         return taskDto;
     }
@@ -106,7 +106,7 @@ public class ConverterOfTasksAndStepsEntitiesImpl implements ConverterOfTasksAnd
         Map<String, Object> adapters = new HashMap<String, Object>();
         adapters.put(INT_STR_ADAPTER_NAME, integerAndStringConverter);
         adapters.put(BOOL_STR_ADAPTER_NAME, booleanAndStringConverter);
-        adapters.put(DATE_STR_SDSPTER_NAME, dateAndStringConverter);
+        adapters.put(DATE_STR_ADAPTER_NAME, dateAndStringConverter);
         taskAssembler.assembleEntity(taskDto, task, adapters, null);
         return task;
     }

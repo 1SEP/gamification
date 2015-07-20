@@ -4,7 +4,6 @@ import com.inspiresoftware.lib.dto.geda.adapter.BeanFactory;
 import com.inspiresoftware.lib.dto.geda.adapter.ValueConverter;
 import com.inspiresoftware.lib.dto.geda.assembler.Assembler;
 import com.inspiresoftware.lib.dto.geda.assembler.DTOAssembler;
-import javafx.geometry.Pos;
 import ru.fsep.enterprise.fseper.controllers.dto.*;
 import ru.fsep.enterprise.fseper.models.PersonInfo;
 import ru.fsep.enterprise.fseper.models.Post;
@@ -19,8 +18,8 @@ import java.util.*;
 public class UserConverterImpl implements UserConverter{
 
     private final static String INT_TO_STR_ADAPTER_NAME = "IntegerToString";
-    private final String DOOBLE_TO_STR_ADAPTER_NAME = "DoubleToString";
-    private final String URL_TO_STR_ADAPTER_NAME = "UrlToString";
+    private final static String DOOBLE_TO_STR_ADAPTER_NAME = "DoubleToString";
+    private final static String URL_TO_STR_ADAPTER_NAME = "UrlToString";
 
 
     private final ValueConverter integerToStringConverter = new ValueConverter() {
@@ -112,6 +111,19 @@ public class UserConverterImpl implements UserConverter{
         UsersDto usersDtoOut = new UsersDto();
         usersDtoOut.setUsers(usersDto);
         return usersDtoOut;
+    }
+
+    public Post toPost(PostDto dto){
+        Post post = new Post();
+        Map<String, Object> adapter = new HashMap<String, Object>();
+
+        return post;
+    }
+
+    public List<Post> toPosts(PostsDto dto){
+        List<Post> listOfPost = new LinkedList<Post>();
+
+        return null;
     }
 }
 

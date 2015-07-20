@@ -4,7 +4,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.fsep.enterprise.fseper.controllers.converters.TasksAndStepsConverter;
 import ru.fsep.enterprise.fseper.controllers.converters.ConverterOfTasksAndStepsEntities;
 import ru.fsep.enterprise.fseper.controllers.dto.ResponseObjectDto;
 import ru.fsep.enterprise.fseper.controllers.dto.TaskDto;
@@ -23,7 +22,6 @@ public class TasksController {
     @Autowired
     private UsersServiceFacade usersServiceFacade;
     @Autowired
-    private TasksAndStepsConverter tasksAndStepsConverter;
     private ConverterOfTasksAndStepsEntities converterOfTasksAndStepsEntities;
     @RequestMapping(value = "tasks/{task-id}.json", method = RequestMethod.GET)
     public ResponseEntity<ResponseObjectDto> getTask(@PathVariable("task-id") int id)
