@@ -22,5 +22,27 @@ public class UserDto {
     @DtoField (value = "instructions", converter = "PersonInfoToPersonInfoDto", readOnly = true)
     private   PersonInfoDto PersonInfo;
 
+    public String getId() {
+        return id;
+    }
 
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public TasksDto getTasks() {
+        return tasks;
+    }
+
+    public void setTasks(TasksDto tasks) {
+        this.tasks = tasks;
+    }
+
+    public PersonInfoDto getPersonInfo() {
+        return PersonInfo;
+    }
+
+    public void setPersonInfo(PersonInfoDto personInfo) {
+        PersonInfo = personInfo;
+    }
 }

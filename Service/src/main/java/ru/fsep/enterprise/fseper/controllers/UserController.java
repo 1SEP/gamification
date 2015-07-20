@@ -1,4 +1,4 @@
-package ru.fsep.enterprise;
+package ru.fsep.enterprise.fseper.controllers;
 
 import org.springframework.web.bind.annotation.RestController;
 
@@ -8,6 +8,5 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class UserController {
-    
 
 }
