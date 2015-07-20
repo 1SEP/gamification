@@ -19,7 +19,7 @@ public class TaskDto {
     private String description;
     @DtoField (converter = "DateAndStringConvert")
     private String dueDate;
-    @DtoField(dtoBeanKey = "StepsDtoBeanKey")
+    @DtoField//(dtoBeanKey = "StepsDtoBeanKey")
     private StepsDto steps;
     @DtoField (converter = "BooleanAndStringConvert")
     private String finished;
@@ -46,5 +46,29 @@ public class TaskDto {
 
     public void setFinished(String finished) {
         this.finished = finished;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getPrivated() {
+        return privated;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public String getDueDate() {
+        return dueDate;
+    }
+
+    public StepsDto getSteps() {
+        return steps;
+    }
+
+    public String getFinished() {
+        return finished;
     }
 }

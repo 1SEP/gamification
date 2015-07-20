@@ -4,13 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import ru.fsep.enterprise.fseper.controllers.converters.ConverterOfTasksAndStepsEntities;
+import ru.fsep.enterprise.fseper.controllers.converters.TasksAndStepsConverter;
 import ru.fsep.enterprise.fseper.controllers.dto.*;
 import ru.fsep.enterprise.fseper.models.Step;
 import ru.fsep.enterprise.fseper.models.Task;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
 
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -23,19 +22,20 @@ public class TasksController {
     @Autowired
     private UsersServiceFacade usersServiceFacade;
     @Autowired
-    private ConverterOfTasksAndStepsEntities converterOfTasksAndStepsEntities;
+    private TasksAndStepsConverter tasksAndStepsConverter;
+
     @RequestMapping(value = "{task-id}.json", method = RequestMethod.GET)
     public ResponseEntity<ResponseObjectDto> getTask(@PathVariable("task-id") int id)
     {
         Task task = usersServiceFacade.getTask(id);
-        TaskDto taskDto = converterOfTasksAndStepsEntities.fromTask(task);
+        TaskDto taskDto = tasksAndStepsConverter.fromTask(task);
         return ResponseBuilder.buildResponseGet(taskDto);
     }
 
     @RequestMapping(value = "{task-id}", method = RequestMethod.PUT)
     public ResponseEntity<ResponseObjectDto> updateTask(@RequestBody TaskDto taskDto)
     {
-        Task task = converterOfTasksAndStepsEntities.toTask(taskDto);
+        Task task = tasksAndStepsConverter.toTask(taskDto);
         usersServiceFacade.updateTask(task);
         return ResponseBuilder.buildResponsePut(taskDto);
     }
@@ -50,7 +50,7 @@ public class TasksController {
     public ResponseEntity<ResponseObjectDto> getSteps(@PathVariable("task-id") int id)
     {
         List<Step> steps = usersServiceFacade.getTask(id).getSteps();
-        StepsDto stepsDto = converterOfTasksAndStepsEntities.fromSteps(steps);
+        StepsDto stepsDto = tasksAndStepsConverter.fromSteps(steps);
         return ResponseBuilder.buildResponseGet(stepsDto);
     }
 
@@ -63,7 +63,7 @@ public class TasksController {
         for (Step s : steps) {
             if (stepId == s.getId() && taskId == s.getTask_id()) step = s;
         }
-        StepDto stepDto = converterOfTasksAndStepsEntities.fromStep(step);
+        StepDto stepDto = tasksAndStepsConverter.fromStep(step);
         return ResponseBuilder.buildResponseGet(stepDto);
     }
 
@@ -76,7 +76,7 @@ public class TasksController {
         for (Step s : steps) {
             if (finished == s.isFinished() && taskId == s.getTask_id()) result.add(s);
         }
-        StepsDto stepsDto = converterOfTasksAndStepsEntities.fromSteps(result);
+        StepsDto stepsDto = tasksAndStepsConverter.fromSteps(result);
         return ResponseBuilder.buildResponseGet(stepsDto);
     }
 
@@ -85,7 +85,7 @@ public class TasksController {
     {
         Task task = usersServiceFacade.getTask(taskId);
         List<Step> steps = task.getSteps();
-        Step step = converterOfTasksAndStepsEntities.toStep(stepDto);
+        Step step = tasksAndStepsConverter.toStep(stepDto);
         steps.add(step);
         return ResponseBuilder.buildResponseGet(stepDto);
     }
@@ -99,7 +99,7 @@ public class TasksController {
         for(int i=0; i< steps.size(); i++){
             if (stepId == steps.get(i).getId() && taskId == steps.get(i).getTask_id()) {
                 steps.remove(i);
-                step = converterOfTasksAndStepsEntities.toStep(stepDto);
+                step = tasksAndStepsConverter.toStep(stepDto);
                 steps.add(i, step);
             }
         }

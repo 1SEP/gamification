@@ -3,14 +3,12 @@ package ru.fsep.enterprise.fseper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import ru.fsep.enterprise.fseper.service.dao.*;
+import ru.fsep.enterprise.fseper.controllers.converters.TasksAndStepsConverter;
+import ru.fsep.enterprise.fseper.controllers.converters.TasksAndStepsConverterImpl;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacadeImpl;
-
-import javax.sql.DataSource;
 
 /**
  * Created by Ôëþð on 11.07.2015.
@@ -38,4 +36,9 @@ public class AppContext extends WebMvcConfigurerAdapter {
     public UsersServiceFacade usersServiceFacade(){
         return new UsersServiceFacadeImpl();
     }
+    @Bean
+    public TasksAndStepsConverter tasksAndStepsConverter(){
+        return new TasksAndStepsConverterImpl();
+    }
+
 }

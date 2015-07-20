@@ -9,13 +9,15 @@ import ru.fsep.enterprise.fseper.models.PersonInfo;
 import ru.fsep.enterprise.fseper.models.Post;
 import ru.fsep.enterprise.fseper.models.User;
 
-import java.net.URL;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 /**
-  Created by Fedorov on 16.07.2015
+ * Created by Fedorov on 16.07.2015
  */
-public class UserConverterImpl implements UserConverter{
+public class UserConverterImpl implements UserConverter {
 
     private final static String INT_TO_STR_ADAPTER_NAME = "IntegerToString";
     private final static String DOOBLE_TO_STR_ADAPTER_NAME = "DoubleToString";
@@ -27,7 +29,7 @@ public class UserConverterImpl implements UserConverter{
             return String.valueOf(o);
         }
 
-    public Object convertToEntity(Object o, Object o1, BeanFactory beanFactory) {
+        public Object convertToEntity(Object o, Object o1, BeanFactory beanFactory) {
             return Integer.parseInt(o.toString());
         }
     };
@@ -74,7 +76,7 @@ public class UserConverterImpl implements UserConverter{
         return postsDtoOut;
     }
 
-    public PersonInfoDto fromPersonInfo(PersonInfo entity){
+    public PersonInfoDto fromPersonInfo(PersonInfo entity) {
         PersonInfoDto PIDto = new PersonInfoDto();
         Map<String, Object> adapter = new HashMap<String, Object>();
         adapter.put(DOOBLE_TO_STR_ADAPTER_NAME, doubleToStringConverter);
@@ -94,16 +96,16 @@ public class UserConverterImpl implements UserConverter{
         return PIDto;
     }
 
-    public UserDto fromUser(User entity){
+    public UserDto fromUser(User entity) {
         UserDto userDto = new UserDto();
         userDto.setId(String.valueOf(entity.getId()));
         userDto.setPersonInfo(fromPersonInfo(entity.getPersonInfo()));
-        ConverterOfTasksAndStepsEntitiesImpl converterForTask = new ConverterOfTasksAndStepsEntitiesImpl();
+        TasksAndStepsConverterImpl converterForTask = new TasksAndStepsConverterImpl();
         userDto.setTasks(converterForTask.fromTasks(entity.getTasks()));
         return userDto;
     }
 
-    public UsersDto fromUsers(List<User> entities){
+    public UsersDto fromUsers(List<User> entities) {
         List<UserDto> usersDto = new LinkedList<UserDto>();
         for (User user : entities) {
             usersDto.add(fromUser(user));
@@ -113,14 +115,14 @@ public class UserConverterImpl implements UserConverter{
         return usersDtoOut;
     }
 
-    public Post toPost(PostDto dto){
+    public Post toPost(PostDto dto) {
         Post post = new Post();
         Map<String, Object> adapter = new HashMap<String, Object>();
 
         return post;
     }
 
-    public List<Post> toPosts(PostsDto dto){
+    public List<Post> toPosts(PostsDto dto) {
         List<Post> listOfPost = new LinkedList<Post>();
 
         return null;
