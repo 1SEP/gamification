@@ -51,12 +51,12 @@ public class DaoArgumentsVerifierImpl implements DaoArgumentsVerifier {
         Map<String, Object> paramMap = paramsMapper.asMap(asList("postId"), asList(postId));
         int countOfPosts = sqlQueryExecutor.queryForInt(SQL_COUNT_OF_POST_BY_POSTID, paramMap);
         if (countOfPosts == 0) {
-            /*here will be thrown the specific exception*/
+            //TODO
         }
     }
 
     public void verifyPost(Post post) {
         verifyPostById(post.getId());
-        /*And verify something else of post*/
+        //TODO
     }
 }

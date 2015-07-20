@@ -9,7 +9,7 @@ public class TestData {
     static final int USER_ID = 1;
     static final int INCORRECT_USER_ID = 2;
     public static final String INCORRECT_FIRSTNAME = "Incorrect first name";
-    public static final String INCORRECT_LASTNAME = "Incorrect incorrect last name";
+    public static final String INCORRECT_LASTNAME = "Incorrect last name";
     static final User USER = new User(USER_ID, initAuthData(), initPersonInfo(), initTasks());
     static final User INCORRECT_USER = new User(INCORRECT_USER_ID, initAuthData(), initPersonInfo(), initTasks());
     static final Map<String, Object> USER_MAP = createUserMap();

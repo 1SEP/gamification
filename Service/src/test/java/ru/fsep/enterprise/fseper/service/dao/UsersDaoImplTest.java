@@ -34,13 +34,13 @@ public class UsersDaoImplTest {
         doThrow(UserNotFoundException.class).when(daoArgumentsVerifierMock).verifyUserById(anyInt());
         doNothing().when(daoArgumentsVerifierMock).verifyUserById(USER_ID);
 
-        doThrow(UserNotFoundException.class).when(daoArgumentsVerifierMock).verifyPost(INCORRECT_POST);
-        doNothing().when(daoArgumentsVerifierMock).verifyPost(POST);
-
         String firstName = USER.getPersonInfo().getFirstName();
         String lastName = USER.getPersonInfo().getLastName();
         doThrow(UserNotFoundException.class).when(daoArgumentsVerifierMock).verifyUserByName(anyString(), anyString());
         doNothing().when(daoArgumentsVerifierMock).verifyUserByName(firstName, lastName);
+
+        doThrow(IllegalArgumentException.class).when(daoArgumentsVerifierMock).verifyPost(INCORRECT_POST);
+        doNothing().when(daoArgumentsVerifierMock).verifyPost(POST);
     }
 
     private void stubbingParamsMapperMock() {
@@ -68,7 +68,6 @@ public class UsersDaoImplTest {
 
     private void stubbingAll() {
         stubbingDaoArgumentsVerifierMock();
-        ;
         stubbingParamsMapperMock();
         stubbingSqlQueryExecutorMock();
     }
