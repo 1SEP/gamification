@@ -129,24 +129,14 @@ public class UserConverterImpl implements UserConverter {
         return post;
     }
 
-<<<<<<< HEAD
+
     public List<Post> toPosts(PostsDto dtos) {
         List<Post> posts = new LinkedList<Post>();
-=======
-<<<<<<< HEAD
-    public List<Post> toPosts(PostsDto dto) {
-        List<Post> listOfPost = new LinkedList<Post>();
-=======
-    public Posts toPosts(PostsDto dtos) {
-        Posts posts = new Posts();
-        List<Post> listPost = new LinkedList<Post>();
->>>>>>> 18bdb940ec484cf804a753498a2d8341c4fdf7c4
         for (PostDto postDto : dtos.getPosts()) {
             posts.add(toPost(postDto));
         }
         return posts;
     }
->>>>>>> 4e21058cc50d10ec5273629fdd0ecbea9a334e2b
 
     public PersonInfo toPersonInfo (PersonInfoDto dto) {
         PersonInfo personInfo = new PersonInfo(dto.getFirstName(),
