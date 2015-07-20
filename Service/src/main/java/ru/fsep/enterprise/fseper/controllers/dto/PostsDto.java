@@ -1,5 +1,7 @@
 package ru.fsep.enterprise.fseper.controllers.dto;
 
+import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
+
 import java.util.List;
 
 /**

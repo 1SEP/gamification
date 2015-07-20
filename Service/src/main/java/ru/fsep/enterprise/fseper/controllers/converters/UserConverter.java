@@ -13,5 +13,5 @@ public interface UserConverter {
     UserDto fromUser(User entity);
     UsersDto fromUsers(List<User> entities);
     PostDto fromPost(Post entity);
-    PostsDto fromPosts(List<Post> entities);
+    PostsDto fromPosts(Posts entities);
 }
