@@ -4,15 +4,18 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import ru.fsep.enterprise.fseper.models.User;
+import ru.fsep.enterprise.fseper.service.exceptions.UserNotFoundException;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.DaoArgumentsVerifier;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.ParamsMapper;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.SqlQueryExecutor;
+
 import java.util.ArrayList;
 import java.util.List;
+
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
-import static org.mockito.MockitoAnnotations.*;
+import static org.mockito.MockitoAnnotations.initMocks;
 import static ru.fsep.enterprise.fseper.service.dao.TestData.*;
 
 public class UsersDaoImplTest {
@@ -26,8 +29,18 @@ public class UsersDaoImplTest {
     private DaoArgumentsVerifier daoArgumentsVerifierMock;
 
     private void stubbingDaoArgumentsVerifierMock() {
-        doThrow(IllegalArgumentException.class).when(daoArgumentsVerifierMock).verifyUser(anyInt());
-        doNothing().when(daoArgumentsVerifierMock).verifyUser(USER_ID);
+        doThrow(UserNotFoundException.class).when(daoArgumentsVerifierMock).verifyUser(INCORRECT_USER);
+
+        doThrow(UserNotFoundException.class).when(daoArgumentsVerifierMock).verifyUserById(anyInt());
+        doNothing().when(daoArgumentsVerifierMock).verifyUserById(USER_ID);
+
+        String firstName = USER.getPersonInfo().getFirstName();
+        String lastName = USER.getPersonInfo().getLastName();
+        doThrow(UserNotFoundException.class).when(daoArgumentsVerifierMock).verifyUserByName(anyString(), anyString());
+        doNothing().when(daoArgumentsVerifierMock).verifyUserByName(firstName, lastName);
+
+        doThrow(IllegalArgumentException.class).when(daoArgumentsVerifierMock).verifyPost(INCORRECT_POST);
+        doNothing().when(daoArgumentsVerifierMock).verifyPost(POST);
     }
 
     private void stubbingParamsMapperMock() {
@@ -47,14 +60,14 @@ public class UsersDaoImplTest {
                 USER_MAP, UsersDaoImpl.USER_ROW_MAPPER);
         doReturn(LIST_OF_USERS).when(sqlQueryExecutorMock).queryForObjects(UsersDaoImpl.SQL_GET_USERS_BY_POST,
                 POST_MAP, UsersDaoImpl.USER_ROW_MAPPER);
-        doReturn(LIST_OF_USERS).when(sqlQueryExecutorMock).queryForObjects(UsersDaoImpl.SQL_GET_ALL_SORTED_USERS,
+        doReturn(LIST_OF_USERS).when(sqlQueryExecutorMock).queryForObjects(UsersDaoImpl.SQL_GET_ALL_SORTED_USERS_BY_NAME,
                 UsersDaoImpl.USER_ROW_MAPPER);
         doReturn(LIST_OF_USERS).when(sqlQueryExecutorMock).queryForObjects(UsersDaoImpl.SQL_GET_ALL_SORTED_USERS_BY_RATING,
                 UsersDaoImpl.USER_ROW_MAPPER);
     }
 
     private void stubbingAll() {
-        stubbingDaoArgumentsVerifierMock();;
+        stubbingDaoArgumentsVerifierMock();
         stubbingParamsMapperMock();
         stubbingSqlQueryExecutorMock();
     }
@@ -70,28 +83,48 @@ public class UsersDaoImplTest {
     public void testGetUser() throws Exception {
         User actual = usersDaoImplTest.getUser(USER_ID);
         User expected = USER;
-        verify(daoArgumentsVerifierMock).verifyUser(USER_ID);
+        verify(daoArgumentsVerifierMock).verifyUserById(USER_ID);
         assertEquals(expected, actual);
+    }
+
+    @Test(expected = UserNotFoundException.class)
+    public void testGetUserForIncorrectId() throws Exception {
+        usersDaoImplTest.getUser(INCORRECT_USER_ID);
     }
 
     @Test
     public void testLogIn() throws Exception {
         usersDaoImplTest.logIn(USER);
-        verify(daoArgumentsVerifierMock).verifyUser(USER_ID);
+        verify(daoArgumentsVerifierMock).verifyUser(USER);
+    }
+
+    @Test(expected = UserNotFoundException.class)
+    public void testLogInForIncorrectUser() {
+        usersDaoImplTest.logIn(INCORRECT_USER);
     }
 
     @Test
     public void testUpdateUser() throws Exception {
         User expected = USER;
         User actual = usersDaoImplTest.updateUser(USER);
-        verify(daoArgumentsVerifierMock).verifyUser(1);
+        verify(daoArgumentsVerifierMock).verifyUser(USER);
         assertEquals(expected, actual);
+    }
+
+    @Test(expected = UserNotFoundException.class)
+    public void testUpdateUserForIncorrectUser() {
+        usersDaoImplTest.updateUser(INCORRECT_USER);
     }
 
     @Test
     public void testRemoveUser() throws Exception {
         usersDaoImplTest.removeUser(USER_ID);
-        verify(daoArgumentsVerifierMock).verifyUser(USER_ID);
+        verify(daoArgumentsVerifierMock).verifyUserById(USER_ID);
+    }
+
+    @Test(expected = UserNotFoundException.class)
+    public void testRemoveUserForIncorrectId() {
+        usersDaoImplTest.removeUser(INCORRECT_USER_ID);
     }
 
     @Test
@@ -107,21 +140,32 @@ public class UsersDaoImplTest {
         String surname = USER.getPersonInfo().getLastName();
         List<User> actual = usersDaoImplTest.getUsersByName(name, surname);
         List<User> expected = LIST_OF_USERS;
+        verify(daoArgumentsVerifierMock).verifyUserByName(name, surname);
         assertEquals(expected, actual);
+    }
+
+    @Test(expected = UserNotFoundException.class)
+    public void testGetUsersByNameForIncorrectName() {
+        usersDaoImplTest.getUsersByName(INCORRECT_FIRSTNAME, INCORRECT_LASTNAME);
     }
 
     @Test
     public void testGetUsersByPost() throws Exception {
         List<User> actual = usersDaoImplTest.getUsersByPost(POST);
         List<User> expected = LIST_OF_USERS;
-        verify(daoArgumentsVerifierMock).verifyPost(POST.getId());
+        verify(daoArgumentsVerifierMock).verifyPost(POST);
         assertEquals(expected, actual);
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetUsersByIncorrectPost() {
+        usersDaoImplTest.getUsersByPost(INCORRECT_POST);
+    }
+
     @Test
-    public void testGetSortedUsers() throws Exception {
+    public void testGetSortedUsersByName() throws Exception {
         List<User> expected = LIST_OF_USERS;
-        List<User> actual = usersDaoImplTest.getSortedUsers();
+        List<User> actual = usersDaoImplTest.getSortedUsersByName();
         assertEquals(expected, actual);
     }
 

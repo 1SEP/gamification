@@ -16,6 +16,6 @@ public interface UsersDao {
     List<User> getUsers();
     List<User> getUsersByName(String firstName, String lastName);
     List<User> getUsersByPost(Post post);
-    List<User> getSortedUsers();
+    List<User> getSortedUsersByName();
     List<User> getSortedUsersByRating();
 }
