@@ -13,6 +13,18 @@ public class TestData {
     static final User USER = new User(USER_ID, initAuthData(), initPersonInfo(), initTasks());
     static final User INCORRECT_USER = new User(INCORRECT_USER_ID, initAuthData(), initPersonInfo(), initTasks());
     static final Map<String, Object> USER_MAP = createUserMap();
+    static final Map<String, Object> USER_MAP_WITH_NAMES = getUserMapWithNames();
+
+    private static Map<String, Object> getUserMapWithNames() {
+        Map<String, Object> map = new HashMap<String, Object>();
+        String firstName = USER.getPersonInfo().getFirstName();
+        String lastName = USER.getPersonInfo().getLastName();
+        map.put("firstName", firstName);
+        map.put("lastName", lastName);
+
+        return map;
+    }
+
     static final List<User> LIST_OF_USERS = getListOfUsers();
     public static final Post POST = getPost();
     static final Post INCORRECT_POST = getIncorrectPost();
@@ -37,10 +49,10 @@ public class TestData {
 
     private static Map<String, Object> getPostMap() {
         Map<String, Object> result = new HashMap<String, Object>();
-
         result.put("postId", POST.getId());
         result.put("postName", POST.getName());
         result.put("postDesciption", POST.getDescription());
+
         return result;
     }
 
@@ -63,6 +75,7 @@ public class TestData {
         post = "Team Lead";
         description = "He is mentor of developer's crew";
         posts.add(new Post(2, post, description));
+
         return posts;
     }
 
@@ -74,6 +87,7 @@ public class TestData {
         tasks.add(new Task(1, true, description, date, initSteps(), false));
         description = "refactor models";
         tasks.add(new Task(1, true, description, date, initSteps(), false));
+
         return tasks;
     }
 
@@ -84,6 +98,7 @@ public class TestData {
         String birthDay = "31.12.1991";
         String role = "have responsibility for the recoupment project";
         PersonInfo personInfo  = new PersonInfo(surname, name, 8.8, birthDay, initPosts(), role, photo);
+
         return personInfo;
     }
 
@@ -97,6 +112,7 @@ public class TestData {
         steps.add(new Step(1, 1, description, false));
         description = "second step of task";
         steps.add(new Step(2, 1, description, false));
+
         return steps;
     }
 }

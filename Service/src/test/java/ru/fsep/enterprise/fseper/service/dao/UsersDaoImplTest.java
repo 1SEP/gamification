@@ -18,6 +18,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static ru.fsep.enterprise.fseper.service.dao.TestData.*;
+import static ru.fsep.enterprise.fseper.service.dao.UsersDaoImpl.*;
 
 public class UsersDaoImplTest {
 
@@ -46,25 +47,31 @@ public class UsersDaoImplTest {
 
     private void stubbingParamsMapperMock() {
         doReturn(USER_MAP).when(paramsMapperMock).asMap(asList("userId"), asList(USER_ID));
+
+        String lastName = USER.getPersonInfo().getLastName();
+        String firstName = USER.getPersonInfo().getFirstName();
+        doReturn(USER_MAP_WITH_NAMES).when(paramsMapperMock).asMap(asList("firstName", "lastName"),
+                asList(firstName, lastName));
+
         doReturn(POST_MAP).when(paramsMapperMock).asMap(asList("postId", "postName", "postDescription"),
                 asList(POST.getId(), POST.getName(), POST.getDescription()));
     }
 
     private void stubbingSqlQueryExecutorMock() {
-        doReturn(USER).when(sqlQueryExecutorMock).queryForObject(UsersDaoImpl.SQL_GET_USER_BY_ID, USER_MAP,
-                UsersDaoImpl.USER_ROW_MAPPER);
-        doReturn(LIST_OF_USERS).when(sqlQueryExecutorMock).queryForObjects(UsersDaoImpl.SQL_GET_ALL_USERS,
-                UsersDaoImpl.USER_ROW_MAPPER);
-        doReturn(USER).when(sqlQueryExecutorMock).queryForObject(UsersDaoImpl.SQL_UPDATE_USER, USER_MAP,
-                UsersDaoImpl.USER_ROW_MAPPER);
-        doReturn(LIST_OF_USERS).when(sqlQueryExecutorMock).queryForObjects(UsersDaoImpl.SQL_GET_ALL_USERS_BY_NAME,
-                USER_MAP, UsersDaoImpl.USER_ROW_MAPPER);
-        doReturn(LIST_OF_USERS).when(sqlQueryExecutorMock).queryForObjects(UsersDaoImpl.SQL_GET_USERS_BY_POST,
-                POST_MAP, UsersDaoImpl.USER_ROW_MAPPER);
-        doReturn(LIST_OF_USERS).when(sqlQueryExecutorMock).queryForObjects(UsersDaoImpl.SQL_GET_ALL_SORTED_USERS_BY_NAME,
-                UsersDaoImpl.USER_ROW_MAPPER);
-        doReturn(LIST_OF_USERS).when(sqlQueryExecutorMock).queryForObjects(UsersDaoImpl.SQL_GET_ALL_SORTED_USERS_BY_RATING,
-                UsersDaoImpl.USER_ROW_MAPPER);
+        doReturn(USER).when(sqlQueryExecutorMock).queryForObject(SQL_GET_USER_BY_ID, USER_MAP,
+                USER_ROW_MAPPER);
+        doReturn(LIST_OF_USERS).when(sqlQueryExecutorMock).queryForObjects(SQL_GET_ALL_USERS,
+                USER_ROW_MAPPER);
+        doReturn(USER).when(sqlQueryExecutorMock).queryForObject(SQL_UPDATE_USER, USER_MAP,
+                USER_ROW_MAPPER);
+        doReturn(LIST_OF_USERS).when(sqlQueryExecutorMock).queryForObjects(SQL_GET_ALL_USERS_BY_NAME,
+                USER_MAP_WITH_NAMES, USER_ROW_MAPPER);
+        doReturn(LIST_OF_USERS).when(sqlQueryExecutorMock).queryForObjects(SQL_GET_USERS_BY_POST,
+                POST_MAP, USER_ROW_MAPPER);
+        doReturn(LIST_OF_USERS).when(sqlQueryExecutorMock).queryForObjects(SQL_GET_ALL_SORTED_USERS_BY_NAME,
+                USER_ROW_MAPPER);
+        doReturn(LIST_OF_USERS).when(sqlQueryExecutorMock).queryForObjects(SQL_GET_ALL_SORTED_USERS_BY_RATING,
+                USER_ROW_MAPPER);
     }
 
     private void stubbingAll() {
@@ -141,6 +148,7 @@ public class UsersDaoImplTest {
         String surname = USER.getPersonInfo().getLastName();
         List<User> actual = usersDaoImplTest.getUsersByName(name, surname);
         List<User> expected = LIST_OF_USERS;
+
         verify(daoArgumentsVerifierMock).verifyUserByName(name, surname);
         assertEquals(expected, actual);
     }
