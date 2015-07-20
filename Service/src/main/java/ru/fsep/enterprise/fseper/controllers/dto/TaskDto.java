@@ -10,7 +10,7 @@ import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
 @Dto
 public class TaskDto {
     @DtoField  (converter = "IntegerAndStringConvert")
-    private int id;
+    private String id;
     @DtoField (converter = "BooleanAndStringConvert")
     private String privated;
     @DtoField

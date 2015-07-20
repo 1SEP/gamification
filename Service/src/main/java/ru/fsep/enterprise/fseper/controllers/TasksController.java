@@ -18,6 +18,7 @@ import java.util.List;
  * Created by дыў№ on 13.07.2015.
  */
 @RestController
+@RequestMapping(value = "tasks/")
 public class TasksController {
     @Autowired
     private UsersServiceFacade usersServiceFacade;
