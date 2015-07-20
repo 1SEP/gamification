@@ -12,19 +12,19 @@ import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
 @Dto
 public class TaskDto {
     @DtoField  (converter = "IntegerAndStringConvert")
-    private int id;
-    @DtoField(converter = "BooleanAndStringConvert")
+    private String id;
+    @DtoField (converter = "BooleanAndStringConvert")
     private String privated;
     @DtoField
     private String description;
     @DtoField (converter = "DateAndStringConvert")
     private String dueDate;
-    @DtoField
+    @DtoField(dtoBeanKey = "StepsDtoBeanKey")
     private StepsDto steps;
     @DtoField (converter = "BooleanAndStringConvert")
     private String finished;
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
