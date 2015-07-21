@@ -9,12 +9,12 @@ public class DtoBeanFactory  implements BeanFactory {
     public Class getClazz(final String dtoBeanKey) {
         if ("StepsDtoBeanKey".equals(dtoBeanKey))
         return StepsDto.class;
-        throw new IllegalArgumentException("Don't mached key" + dtoBeanKey);
+        throw new IllegalArgumentException("Don't matched key" + dtoBeanKey);
     }
 
     public Object get(final String dtoBeanKey) {
         if ("StepsDtoBeanKey".equals(dtoBeanKey))
         return new StepsDto();
-        throw new IllegalArgumentException("don't find key" + dtoBeanKey);
+        throw new IllegalArgumentException("Don't find key" + dtoBeanKey);
     }
 }

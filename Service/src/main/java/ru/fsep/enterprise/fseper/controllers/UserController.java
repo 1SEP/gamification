@@ -1,14 +1,17 @@
 package ru.fsep.enterprise.fseper.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
+import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.web.bind.annotation.*;
 import ru.fsep.enterprise.fseper.controllers.converters.TasksAndStepsConverter;
-import ru.fsep.enterprise.fseper.controllers.dto.ResponseObjectDto;
-import ru.fsep.enterprise.fseper.controllers.dto.TaskDto;
-import ru.fsep.enterprise.fseper.controllers.dto.TasksDto;
+import ru.fsep.enterprise.fseper.controllers.converters.UserConverterImpl;
+import ru.fsep.enterprise.fseper.controllers.dto.*;
 import ru.fsep.enterprise.fseper.models.Task;
+import ru.fsep.enterprise.fseper.models.User;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
+import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacadeImpl;
 
 import java.util.Date;
 import java.util.List;
@@ -66,5 +69,33 @@ public class UserController {
         tasks = usersServiceFacade.getTasksByDate(userId, dueDate);
         TasksDto tasksDto = tasksAndStepsConverter.fromTasks(tasks);
         return ResponseBuilder.buildResponseGet(tasksDto);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<ResponseObjectDto> signUpUser(@RequestBody UserDto userDto){
+        User user = new User()
+    }
+
+    @RequestMapping(value = "{user-id}", method = RequestMethod.GET)
+    public ResponseEntity<ResponseObjectDto> getUserById(@PathVariable("user-id") int userId){
+        UsersServiceFacadeImpl facade = new UsersServiceFacadeImpl();
+        UserConverterImpl converter = new UserConverterImpl();
+        User outUser = facade.getUser(userId);
+        UserDto outUserDto = converter.fromUser(outUser);
+        return ResponseBuilder.buildResponseGet(outUserDto);
+    }
+
+    @RequestMapping(value = "{user-id}", method = RequestMethod.PUT)
+        public ResponseEntity<ResponseObjectDto>  updateUserById(@RequestBody UserDto userDto, @PathVariable("user-id") int userId){
+            UsersServiceFacadeImpl facade = new UsersServiceFacadeImpl();
+            UserConverterImpl converter = new UserConverterImpl();
+            User user = converter.toUser(userDto);
+            facade.updateUser(user);
+            return ResponseBuilder.buildResponseGet(userDto);
+    }
+
+    @RequestMapping(value = "{user-id}", method = RequestMethod.DELETE)
+    public RequestEntity<ResponseObjectDto> deleteUserById(@PathVariable("{user-id") int userId){
+        return AuthDataDto;
     }
 }
