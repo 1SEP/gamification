@@ -31,14 +31,6 @@ public class AppContext extends WebMvcConfigurerAdapter {
 //        dataSource.setDriverClassName(driverClassName);
 //
 //        return  dataSource;
-//    }
-    @Bean
-    public UsersServiceFacade usersServiceFacade(){
-        return new UsersServiceFacadeImpl();
-    }
-    @Bean
-    public TasksAndStepsConverter tasksAndStepsConverter(){
-        return new TasksAndStepsConverterImpl();
-    }
+
 
 }
