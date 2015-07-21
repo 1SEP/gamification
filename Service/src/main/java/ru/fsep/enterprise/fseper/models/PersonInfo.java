@@ -1,6 +1,10 @@
 package ru.fsep.enterprise.fseper.models;
 
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
+
 import java.net.URL;
+import java.util.List;
 
 /**
  * 05.07.15
@@ -20,19 +24,20 @@ public class PersonInfo {
 
     private String birthday;
 
-    private String post;
+    private List<Post> posts;
 
     private String role;
 
     private URL photo;
 
-    public PersonInfo(String firstName, String lastName, double rating, String birthday, String post, String role,
-                      URL photo) {
+    public PersonInfo(){}
+
+    public PersonInfo(String firstName, String lastName, double rating, String birthday,List<Post> posts, String role, URL photo) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.rating = rating;
         this.birthday = birthday;
-        this.post = post;
+        this.posts = posts;
         this.role = role;
         this.photo = photo;
     }
@@ -53,8 +58,8 @@ public class PersonInfo {
         return birthday;
     }
 
-    public String getPost() {
-        return post;
+    public List<Post> getPosts() {
+        return this.posts;
     }
 
     public String getRole() {
@@ -65,5 +70,35 @@ public class PersonInfo {
         return photo;
     }
 
-    // TODO : add equals, toString and hashCode implementations
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("firstName", firstName)
+                .add("lastName", lastName)
+                .add("rating", rating)
+                .add("birthday", birthday)
+                .add("posts", posts)
+                .add("role", role)
+                .add("photo", photo)
+                .toString();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PersonInfo that = (PersonInfo) o;
+        return Objects.equal(rating, that.rating) &&
+                Objects.equal(firstName, that.firstName) &&
+                Objects.equal(lastName, that.lastName) &&
+                Objects.equal(birthday, that.birthday) &&
+                Objects.equal(posts, that.posts) &&
+                Objects.equal(role, that.role) &&
+                Objects.equal(photo, that.photo);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(firstName, lastName, rating, birthday, posts, role, photo);
+    }
 }
