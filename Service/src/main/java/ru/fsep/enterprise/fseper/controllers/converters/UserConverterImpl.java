@@ -6,6 +6,10 @@ import com.inspiresoftware.lib.dto.geda.assembler.Assembler;
 import com.inspiresoftware.lib.dto.geda.assembler.DTOAssembler;
 import ru.fsep.enterprise.fseper.controllers.dto.*;
 import ru.fsep.enterprise.fseper.models.*;
+<<<<<<< HEAD
+=======
+
+>>>>>>> c56fceca32e136eeed737e91a808c1b79dffccc9
 import java.net.URL;
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -69,9 +73,9 @@ public class UserConverterImpl implements UserConverter {
         return postDto;
     }
 
-    public PostsDto fromPosts(Posts entities) {
+    public PostsDto fromPosts(List<Post> entities) {
         List<PostDto> postsDto = new LinkedList<PostDto>();
-        for (Post post : entities.getPosts()) {
+        for (Post post : entities) {
             postsDto.add(fromPost(post));
         }
         PostsDto postsDtoOut = new PostsDto();
@@ -127,15 +131,21 @@ public class UserConverterImpl implements UserConverter {
 
         return post;
     }
+<<<<<<< HEAD
 //    public List<Post> toPosts(PostsDto dto) {
 //        List<Post> listOfPost = new LinkedList<Post>();
     public Posts toPosts(PostsDto dtos) {
         Posts posts = new Posts();
         List<Post> listPost = new LinkedList<Post>();
+=======
+
+
+    public List<Post> toPosts(PostsDto dtos) {
+        List<Post> posts = new LinkedList<Post>();
+>>>>>>> c56fceca32e136eeed737e91a808c1b79dffccc9
         for (PostDto postDto : dtos.getPosts()) {
-            listPost.add(toPost(postDto));
+            posts.add(toPost(postDto));
         }
-        posts.setPosts(listPost);
         return posts;
     }
 
@@ -163,6 +173,5 @@ public class UserConverterImpl implements UserConverter {
                 toPersonInfo(dto.getPersonInfo()),
                 null);
     }
-
 }
 
