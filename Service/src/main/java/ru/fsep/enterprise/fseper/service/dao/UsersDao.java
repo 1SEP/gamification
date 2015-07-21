@@ -1,12 +1,12 @@
 package ru.fsep.enterprise.fseper.service.dao;
 
-import ru.fsep.enterprise.fseper.models.PersonInfo;
 import ru.fsep.enterprise.fseper.models.Post;
 import ru.fsep.enterprise.fseper.models.User;
+
 import java.util.List;
 
 /**
- * Created by Ôëþð on 06.07.2015.
+ * Created by Marsel Sidikov and Ildar Almakayev (First Software Engineering Platform))
  */
 public interface UsersDao {
     void logIn(User user);
@@ -14,8 +14,8 @@ public interface UsersDao {
     User updateUser(User user);
     void removeUser(int userId);
     List<User> getUsers();
-    List<User> getUsersByName(String firstname, String lastname);
+    List<User> getUsersByName(String firstName, String lastName);
     List<User> getUsersByPost(Post post);
-    List<User> getSortedUsers();
+    List<User> getSortedUsersByName();
     List<User> getSortedUsersByRating();
 }

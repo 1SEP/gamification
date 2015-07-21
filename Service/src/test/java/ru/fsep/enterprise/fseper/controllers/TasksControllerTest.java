@@ -9,14 +9,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import ru.fsep.enterprise.fseper.AppContext;
 import ru.fsep.enterprise.fseper.AppTestContext;
 import ru.fsep.enterprise.fseper.TestData;
 import ru.fsep.enterprise.fseper.controllers.converters.TasksAndStepsConverter;
-import ru.fsep.enterprise.fseper.controllers.converters.TasksAndStepsConverterImpl;
 import ru.fsep.enterprise.fseper.models.Task;
 import ru.fsep.enterprise.fseper.models.User;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
@@ -24,14 +22,10 @@ import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacadeImpl;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.hasSize;
-import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+//import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 

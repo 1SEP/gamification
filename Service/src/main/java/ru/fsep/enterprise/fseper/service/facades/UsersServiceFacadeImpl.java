@@ -54,7 +54,7 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
 
 
     public List<User> getSortedUsers() {
-        return usersDao.getSortedUsers();
+        return usersDao.getSortedUsersByName();
     }
 
     public List<User> getSortedUsersByRating() {
