@@ -19,7 +19,7 @@ import java.util.*;
 /**
  * Created by Ôëþð on 15.07.2015.
  */
-
+@Component
 public class TasksAndStepsConverterImpl implements TasksAndStepsConverter {
 
     private final String INT_STR_ADAPTER_NAME = "IntegerAndStringConvert";
@@ -52,6 +52,7 @@ public class TasksAndStepsConverterImpl implements TasksAndStepsConverter {
         }
 
         public Object convertToEntity(Object o, Object o1, BeanFactory beanFactory) {
+            //TODO
             SimpleDateFormat formatter= new SimpleDateFormat("MMM dd, yyyy");
             try {
                 return formatter.parse(o.toString());

@@ -11,8 +11,8 @@ import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacadeImpl;
  */
 @Configuration
 public class AppTestContext {
-    @Bean
-    public UsersServiceFacade usersServiceFacade(){
-        return Mockito.mock(UsersServiceFacade.class);
-    }
+//    @Bean
+//    public UsersServiceFacade usersServiceFacade(){
+//        return Mockito.mock(UsersServiceFacade.class);
+//    }
 }
