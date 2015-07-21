@@ -37,6 +37,11 @@ public class Task {
         this.finished = finished;
     }
 
+    public Task() {
+
+    }
+
+
     public int getId() {
         return id;
     }
@@ -59,6 +64,10 @@ public class Task {
 
     public boolean isFinished() {
         return finished;
+    }
+
+    public void setSteps(List<Step> steps) {
+        this.steps = steps;
     }
 
     @Override

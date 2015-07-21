@@ -3,6 +3,10 @@ package ru.fsep.enterprise.fseper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import ru.fsep.enterprise.fseper.controllers.converters.TasksAndStepsConverter;
+import ru.fsep.enterprise.fseper.controllers.converters.TasksAndStepsConverterImpl;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacadeImpl;
 
@@ -10,8 +14,9 @@ import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacadeImpl;
  * Created by Ôëþð on 11.07.2015.
  */
 @Configuration
+@EnableWebMvc
 @ComponentScan(basePackages = "ru.fsep.enterprise.fseper")
-public class AppContext {
+public class AppContext extends WebMvcConfigurerAdapter {
 //    @Bean
 //    public DataSource dataSource() {
 //        DriverManagerDataSource dataSource = new DriverManagerDataSource();
@@ -26,9 +31,6 @@ public class AppContext {
 //        dataSource.setDriverClassName(driverClassName);
 //
 //        return  dataSource;
-//    }
-    @Bean
-    public UsersServiceFacade usersServiceFacade(){
-        return new UsersServiceFacadeImpl();
-    }
+
+
 }
