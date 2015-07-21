@@ -20,60 +20,62 @@ public class Step {
 
     private boolean finished;
 
-    public Step(int id, int task_id, String description, boolean finished) {
-        this.id = id;
-        this.taskId = task_id;
-        this.description = description;
-        this.finished = finished;
-    }
-
     public Step() {
 
+    }
+
+    public Step(int id, int taskId, String description, boolean finished) {
+        this.id = id;
+        this.taskId = taskId;
+        this.description = description;
+        this.finished = finished;
     }
 
     public int getId() {
         return id;
     }
 
-    public int getTask_id() {
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getTaskId() {
         return taskId;
+    }
+
+    public void setTaskId(int taskId) {
+        this.taskId = taskId;
     }
 
     public String getDescription() {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public boolean isFinished() {
         return finished;
     }
 
+    public void setFinished(boolean finished) {
+        this.finished = finished;
+    }
+
     @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("id", id)
-                .add("task_id", taskId)
-                .add("description", description)
-                .add("finished", finished)
-                .toString();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Step step = (Step) o;
+        return Objects.equal(id, step.id) &&
+                Objects.equal(taskId, step.taskId) &&
+                Objects.equal(finished, step.finished) &&
+                Objects.equal(description, step.description);
     }
 
     @Override
     public int hashCode() {
         return Objects.hashCode(id, taskId, description, finished);
-    }
-
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        final Step other = (Step) obj;
-        return Objects.equal(this.id, other.id)
-                && Objects.equal(this.taskId, other.taskId)
-                && Objects.equal(this.description, other.description)
-                && Objects.equal(this.finished, other.finished);
     }
 }

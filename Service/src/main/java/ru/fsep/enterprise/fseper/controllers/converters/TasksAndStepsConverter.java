@@ -14,9 +14,10 @@ import java.util.List;
  */
 public interface TasksAndStepsConverter {
     TaskDto fromTask(Task entity);
-    TasksDto fromTasks(List<Task> entities);
+    List<TaskDto> fromTasks(List<Task> entities);
     StepDto fromStep(Step entity);
-    StepsDto fromSteps(List<Step> entities);
+    //StepsDto fromSteps(List<Step> entities);
+    List<StepDto> fromSteps(List<Step> entities);
     Task toTask(TaskDto taskDto);
     List<Task> toTasks(TasksDto tasksDto);
     Step toStep(StepDto stepDto);

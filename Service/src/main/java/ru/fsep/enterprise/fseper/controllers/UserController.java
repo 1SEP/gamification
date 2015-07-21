@@ -28,7 +28,7 @@ public class UserController {
     public ResponseEntity<ResponseObjectDto> getTasks(@PathVariable("users-id") int userId)
     {
         List<Task> tasks = usersServiceFacade.getTasks(userId);
-        TasksDto tasksDto = tasksAndStepsConverter.fromTasks(tasks);
+        List<TaskDto> tasksDto= tasksAndStepsConverter.fromTasks(tasks);
         return ResponseBuilder.buildResponseGet(tasksDto);
     }
 
@@ -45,7 +45,7 @@ public class UserController {
     {
         List<Task> tasks;
         tasks = usersServiceFacade.getPrivatedTasks(userId);
-        TasksDto tasksDto = tasksAndStepsConverter.fromTasks(tasks);
+        List<TaskDto> tasksDto = tasksAndStepsConverter.fromTasks(tasks);
         return ResponseBuilder.buildResponseGet(tasksDto);
     }
 
@@ -54,7 +54,7 @@ public class UserController {
     {
         List<Task> tasks;
         tasks = usersServiceFacade.getFinishedTasks(userId);
-        TasksDto tasksDto = tasksAndStepsConverter.fromTasks(tasks);
+        List<TaskDto> tasksDto = tasksAndStepsConverter.fromTasks(tasks);
         return ResponseBuilder.buildResponseGet(tasksDto);
     }
 
@@ -64,7 +64,7 @@ public class UserController {
     {
         List<Task> tasks;
         tasks = usersServiceFacade.getTasksByDate(userId, dueDate);
-        TasksDto tasksDto = tasksAndStepsConverter.fromTasks(tasks);
+        List<TaskDto> tasksDto = tasksAndStepsConverter.fromTasks(tasks);
         return ResponseBuilder.buildResponseGet(tasksDto);
     }
 }

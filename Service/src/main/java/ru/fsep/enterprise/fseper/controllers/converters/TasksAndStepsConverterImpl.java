@@ -63,28 +63,51 @@ public class TasksAndStepsConverterImpl implements TasksAndStepsConverter {
         }
     };
 
-    private final Assembler taskAssembler = DTOAssembler.newAssembler(TaskDto.class, TasksDto.class);
-    private final Assembler stepAssembler = DTOAssembler.newAssembler(Step.class, StepsDto.class);
+    private final Assembler taskAssembler = DTOAssembler.newAssembler(TaskDto.class, Task.class);
+    private final Assembler stepAssembler = DTOAssembler.newAssembler(StepDto.class, Step.class);
+
     public TaskDto fromTask(Task entity) {
         TaskDto taskDto = new TaskDto();
         Map<String, Object> adapters = new HashMap<String, Object>();
+        taskDto.setSteps(fromSteps(entity.getSteps()));
         adapters.put(INT_STR_ADAPTER_NAME, integerAndStringConverter);
         adapters.put(BOOL_STR_ADAPTER_NAME, booleanAndStringConverter);
         adapters.put(DATE_STR_ADAPTER_NAME, dateAndStringConverter);
         //DtoBeanFactory bean = new DtoBeanFactory();
-        taskDto.setSteps(fromSteps(entity.getSteps()));
+      //  taskDto.setSteps(fromSteps(entity.getSteps()));
         taskAssembler.assembleDto(taskDto, entity, adapters, null);
+
+
+//        System.out.println(taskDto.getId());
+//        System.out.println(taskDto.getDescription());
+//        System.out.println(taskDto.getDueDate());
+//        System.out.println(taskDto.getFinished());
+//        System.out.println(taskDto.getPrivated());
+//        ///
+//        List<StepDto> stepDtos = taskDto.getSteps();
+//        for (StepDto stepDto : stepDtos) {
+//            System.out.println("c: " + stepDto.getDescription());
+//        }
+//        ///
         return taskDto;
     }
 
-    public TasksDto fromTasks(List<Task> entities) {
+//    public TasksDto fromTasks(List<Task> entities) {
+//        List<TaskDto> tasksDtos = new LinkedList<TaskDto>();
+//        for (Task task : entities) {
+//            tasksDtos.add(fromTask(task));
+//        }
+//        TasksDto tasksDto = new TasksDto();
+//        tasksDto.setTaskDtos(tasksDtos);
+//        return tasksDto;
+//    }
+
+    public List<TaskDto> fromTasks(List<Task> entities) {
         List<TaskDto> tasksDtos = new LinkedList<TaskDto>();
         for (Task task : entities) {
             tasksDtos.add(fromTask(task));
         }
-        TasksDto tasksDto = new TasksDto();
-        tasksDto.setTaskDtos(tasksDtos);
-        return tasksDto;
+        return tasksDtos;
     }
 
     public StepDto fromStep(Step entity) {
@@ -96,14 +119,23 @@ public class TasksAndStepsConverterImpl implements TasksAndStepsConverter {
         return stepDto;
     }
 
-    public StepsDto fromSteps(List<Step> entities) {
+//    public StepsDto fromSteps(List<Step> entities) {
+//        List<StepDto> stepDtos = new LinkedList<StepDto>();
+//        for (Step step : entities) {
+//            stepDtos.add(fromStep(step));
+//        }
+//        StepsDto stepsDto = new StepsDto();
+//        stepsDto.setStepDtos(stepDtos);
+//        return stepsDto;
+//    }
+    public List<StepDto> fromSteps(List<Step> entities) {
         List<StepDto> stepDtos = new LinkedList<StepDto>();
         for (Step step : entities) {
             stepDtos.add(fromStep(step));
         }
-        StepsDto stepsDto = new StepsDto();
-        stepsDto.setStepDtos(stepDtos);
-        return stepsDto;
+//        StepsDto stepsDto = new StepsDto();
+//        stepsDto.setStepDtos(stepDtos);
+        return stepDtos;
     }
 
     public Task toTask(TaskDto taskDto) {
@@ -112,7 +144,7 @@ public class TasksAndStepsConverterImpl implements TasksAndStepsConverter {
         adapters.put(INT_STR_ADAPTER_NAME, integerAndStringConverter);
         adapters.put(BOOL_STR_ADAPTER_NAME, booleanAndStringConverter);
         adapters.put(DATE_STR_ADAPTER_NAME, dateAndStringConverter);
-        task.setSteps(toSteps(taskDto.getSteps()));
+      //  task.setSteps(toSteps(taskDto.getSteps()));
         taskAssembler.assembleEntity(taskDto, task, adapters, null);
         return task;
     }

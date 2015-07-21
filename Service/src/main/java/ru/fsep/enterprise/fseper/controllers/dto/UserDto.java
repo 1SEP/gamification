@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.inspiresoftware.lib.dto.geda.annotations.Dto;
 import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
 
+import java.util.List;
+
 /**
  * Created by Fedorov on 14.07.2015.
  */
@@ -17,7 +19,7 @@ public class UserDto {
     private String id;
 
     @DtoField (value = "instructions", converter = "TaskToTaskDto", readOnly = true)
-    private  TasksDto tasks;
+    private List<TaskDto> tasks;
 
     @DtoField (value = "instructions", converter = "PersonInfoToPersonInfoDto", readOnly = true)
     private   PersonInfoDto PersonInfo;
@@ -30,11 +32,11 @@ public class UserDto {
         this.id = id;
     }
 
-    public TasksDto getTasks() {
+    public List<TaskDto> getTasks() {
         return tasks;
     }
 
-    public void setTasks(TasksDto tasks) {
+    public void setTasks(List<TaskDto> tasks) {
         this.tasks = tasks;
     }
 

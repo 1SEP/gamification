@@ -14,7 +14,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Created by Ôëþð on 13.07.2015.
+ * Created by ï¿½ï¿½ï¿½ï¿½ on 13.07.2015.
  */
 @RestController
 @RequestMapping(value = "tasks/")
@@ -50,7 +50,7 @@ public class TasksController {
     public ResponseEntity<ResponseObjectDto> getSteps(@PathVariable("task-id") int id)
     {
         List<Step> steps = usersServiceFacade.getTask(id).getSteps();
-        StepsDto stepsDto = tasksAndStepsConverter.fromSteps(steps);
+        List<StepDto> stepsDto = tasksAndStepsConverter.fromSteps(steps);
         return ResponseBuilder.buildResponseGet(stepsDto);
     }
 
@@ -61,7 +61,7 @@ public class TasksController {
         List<Step> steps = usersServiceFacade.getTask(taskId).getSteps();
         Step step = null;
         for (Step s : steps) {
-            if (stepId == s.getId() && taskId == s.getTask_id()) step = s;
+            if (stepId == s.getId() && taskId == s.getTaskId()) step = s;
         }
         StepDto stepDto = tasksAndStepsConverter.fromStep(step);
         return ResponseBuilder.buildResponseGet(stepDto);
@@ -74,9 +74,9 @@ public class TasksController {
         List<Step> steps = usersServiceFacade.getTask(taskId).getSteps();
         List<Step> result = new LinkedList<Step>();
         for (Step s : steps) {
-            if (finished == s.isFinished() && taskId == s.getTask_id()) result.add(s);
+            if (finished == s.isFinished() && taskId == s.getTaskId()) result.add(s);
         }
-        StepsDto stepsDto = tasksAndStepsConverter.fromSteps(result);
+        List<StepDto> stepsDto= tasksAndStepsConverter.fromSteps(result);
         return ResponseBuilder.buildResponseGet(stepsDto);
     }
 
@@ -97,7 +97,7 @@ public class TasksController {
         List<Step> steps = usersServiceFacade.getTask(taskId).getSteps();
         Step step;
         for(int i=0; i< steps.size(); i++){
-            if (stepId == steps.get(i).getId() && taskId == steps.get(i).getTask_id()) {
+            if (stepId == steps.get(i).getId() && taskId == steps.get(i).getTaskId()) {
                 steps.remove(i);
                 step = tasksAndStepsConverter.toStep(stepDto);
                 steps.add(i, step);
@@ -111,7 +111,7 @@ public class TasksController {
     {
         List<Step> steps = usersServiceFacade.getTask(taskId).getSteps();
         for (int i=0; i < steps.size(); i++) {
-            if (stepId == steps.get(i).getId() && taskId == steps.get(i).getTask_id()) steps.remove(i);
+            if (stepId == steps.get(i).getId() && taskId == steps.get(i).getTaskId()) steps.remove(i);
         }
         return ResponseEntity.ok();
     }

@@ -3,6 +3,8 @@ package ru.fsep.enterprise.fseper.controllers;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
@@ -14,9 +16,7 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import ru.fsep.enterprise.fseper.AppContext;
 import ru.fsep.enterprise.fseper.AppTestContext;
-import ru.fsep.enterprise.fseper.TestData;
 import ru.fsep.enterprise.fseper.controllers.converters.TasksAndStepsConverter;
-import ru.fsep.enterprise.fseper.controllers.converters.TasksAndStepsConverterImpl;
 import ru.fsep.enterprise.fseper.models.Task;
 import ru.fsep.enterprise.fseper.models.User;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
@@ -30,11 +30,10 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
-
+import static ru.fsep.enterprise.fseper.Data.*;
 /**
  * Created by Ôëþð on 20.07.2015.
  */
@@ -42,6 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ContextConfiguration(classes = {AppTestContext.class, AppContext.class})
 @WebAppConfiguration
 public class TasksControllerTest {
+
     User user;
     int userId;
     int taskId;
@@ -55,11 +55,11 @@ public class TasksControllerTest {
     WebApplicationContext context;
     @Before
     public void setUp() throws Exception{
-        user = TestData.USER;
+        user = USER;
         //List<Task> tasks= TestData.USER.getTasks();
         userId = user.getId();
         taskId = user.getTasks().get(0).getId();
-        mockMvc = MockMvcBuilders.webAppContextSetup(context).build();
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
         usersServiceFacade = mock(UsersServiceFacadeImpl.class);
     }
     public void getTaskById(){
@@ -72,12 +72,14 @@ public class TasksControllerTest {
     public void testGetTask() throws Exception {
         getTaskById();
         when(usersServiceFacade.getTask(taskId)).thenReturn(task);
-        mockMvc.perform(get("{task-id}.json",taskId))
-                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
+        Mockito.doReturn(task).when(usersServiceFacade).getTask(taskId);
+    //    Mockito.doThrow(Exception.class).when(usersServiceFacade).getTask(Matchers.anyInt());
+        mockMvc.perform(get("{task-id}.json", taskId).contentType(MediaType.APPLICATION_JSON))
+                .andExpect( status().isOk())
            //     .andExpect(jsonPath("$", hasSize(2)))
                 .andExpect(jsonPath("$.id", is(String.valueOf(taskId))))
-                .andExpect(jsonPath("$.privated", is(String.valueOf(task.isPrivated()))))
+          //      .andExpect(jsonPath("$.id").value(1))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.privated", is(String.valueOf(task.isPrivated()))))
                 .andExpect(jsonPath("$.description", is(task.getDescription())))
                 .andExpect(jsonPath("$.duedate", is(String.valueOf(task.getDueDate()))))
                 .andExpect(jsonPath("$.steps", is(converter.fromSteps(task.getSteps()))))

@@ -8,7 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.fsep.enterprise.fseper.AppContext;
 import ru.fsep.enterprise.fseper.AppTestContext;
-import ru.fsep.enterprise.fseper.TestData;
+import ru.fsep.enterprise.fseper.Data;
 import ru.fsep.enterprise.fseper.models.Post;
 import ru.fsep.enterprise.fseper.models.Task;
 import ru.fsep.enterprise.fseper.models.User;
@@ -32,8 +32,8 @@ public class UsersServiceFacadeTest {
     UsersServiceFacade usersServiceFacade;
     @Before
     public void setUp() throws Exception{
-        //usersServiceFacade = mock(UsersServiceFacadeImpl.class);
-        user = TestData.USER;
+        usersServiceFacade = mock(UsersServiceFacadeImpl.class);
+        user = Data.USER;
         userId = user.getId();
         taskId = user.getTasks().get(0).getId();
     }
@@ -88,7 +88,7 @@ public class UsersServiceFacadeTest {
     }
     @Test
     public void partOfPostService() throws  Exception{
-        Post post = TestData.USER.getPersonInfo().getPosts().get(0);
+        Post post = Data.USER.getPersonInfo().getPosts().get(0);
 
         int postId = post.getId();
         usersServiceFacade.addPost(post, userId);
