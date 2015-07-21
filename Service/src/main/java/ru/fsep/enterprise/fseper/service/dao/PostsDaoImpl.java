@@ -53,11 +53,12 @@ public class PostsDaoImpl implements PostsDao {
         sqlQueryExecutor.updateQuery(SQL_REMOVE_POST, paramMap);
     }
 
-    public void updatePost(Post post) {
+    public Post updatePost(Post post) {
         daoArgumentsVerifier.verifyPost(post);
         Map<String, Object> paramMap = paramsMapper.asMap(asList("id", "name", "description"),
                 asList(post.getId(), post.getName(), post.getDescription()));
         sqlQueryExecutor.updateQuery(SQL_UPDATE_POST, paramMap);
+        return post;
     }
 
     public List<Post> getPosts(int userId) {
