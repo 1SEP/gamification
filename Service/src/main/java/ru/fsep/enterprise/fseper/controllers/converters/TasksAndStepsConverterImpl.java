@@ -19,6 +19,7 @@ import java.util.*;
 /**
  * Created by дыў№ on 15.07.2015.
  */
+
 public class TasksAndStepsConverterImpl implements TasksAndStepsConverter {
 
     private final String INT_STR_ADAPTER_NAME = "IntegerAndStringConvert";

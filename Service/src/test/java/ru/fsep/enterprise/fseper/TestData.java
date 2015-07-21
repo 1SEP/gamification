@@ -2,7 +2,7 @@ package ru.fsep.enterprise.fseper;
 
 import ru.fsep.enterprise.fseper.models.*;
 
-import java.net.MalformedURLException;
+
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -10,7 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Ôëþð on 10.07.2015.
+ * Created by ï¿½ï¿½ï¿½ï¿½ on 10.07.2015.
  */
 public class TestData {
     public static final User USER= new User(1, initAuthData(), initPersonInfo(), initTasks());

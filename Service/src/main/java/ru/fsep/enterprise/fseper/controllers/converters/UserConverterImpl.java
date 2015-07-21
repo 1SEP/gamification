@@ -6,11 +6,7 @@ import com.inspiresoftware.lib.dto.geda.assembler.Assembler;
 import com.inspiresoftware.lib.dto.geda.assembler.DTOAssembler;
 import ru.fsep.enterprise.fseper.controllers.dto.*;
 import ru.fsep.enterprise.fseper.models.*;
-
-<<<<<<< HEAD
-=======
 import java.net.URL;
->>>>>>> 4e21058cc50d10ec5273629fdd0ecbea9a334e2b
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -131,11 +127,8 @@ public class UserConverterImpl implements UserConverter {
 
         return post;
     }
-
-<<<<<<< HEAD
-    public List<Post> toPosts(PostsDto dto) {
-        List<Post> listOfPost = new LinkedList<Post>();
-=======
+//    public List<Post> toPosts(PostsDto dto) {
+//        List<Post> listOfPost = new LinkedList<Post>();
     public Posts toPosts(PostsDto dtos) {
         Posts posts = new Posts();
         List<Post> listPost = new LinkedList<Post>();
@@ -145,7 +138,6 @@ public class UserConverterImpl implements UserConverter {
         posts.setPosts(listPost);
         return posts;
     }
->>>>>>> 4e21058cc50d10ec5273629fdd0ecbea9a334e2b
 
     public PersonInfo toPersonInfo (PersonInfoDto dto) {
         PersonInfo personInfo = new PersonInfo(dto.getFirstName(),
