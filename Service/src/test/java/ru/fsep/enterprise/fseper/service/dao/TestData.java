@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.*;
 
 public class TestData {
+
     static final int USER_ID = 1;
     static final int INCORRECT_USER_ID = 2;
     static final String INCORRECT_FIRSTNAME = "Incorrect first name";
@@ -14,6 +15,14 @@ public class TestData {
     static final User INCORRECT_USER = new User(INCORRECT_USER_ID, initAuthData(), initPersonInfo(), initTasks());
     static final Map<String, Object> USER_MAP = createUserMap();
     static final Map<String, Object> USER_MAP_WITH_NAMES = getUserMapWithNames();
+    static final List<User> LIST_OF_USERS = getListOfUsers();
+
+    static final int POST_ID = 1;
+    static final int INCORRECT_POST_ID = 2;
+    public static final Post POST = getPost();
+    static final Post INCORRECT_POST = getIncorrectPost();
+    static final Map<String, Object> POST_MAP = getPostMap();
+    static final List LIST_OF_POSTS = getListOfPosts();
 
     private static Map<String, Object> getUserMapWithNames() {
         Map<String, Object> map = new HashMap<String, Object>();
@@ -24,14 +33,6 @@ public class TestData {
 
         return map;
     }
-
-    static final List<User> LIST_OF_USERS = getListOfUsers();
-    public static final Post POST = getPost();
-    static final Post INCORRECT_POST = getIncorrectPost();
-    static final int POST_ID = 1;
-    static final int INCORRECT_POST_ID = 2;
-    static final List LIST_OF_POSTS = getListOfPosts();
-    static final Map<String, Object> POST_MAP = getPostMap();
 
     private static List getListOfPosts() {
         List<Post> result = new ArrayList<Post>();
@@ -58,10 +59,11 @@ public class TestData {
 
     private static Map<String, Object> createUserMap() {
         Map<String, Object> map = new HashMap<String, Object>();
+        map.put("userId", USER_ID);
         return map;
     }
 
-    private static List<User> getListOfUsers(){
+    private static List<User> getListOfUsers() {
         List<User> result = new ArrayList<User>();
         result.add(USER);
         return result;
@@ -79,7 +81,7 @@ public class TestData {
         return posts;
     }
 
-    static public List<Task> initTasks(){
+    static public List<Task> initTasks() {
         List<Task> tasks = new ArrayList<Task>();
         String description = "create controller";
         Calendar c = Calendar.getInstance();
@@ -91,22 +93,22 @@ public class TestData {
         return tasks;
     }
 
-    static  public PersonInfo initPersonInfo(){
+    static public PersonInfo initPersonInfo() {
         URL photo = null;
         String surname = "Almakayev";
         String name = "Ildar";
         String birthDay = "31.12.1991";
         String role = "have responsibility for the recoupment project";
-        PersonInfo personInfo  = new PersonInfo(surname, name, 8.8, birthDay, initPosts(), role, photo);
+        PersonInfo personInfo = new PersonInfo(surname, name, 8.8, birthDay, initPosts(), role, photo);
 
         return personInfo;
     }
 
-    static public AuthData initAuthData(){
+    static public AuthData initAuthData() {
         return new AuthData("password", "login");
     }
 
-    static  public List<Step> initSteps(){
+    static public List<Step> initSteps() {
         List<Step> steps = new ArrayList<Step>();
         String description = "step by step perform";
         steps.add(new Step(1, 1, description, false));

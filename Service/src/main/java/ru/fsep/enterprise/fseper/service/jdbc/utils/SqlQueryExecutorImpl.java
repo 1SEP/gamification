@@ -6,13 +6,10 @@ import org.springframework.jdbc.core.RowMapper;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcDaoSupport;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 
-import javax.activation.DataSource;
+import javax.sql.DataSource;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Надежда on 10.07.2015.
- */
 public class SqlQueryExecutorImpl implements SqlQueryExecutor {
 
     JdbcTemplate jdbcTemplate;
@@ -21,7 +18,7 @@ public class SqlQueryExecutorImpl implements SqlQueryExecutor {
     @Autowired
     public SqlQueryExecutorImpl(DataSource dataSource){
         NamedParameterJdbcDaoSupport jdbcDaoSupport = new NamedParameterJdbcDaoSupport();
-        jdbcDaoSupport.setDataSource((javax.sql.DataSource) dataSource);
+        jdbcDaoSupport.setDataSource(dataSource);
         this.jdbcTemplate = jdbcDaoSupport.getJdbcTemplate();
         this.namedParameterJdbcTemplate = jdbcDaoSupport.getNamedParameterJdbcTemplate();
 
