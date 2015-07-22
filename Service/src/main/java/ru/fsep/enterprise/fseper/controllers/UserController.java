@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.web.bind.annotation.*;
 import ru.fsep.enterprise.fseper.controllers.converters.TasksAndStepsConverter;
+import ru.fsep.enterprise.fseper.controllers.converters.UserConverter;
 import ru.fsep.enterprise.fseper.controllers.converters.UserConverterImpl;
 import ru.fsep.enterprise.fseper.controllers.dto.*;
 import ru.fsep.enterprise.fseper.models.Task;
@@ -24,9 +25,11 @@ import java.util.List;
 @RequestMapping(value = "users/")
 public class UserController {
     @Autowired
-    UsersServiceFacade usersServiceFacade;
+    private UsersServiceFacade usersServiceFacade;
     @Autowired
     private TasksAndStepsConverter tasksAndStepsConverter;
+    @Autowired
+    private UserConverter userConverter;
     @RequestMapping(value = "{users-id}/tasks.json", method = RequestMethod.GET)
     public ResponseEntity<ResponseObjectDto> getTasks(@PathVariable("users-id") int userId)
     {
@@ -73,29 +76,28 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<ResponseObjectDto> signUpUser(@RequestBody UserDto userDto){
-        User user = new User()
+        User entity = userConverter.toUser(userDto);
+        usersServiceFacade.a
     }
 
     @RequestMapping(value = "{user-id}", method = RequestMethod.GET)
     public ResponseEntity<ResponseObjectDto> getUserById(@PathVariable("user-id") int userId){
-        UsersServiceFacadeImpl facade = new UsersServiceFacadeImpl();
-        UserConverterImpl converter = new UserConverterImpl();
-        User outUser = facade.getUser(userId);
-        UserDto outUserDto = converter.fromUser(outUser);
+        User outUser = usersServiceFacade.getUser(userId);
+        UserDto outUserDto = userConverter.fromUser(outUser);
         return ResponseBuilder.buildResponseGet(outUserDto);
     }
 
     @RequestMapping(value = "{user-id}", method = RequestMethod.PUT)
-        public ResponseEntity<ResponseObjectDto>  updateUserById(@RequestBody UserDto userDto, @PathVariable("user-id") int userId){
-            UsersServiceFacadeImpl facade = new UsersServiceFacadeImpl();
-            UserConverterImpl converter = new UserConverterImpl();
-            User user = converter.toUser(userDto);
-            facade.updateUser(user);
-            return ResponseBuilder.buildResponseGet(userDto);
+    public ResponseEntity<ResponseObjectDto>  updateUserById(@RequestBody UserDto userDto, @PathVariable("user-id") int userId){
+        User user = userConverter.toUser(userDto);
+        usersServiceFacade.updateUser(user);
+        return ResponseBuilder.buildResponseGet(userDto);
     }
 
     @RequestMapping(value = "{user-id}", method = RequestMethod.DELETE)
-    public RequestEntity<ResponseObjectDto> deleteUserById(@PathVariable("{user-id") int userId){
-        return AuthDataDto;
+    public ResponseEntity<ResponseObjectDto> deleteUserById(@PathVariable("{user-id") int userId){
+        User user = usersServiceFacade.getUser(userId);
+        usersServiceFacade.removeUser(userId);
+        return ResponseBuilder.buildResponseGet(user.getAuthData());
     }
 }
