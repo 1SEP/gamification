@@ -9,6 +9,7 @@
     <version>1.0-SNAPSHOT</version>
 
     <dependencies>
+
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
@@ -26,6 +27,7 @@
             <artifactId>spring-core</artifactId>
             <version>4.1.7.RELEASE</version>
         </dependency>
+
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-web</artifactId>
@@ -69,25 +71,35 @@
         </dependency>
 
         <dependency>
+            <groupId>org.hsqldb</groupId>
+            <artifactId>hsqldb</artifactId>
+            <version>2.3.1</version>
+        </dependency>
+
+        <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-webmvc</artifactId>
             <version>4.1.7.RELEASE</version>
         </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-annotations</artifactId>
             <version>2.5.0</version>
         </dependency>
+
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
             <version>2.5.1</version>
         </dependency>
+
         <dependency>
             <groupId>com.inspire-software.lib.dto.geda</groupId>
             <artifactId>geda.core</artifactId>
             <version>3.0.0</version>
         </dependency>
+<<<<<<< HEAD
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
@@ -155,6 +167,9 @@
             <version>1.1</version>
             <scope>test</scope>
         </dependency>
+=======
+
+>>>>>>> 8b8eff6e20560f0682f923ef0cc6a7de17dc6edb
     </dependencies>
 
 

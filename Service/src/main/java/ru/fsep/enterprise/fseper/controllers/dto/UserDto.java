@@ -8,7 +8,7 @@ import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
 import java.util.List;
 
 /**
- * Created by Fedorov on 14.07.2015.
+ * Author Fedorov Juriy on 14.07.2015
  */
 
 @JsonInclude(JsonInclude.Include.NON_NULL)

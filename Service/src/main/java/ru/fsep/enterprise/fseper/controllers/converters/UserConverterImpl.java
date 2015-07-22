@@ -158,12 +158,19 @@ public class UserConverterImpl implements UserConverter {
         return personInfo;
     }
 
-//    public User toUser (UserDto dto){
-//
-//        return new User(integerToStringConverter.convertToEntity(dto.getId(), INT_TO_STR_ADAPTER_NAME, null),
-//                null,
-//                toPersonInfo(dto.getPersonInfo()),
-//                null);
-//    }
+    public User toUser (UserDto dto){
+
+        return new User(Integer.parseInt(dto.getId()),
+                null, toPersonInfo(dto.getPersonInfo()), null);
+    }
+
+    public List<User> toUsers(UsersDto dto){
+        List<User> users = new LinkedList<User>();
+        for (UserDto userDto: dto.getUsers()){
+            users.add(toUser(userDto));
+        }
+        return users;
+    }
 }
 
+/*integerToStringConverter.convertToEntity(dto.getId(), INT_TO_STR_ADAPTER_NAME, null*/

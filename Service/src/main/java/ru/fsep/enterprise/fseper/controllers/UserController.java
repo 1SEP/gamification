@@ -4,10 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.fsep.enterprise.fseper.controllers.converters.TasksAndStepsConverter;
-import ru.fsep.enterprise.fseper.controllers.dto.ResponseObjectDto;
-import ru.fsep.enterprise.fseper.controllers.dto.TaskDto;
-import ru.fsep.enterprise.fseper.controllers.dto.TasksDto;
+import ru.fsep.enterprise.fseper.controllers.converters.UserConverter;
+import ru.fsep.enterprise.fseper.controllers.dto.*;
 import ru.fsep.enterprise.fseper.models.Task;
+import ru.fsep.enterprise.fseper.models.User;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
 
 import java.util.Date;
@@ -18,14 +18,16 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping(value = "users/")
+@RequestMapping(value = "user/")
 public class UserController {
     @Autowired
-    UsersServiceFacade usersServiceFacade;
+    private UsersServiceFacade usersServiceFacade;
     @Autowired
     private TasksAndStepsConverter tasksAndStepsConverter;
-    @RequestMapping(value = "{users-id}/tasks.json", method = RequestMethod.GET)
-    public ResponseEntity<ResponseObjectDto> getTasks(@PathVariable("users-id") int userId)
+    @Autowired
+    private UserConverter userConverter;
+    @RequestMapping(value = "{user-id}/tasks.json", method = RequestMethod.GET)
+    public ResponseEntity<ResponseObjectDto> getTasks(@PathVariable("user-id") int userId)
     {
         List<Task> tasks = usersServiceFacade.getTasks(userId);
         List<TaskDto> tasksDto= tasksAndStepsConverter.fromTasks(tasks);
@@ -37,7 +39,7 @@ public class UserController {
     {
         Task task = tasksAndStepsConverter.toTask(taskDto);
         usersServiceFacade.assignmentTask(task, userId);
-        return ResponseBuilder.buildResponsePut(taskDto);
+        return ResponseBuilder.buildResponsePost(taskDto);
     }
 
     @RequestMapping(value = "{user-id}/tasks.json/filter=privated", method = RequestMethod.GET)
@@ -66,5 +68,33 @@ public class UserController {
         tasks = usersServiceFacade.getTasksByDate(userId, dueDate);
         List<TaskDto> tasksDto = tasksAndStepsConverter.fromTasks(tasks);
         return ResponseBuilder.buildResponseGet(tasksDto);
+    }
+
+    @RequestMapping(method = RequestMethod.POST)
+    public ResponseEntity<ResponseObjectDto> signUpUser(@RequestBody UserDto userDto){
+        User entity = userConverter.toUser(userDto);
+        usersServiceFacade.signUp(entity);
+        return ResponseBuilder.buildResponsePost(userDto);
+    }
+
+    @RequestMapping(value = "{user-id}", method = RequestMethod.GET)
+    public ResponseEntity<ResponseObjectDto> getUserById(@PathVariable("user-id") int userId){
+        User outUser = usersServiceFacade.getUser(userId);
+        UserDto outUserDto = userConverter.fromUser(outUser);
+        return ResponseBuilder.buildResponseGet(outUserDto);
+    }
+
+    @RequestMapping(value = "{user-id}", method = RequestMethod.PUT)
+    public ResponseEntity<ResponseObjectDto>  updateUserById(@RequestBody UserDto userDto, @PathVariable("user-id") int userId){
+        User user = userConverter.toUser(userDto);
+        usersServiceFacade.updateUser(user);
+        return ResponseBuilder.buildResponseGet(userDto);
+    }
+
+    @RequestMapping(value = "{user-id}", method = RequestMethod.DELETE)
+    public ResponseEntity<ResponseObjectDto> deleteUserById(@PathVariable("{user-id") int userId){
+        User user = usersServiceFacade.getUser(userId);
+        usersServiceFacade.removeUser(userId);
+        return ResponseBuilder.buildResponseGet(user.getAuthData());
     }
 }

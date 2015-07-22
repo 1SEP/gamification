@@ -4,6 +4,7 @@ import ru.fsep.enterprise.fseper.models.Post;
 import ru.fsep.enterprise.fseper.models.Task;
 import ru.fsep.enterprise.fseper.models.User;
 
+
 import java.util.Date;
 import java.util.List;
 
@@ -11,7 +12,8 @@ import java.util.List;
  * Created by Ôëþð on 06.07.2015.
  */
 public interface UsersServiceFacade {
-    void logIn(User user);
+    void signIn(User user);
+    void signUp(User user);
     User getUser(int userId);
     User updateUser(User user);
     void removeUser(int userId);

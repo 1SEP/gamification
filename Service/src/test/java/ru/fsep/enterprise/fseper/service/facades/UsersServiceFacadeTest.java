@@ -43,7 +43,7 @@ public class UsersServiceFacadeTest {
         posts = user.getPersonInfo().getPosts();
         String firstName = user.getPersonInfo().getFirstName();
         String lastName = user.getPersonInfo().getLastName();
-        usersServiceFacade.logIn(user);
+        usersServiceFacade.SignIn(user);
         usersServiceFacade.getUser(userId);
         usersServiceFacade.updateUser(user);
         usersServiceFacade.removeUser(userId);
@@ -53,7 +53,7 @@ public class UsersServiceFacadeTest {
         usersServiceFacade.getSortedUsers();
         usersServiceFacade.getSortedUsersByRating();
 
-        verify(usersServiceFacade).logIn(user);
+        verify(usersServiceFacade).SignIn(user);
         verify(usersServiceFacade).getUser(userId);
         verify(usersServiceFacade).updateUser(user);
         verify(usersServiceFacade).removeUser(userId);

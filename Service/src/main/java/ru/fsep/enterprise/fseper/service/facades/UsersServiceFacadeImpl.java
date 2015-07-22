@@ -24,8 +24,12 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
 //    @Autowired
     private TasksDao tasksDao;
 
-    public void logIn(User user) {
+    public void signIn(User user) {
         usersDao.logIn(user);
+    }
+
+    public void signUp(User user){
+        //TODO
     }
 
     public User getUser(int userId) {
@@ -54,7 +58,7 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
 
 
     public List<User> getSortedUsers() {
-        return usersDao.getSortedUsers();
+        return usersDao.getSortedUsersByName();
     }
 
     public List<User> getSortedUsersByRating() {
