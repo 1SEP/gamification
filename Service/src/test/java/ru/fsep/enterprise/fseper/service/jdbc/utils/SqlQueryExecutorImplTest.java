@@ -1,13 +1,19 @@
 package ru.fsep.enterprise.fseper.service.jdbc.utils;
 
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
+import ru.fsep.enterprise.fseper.models.User;
+import ru.fsep.enterprise.fseper.service.dao.UsersDaoImpl;
+
+import java.util.List;
 
 public class SqlQueryExecutorImplTest {
+
+    //language=SQL
+    public static final String SQL_GET_ALL_USERS = "SELECT * FROM users";
 
     EmbeddedDatabase database;
     SqlQueryExecutorImpl sqlQueryExecutor;
@@ -27,12 +33,12 @@ public class SqlQueryExecutorImplTest {
 
     @Test
     public void testQueryForObjects() throws Exception {
-
+        List<User> actual = sqlQueryExecutor.queryForObjects(SQL_GET_ALL_USERS, UsersDaoImpl.USER_ROW_MAPPER);
+        System.out.println(actual);
     }
 
     @Test
-    public void testQueryForObjects1() throws Exception {
-
+    public void testQueryForObjectsWithParamMap() throws Exception {
     }
 
     @Test
@@ -55,8 +61,8 @@ public class SqlQueryExecutorImplTest {
 
     }
 
-    @After
-    public void closeDatabase() {
-        database.shutdown();
-    }
+//    @After
+//    public void closeDatabase() {
+//        database.shutdown();
+//    }
 }

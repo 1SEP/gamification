@@ -21,7 +21,6 @@ public class SqlQueryExecutorImpl implements SqlQueryExecutor {
         jdbcDaoSupport.setDataSource(dataSource);
         this.jdbcTemplate = jdbcDaoSupport.getJdbcTemplate();
         this.namedParameterJdbcTemplate = jdbcDaoSupport.getNamedParameterJdbcTemplate();
-
     }
 
     public <T> List<T> queryForObjects(String sql, RowMapper<T> rowMapper) {

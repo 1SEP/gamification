@@ -7,7 +7,10 @@ import ru.fsep.enterprise.fseper.service.jdbc.utils.DaoArgumentsVerifier;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.ParamsMapper;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.SqlQueryExecutor;
 
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.*;
 import static java.util.Arrays.asList;
 
@@ -17,7 +20,23 @@ public class UsersDaoImpl implements UsersDao {
     private ParamsMapper paramsMapper;
     private DaoArgumentsVerifier daoArgumentsVerifier;
 
-    public static final RowMapper<User> USER_ROW_MAPPER = new BeanPropertyRowMapper<User>(User.class);
+    public static final RowMapper<User> USER_ROW_MAPPER = new RowMapper<User>() {
+        public User mapRow(ResultSet rs, int i) throws SQLException {
+            int id = rs.getInt("id");
+            String login = rs.getString("login");
+            String password_hash = rs.getString("password_hash");
+            String first_name = rs.getString("first_name");
+            String last_name = rs.getString("last_name");
+            double rating = rs.getDouble("rating");
+            String birthday = rs.getString("birthday");
+            List<Post> posts = null;
+            String role = rs.getString("user_role");
+            URL photo = null /*rs.getURL("photo")*/;
+
+            return new User(id, new AuthData(password_hash, login),
+                    new PersonInfo(first_name, last_name, rating, birthday, posts, role, photo), null);
+        }
+    };
 
     public UsersDaoImpl(SqlQueryExecutor sqlQueryExecutor, ParamsMapper paramsMapper, DaoArgumentsVerifier verifier) {
         this.sqlQueryExecutor = sqlQueryExecutor;
@@ -31,8 +50,8 @@ public class UsersDaoImpl implements UsersDao {
     public static final String SQL_DELETE_USER_BY_ID = "DELETE FROM users WHERE id = :userId;";
     //language=SQL
     public static final String SQL_UPDATE_USER = "UPDATE users SET first_name = :firstName, last_name = :firstName, " +
-            "birthday = :birthday, rating = :rating, photo = :photo, role = :role, login = :login, password_hash = :password," +
-            " WHERE id = :userId;";
+            "birthday = :birthday, rating = :rating, photo = :photo, role = :role, login = :login, " +
+            "password_hash = :password WHERE id = :userId";
     //language=SQL
     public static final String SQL_GET_ALL_USERS = "SELECT * FROM users;";
     //language=SQL
