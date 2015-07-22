@@ -4,6 +4,7 @@ import com.inspiresoftware.lib.dto.geda.adapter.BeanFactory;
 import com.inspiresoftware.lib.dto.geda.adapter.ValueConverter;
 import com.inspiresoftware.lib.dto.geda.assembler.Assembler;
 import com.inspiresoftware.lib.dto.geda.assembler.DTOAssembler;
+import org.springframework.stereotype.Component;
 import ru.fsep.enterprise.fseper.controllers.dto.*;
 import ru.fsep.enterprise.fseper.models.*;
 import java.net.URL;
@@ -15,6 +16,7 @@ import java.util.Map;
 /**
  * Created by Fedorov on 16.07.2015
  */
+@Component
 public class UserConverterImpl implements UserConverter {
 
     private final static String INT_TO_STR_ADAPTER_NAME = "IntegerToString";

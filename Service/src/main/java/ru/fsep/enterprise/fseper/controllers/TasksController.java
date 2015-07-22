@@ -88,7 +88,7 @@ public class TasksController {
         List<Step> steps = task.getSteps();
         Step step = tasksAndStepsConverter.toStep(stepDto);
         steps.add(step);
-        return ResponseBuilder.buildResponsePut(stepDto);
+        return ResponseBuilder.buildResponsePost(stepDto);
     }
 
     @RequestMapping(value = "{task-id}/steps/{step-id}", method = RequestMethod.PUT)

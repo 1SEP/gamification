@@ -99,7 +99,6 @@
             <artifactId>geda.core</artifactId>
             <version>3.0.0</version>
         </dependency>
-<<<<<<< HEAD
         <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>javax.servlet-api</artifactId>
@@ -167,9 +166,6 @@
             <version>1.1</version>
             <scope>test</scope>
         </dependency>
-=======
-
->>>>>>> 8b8eff6e20560f0682f923ef0cc6a7de17dc6edb
     </dependencies>
 
 

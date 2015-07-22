@@ -15,34 +15,20 @@ import org.springframework.web.context.WebApplicationContext;
 import ru.fsep.enterprise.fseper.AppContext;
 import ru.fsep.enterprise.fseper.AppTestContext;
 import ru.fsep.enterprise.fseper.controllers.converters.TasksAndStepsConverter;
-<<<<<<< HEAD
-import ru.fsep.enterprise.fseper.controllers.dto.StepDto;
 import ru.fsep.enterprise.fseper.models.Step;
-=======
->>>>>>> 8b8eff6e20560f0682f923ef0cc6a7de17dc6edb
 import ru.fsep.enterprise.fseper.models.Task;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
 
 import java.util.List;
 
-<<<<<<< HEAD
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-=======
-//import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
->>>>>>> 8b8eff6e20560f0682f923ef0cc6a7de17dc6edb
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ru.fsep.enterprise.fseper.TestData.USER;
-import static ru.fsep.enterprise.fseper.TestData.STEPDTO;
-
 
 /**
  * Created by Ôëþð on 20.07.2015.
