@@ -12,8 +12,8 @@ import java.util.List;
  * Created by Ôëþð on 06.07.2015.
  */
 public interface UsersServiceFacade {
-    void SignIn(User user);
-    void SignUp(User user);
+    void signIn(User user);
+    void signUp(User user);
     User getUser(int userId);
     User updateUser(User user);
     void removeUser(int userId);

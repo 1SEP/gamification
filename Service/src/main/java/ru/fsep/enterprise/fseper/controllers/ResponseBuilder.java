@@ -8,7 +8,7 @@ import ru.fsep.enterprise.fseper.controllers.dto.ResponseObjectDto;
  * Created by Ôëþð on 13.07.2015.
  */
 public class  ResponseBuilder {
-    public static ResponseEntity<ResponseObjectDto> buildResponsePut(Object data) {
+    public static ResponseEntity<ResponseObjectDto> buildResponsePost(Object data) {
         ResponseObjectDto body = new ResponseObjectDto("201", "success", data);
         ResponseEntity<ResponseObjectDto> response = new ResponseEntity<ResponseObjectDto>(body, HttpStatus.CREATED);
         return response;

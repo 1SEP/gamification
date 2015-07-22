@@ -24,11 +24,12 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
 //    @Autowired
     private TasksDao tasksDao;
 
-    public void SignIn(User user) {
+    public void signIn(User user) {
         usersDao.logIn(user);
     }
 
-    public void SignUp(User user){
+    public void signUp(User user){
+        //TODO
     }
 
     public User getUser(int userId) {

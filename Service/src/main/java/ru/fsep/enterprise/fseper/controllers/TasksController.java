@@ -37,7 +37,7 @@ public class TasksController {
     {
         Task task = tasksAndStepsConverter.toTask(taskDto);
         usersServiceFacade.updateTask(task);
-        return ResponseBuilder.buildResponsePut(taskDto);
+        return ResponseBuilder.buildResponsePost(taskDto);
     }
 
     @RequestMapping(value = "{task-id}", method = RequestMethod.DELETE)
