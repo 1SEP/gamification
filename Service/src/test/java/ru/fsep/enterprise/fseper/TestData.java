@@ -1,5 +1,6 @@
 package ru.fsep.enterprise.fseper;
 
+import ru.fsep.enterprise.fseper.controllers.dto.StepDto;
 import ru.fsep.enterprise.fseper.models.*;
 
 
@@ -14,7 +15,15 @@ import java.util.List;
  */
 public class TestData {
     public static final User USER= new User(1, initAuthData(), initPersonInfo(), initTasks());
-
+    public static final StepDto STEPDTO = initStepDto();
+    static public StepDto initStepDto(){
+        StepDto stepDto = new StepDto();
+        stepDto.setId("2");
+        stepDto.setTaskId("1");
+        stepDto.setDescription("step of steps");
+        stepDto.setFinished("false");
+        return stepDto;
+    }
     static public List<Post> initPosts() {
         List<Post> posts = new ArrayList<Post>();
         String post = "It director";

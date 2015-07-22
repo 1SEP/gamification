@@ -19,4 +19,9 @@ public class  ResponseBuilder {
         ResponseEntity<ResponseObjectDto> response = new ResponseEntity<ResponseObjectDto>(body, HttpStatus.OK);
         return response;
     }
+    public static ResponseEntity<ResponseObjectDto> buildResponseDelete() {
+        ResponseObjectDto body = new ResponseObjectDto("200", "success", null);
+        ResponseEntity<ResponseObjectDto> response = new ResponseEntity<ResponseObjectDto>(body, HttpStatus.OK);
+        return response;
+    }
 }
