@@ -13,7 +13,7 @@ import java.util.List;
  * Created by ���� on 10.07.2015.
  */
 public class TestData {
-    public static final User USER= new User(1, initAuthData(), initPersonInfo(), initTasks());
+    public static final User USER = new User(1, initAuthData(), initPersonInfo(), initTasks());
 
     static public List<Post> initPosts() {
         List<Post> posts = new ArrayList<Post>();
