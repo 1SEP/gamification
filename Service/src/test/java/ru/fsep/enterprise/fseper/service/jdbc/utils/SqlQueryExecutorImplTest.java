@@ -21,14 +21,38 @@ import static ru.fsep.enterprise.fseper.service.dao.UsersDaoImpl.*;
 
 public class SqlQueryExecutorImplTest {
 
-    EmbeddedDatabase database;
+    EmbeddedDatabase databaseTest;
     SqlQueryExecutorImpl sqlQueryExecutorTest;
     ParamsMapperJDBCImpl paramsMapperTest;
-    DaoArgumentsVerifier verifierTest;
+
+    //language=SQL
+    private final String TEST_SQL_GET_USER_BY_ID = "SELECT * FROM users WHERE  id = :userId;";
+    //language=SQL
+    private final String TEST_SQL_GET_ALL_USERS = "SELECT * FROM users;";
+    //language=SQL
+    private final String TEST_SQL_GET_ALL_USERS_BY_NAME = "SELECT * FROM users WHERE (first_name = :firstName " +
+            "AND last_name = :lastName);";
+    //language=SQL
+    private final String TEST_SQL_UPDATE_USER = "UPDATE users SET first_name = :firstName, last_name = :lastName, " +
+            "birthday = :birthday, rating = :rating, photo = :photo, user_role = :role, login = :login, " +
+            "password_hash = :password WHERE id = :userId";
+    //language=SQL
+    private final String TEST_SQL_DELETE_USER_BY_ID = "DELETE FROM users WHERE id = :userId;";
+    //language=SQL
+    private final String TEST_SQL_GET_COUNT_OF_USERS_WITH_THIS_ID = "SELECT COUNT(*) FROM users  WHERE id = :userId;";
+    //language=SQL
+    private final String TEST_SQL_INSERT_USER = "INSERT INTO users(first_name, last_name, birthday, rating, " +
+            "photo, user_role, login, password_hash) " +
+            "VALUES (:firstName, :lastName, :birthday, :rating, :photo, :role, :login, :password);";
+    //language=SQL
+    private final String TEST_SQL_GET_COUNT_OF_USERS_WITH_THIS_NAME = "SELECT COUNT(*) FROM users WHERE first_name = " +
+            ":firstName";
+    //language=SQL
+    private final String TEST_SQL_GET_COUNT_OF_USERS = "SELECT COUNT(*) FROM users;";
 
     private void databaseInitialize() {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
-        database = builder.setType(EmbeddedDatabaseType.HSQL)
+        databaseTest = builder.setType(EmbeddedDatabaseType.HSQL)
                 .addScript("file:src/test/java/ru/fsep/enterprise/fseper/service/jdbc/utils/schema.sql")
                 .addScript("file:src/test/java/ru/fsep/enterprise/fseper/service/jdbc/utils/test-data.sql").build();
     }
@@ -37,14 +61,13 @@ public class SqlQueryExecutorImplTest {
     public void setUp() throws Exception {
         databaseInitialize();
         paramsMapperTest = new ParamsMapperJDBCImpl();
-        verifierTest = new DaoArgumentsVerifierImpl();
-        sqlQueryExecutorTest = new SqlQueryExecutorImpl(database);
+        sqlQueryExecutorTest = new SqlQueryExecutorImpl(databaseTest);
     }
 
     @Test
     public void testQueryForObjects() throws Exception {
         List<User> expected = LIST_OF_USERS;
-        List<User> actual = sqlQueryExecutorTest.queryForObjects(SQL_GET_ALL_USERS, USER_ROW_MAPPER);
+        List<User> actual = sqlQueryExecutorTest.queryForObjects(TEST_SQL_GET_ALL_USERS, USER_ROW_MAPPER);
         assertEquals(expected, actual);
     }
 
@@ -53,14 +76,15 @@ public class SqlQueryExecutorImplTest {
         List<User> expected = LIST_OF_USERS;
         Map<String, Object> paramMap = paramsMapperTest.asMap(asList("firstName", "lastName"),
                 asList("Ildar", "Almakayev"));
-        List<User> actual = sqlQueryExecutorTest.queryForObjects(SQL_GET_ALL_USERS_BY_NAME, paramMap, USER_ROW_MAPPER);
+        List<User> actual = sqlQueryExecutorTest.queryForObjects(TEST_SQL_GET_ALL_USERS_BY_NAME, paramMap,
+                USER_ROW_MAPPER);
         assertEquals(expected, actual);
     }
 
     @Test
     public void testQueryForObject() throws Exception {
         Map<String, Object> paramMap = paramsMapperTest.asMap(asList("userId"), asList(USER_ID));
-        User actual = sqlQueryExecutorTest.queryForObject(SQL_GET_USER_BY_ID, paramMap, USER_ROW_MAPPER);
+        User actual = sqlQueryExecutorTest.queryForObject(TEST_SQL_GET_USER_BY_ID, paramMap, USER_ROW_MAPPER);
         User expected = USER;
         assertEquals(expected, actual);
     }
@@ -83,10 +107,10 @@ public class SqlQueryExecutorImplTest {
         Map<String, Object> paramMap = paramsMapperTest.asMap(asList("userId", "firstName", "lastName", "birthday",
                         "rating", "photo", "role", "login", "password"),
                 asList(updatedUserId, firstName, lastName, birthday, rating, photo, role, login, passwordHash));
-        sqlQueryExecutorTest.updateQuery(SQL_UPDATE_USER, paramMap);
+        sqlQueryExecutorTest.updateQuery(TEST_SQL_UPDATE_USER, paramMap);
 
         Map<String, Object> paramMapForUserId = paramsMapperTest.asMap(asList("userId"), asList(0));
-        User actual = sqlQueryExecutorTest.queryForObject(SQL_GET_USER_BY_ID, paramMapForUserId, USER_ROW_MAPPER);
+        User actual = sqlQueryExecutorTest.queryForObject(TEST_SQL_GET_USER_BY_ID, paramMapForUserId, USER_ROW_MAPPER);
         User expected = new User(0, authData, personInfo, null);
         assertEquals(expected, actual);
     }
@@ -95,10 +119,9 @@ public class SqlQueryExecutorImplTest {
     public void testUpdateUserQueryForRemoveUser() throws Exception {
         int userId = USER.getId();
         Map<String, Object> paramMap = paramsMapperTest.asMap(asList("userId"), asList(userId));
-        sqlQueryExecutorTest.updateQuery(SQL_DELETE_USER_BY_ID, paramMap);
+        sqlQueryExecutorTest.updateQuery(TEST_SQL_DELETE_USER_BY_ID, paramMap);
 
-        String SQL_GET_COUNT_OF_USERS_WITH_THIS_ID = "SELECT COUNT(*) FROM users  WHERE id = :userId;";
-        int actual = sqlQueryExecutorTest.queryForInt(SQL_GET_COUNT_OF_USERS_WITH_THIS_ID, paramMap);
+        int actual = sqlQueryExecutorTest.queryForInt(TEST_SQL_GET_COUNT_OF_USERS_WITH_THIS_ID, paramMap);
         int expected = 0;
 
         assertEquals(expected, actual);
@@ -120,36 +143,34 @@ public class SqlQueryExecutorImplTest {
         Map<String, Object> paramMap = paramsMapperTest.asMap(asList("firstName", "lastName", "birthday", "rating",
                         "photo", "role", "login", "password"),
                 asList(firstName, lastName, birthday, rating, photo, role, login, passwordHash));
-        sqlQueryExecutorTest.updateQuery(SQL_INSERT_USER, paramMap);
+        sqlQueryExecutorTest.updateQuery(TEST_SQL_INSERT_USER, paramMap);
 
         User expected = new User(1, authData, personInfo, null);
         int expectedUserId = expected.getId();
         Map<String, Object> paramMapForInsertedUser = paramsMapperTest.asMap(asList("userId"), asList(expectedUserId));
-        User actual = sqlQueryExecutorTest.queryForObject(SQL_GET_USER_BY_ID, paramMapForInsertedUser, USER_ROW_MAPPER);
+        User actual = sqlQueryExecutorTest.queryForObject(TEST_SQL_GET_USER_BY_ID, paramMapForInsertedUser, USER_ROW_MAPPER);
 
         assertEquals(expected, actual);
     }
 
     @Test
     public void testQueryForIntWithNamedJdbcTemplate() throws Exception {
-        String SQL_GET_COUNT_OF_USERS_WITH_THIS_NAME = "SELECT COUNT(*) FROM users WHERE first_name = :firstName";
         String firstName = USER.getPersonInfo().getFirstName();
         Map<String, Object> paramMap = paramsMapperTest.asMap(asList("firstName"), asList(firstName));
-        int actual = sqlQueryExecutorTest.queryForInt(SQL_GET_COUNT_OF_USERS_WITH_THIS_NAME, paramMap);
+        int actual = sqlQueryExecutorTest.queryForInt(TEST_SQL_GET_COUNT_OF_USERS_WITH_THIS_NAME, paramMap);
         int expected = 1;
         assertEquals(expected, actual);
     }
 
     @Test
     public void testQueryForIntWithJdbcTemplate() throws Exception {
-        String SQL_GET_COUNT_OF_USERS = "SELECT COUNT(*) FROM users;";
-        int actual = sqlQueryExecutorTest.queryForInt(SQL_GET_COUNT_OF_USERS);
+        int actual = sqlQueryExecutorTest.queryForInt(TEST_SQL_GET_COUNT_OF_USERS);
         int expected = 1;
         assertEquals(expected, actual);
     }
 
     @After
     public void closeDatabase() {
-        database.shutdown();
+        databaseTest.shutdown();
     }
 }
