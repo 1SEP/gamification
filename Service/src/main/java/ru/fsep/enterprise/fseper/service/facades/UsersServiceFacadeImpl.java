@@ -17,9 +17,9 @@ import java.util.List;
  */
 @Service
 public class UsersServiceFacadeImpl implements UsersServiceFacade {
-//    @Autowired
+    @Autowired
     private UsersDao usersDao;
-//    @Autowired
+    @Autowired
     private PostsDao postsDao;
 //    @Autowired
     private TasksDao tasksDao;

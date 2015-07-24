@@ -3,6 +3,9 @@ package ru.fsep.enterprise.fseper.controllers.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.inspiresoftware.lib.dto.geda.annotations.Dto;
 import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
+import ru.fsep.enterprise.fseper.models.Step;
+
+import java.util.List;
 
 /**
  * Author Ôëþð on 14.07.2015
@@ -19,8 +22,10 @@ public class TaskDto {
     private String description;
     @DtoField (converter = "DateAndStringConvert")
     private String dueDate;
-    @DtoField//(dtoBeanKey = "StepsDtoBeanKey")
-    private StepsDto steps;
+//    @DtoField
+//    private StepsDto steps;
+ //   @DtoField(dtoBeanKey = "StepsDtoBeanKey")
+    private List<StepDto> steps;
     @DtoField (converter = "BooleanAndStringConvert")
     private String finished;
 
@@ -40,7 +45,16 @@ public class TaskDto {
         this.dueDate = dueDate;
     }
 
-    public void setSteps(StepsDto steps) {
+//    public void setSteps(StepsDto steps) {
+//        this.steps = steps;
+//    }
+
+
+    public List<StepDto> getSteps() {
+        return steps;
+    }
+
+    public void setSteps(List<StepDto> steps) {
         this.steps = steps;
     }
 
@@ -64,9 +78,9 @@ public class TaskDto {
         return dueDate;
     }
 
-    public StepsDto getSteps() {
-        return steps;
-    }
+//    public StepsDto getSteps() {
+//        return steps;
+//    }
 
     public String getFinished() {
         return finished;

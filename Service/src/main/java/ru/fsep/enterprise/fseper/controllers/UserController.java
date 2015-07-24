@@ -18,7 +18,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping(value = "user/")
+//@RequestMapping(value = "user/")
 public class UserController {
     @Autowired
     private UsersServiceFacade usersServiceFacade;
@@ -30,7 +30,7 @@ public class UserController {
     public ResponseEntity<ResponseObjectDto> getTasks(@PathVariable("user-id") int userId)
     {
         List<Task> tasks = usersServiceFacade.getTasks(userId);
-        TasksDto tasksDto = tasksAndStepsConverter.fromTasks(tasks);
+        List<TaskDto> tasksDto= tasksAndStepsConverter.fromTasks(tasks);
         return ResponseBuilder.buildResponseGet(tasksDto);
     }
 
@@ -47,7 +47,7 @@ public class UserController {
     {
         List<Task> tasks;
         tasks = usersServiceFacade.getPrivatedTasks(userId);
-        TasksDto tasksDto = tasksAndStepsConverter.fromTasks(tasks);
+        List<TaskDto> tasksDto = tasksAndStepsConverter.fromTasks(tasks);
         return ResponseBuilder.buildResponseGet(tasksDto);
     }
 
@@ -56,7 +56,7 @@ public class UserController {
     {
         List<Task> tasks;
         tasks = usersServiceFacade.getFinishedTasks(userId);
-        TasksDto tasksDto = tasksAndStepsConverter.fromTasks(tasks);
+        List<TaskDto> tasksDto = tasksAndStepsConverter.fromTasks(tasks);
         return ResponseBuilder.buildResponseGet(tasksDto);
     }
 
@@ -66,7 +66,7 @@ public class UserController {
     {
         List<Task> tasks;
         tasks = usersServiceFacade.getTasksByDate(userId, dueDate);
-        TasksDto tasksDto = tasksAndStepsConverter.fromTasks(tasks);
+        List<TaskDto> tasksDto = tasksAndStepsConverter.fromTasks(tasks);
         return ResponseBuilder.buildResponseGet(tasksDto);
     }
 
@@ -77,11 +77,11 @@ public class UserController {
         return ResponseBuilder.buildResponsePost(userDto);
     }
 
-    @RequestMapping(value = "{user-id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/{user-id}", method = RequestMethod.GET)
     public ResponseEntity<ResponseObjectDto> getUserById(@PathVariable("user-id") int userId){
-        User outUser = usersServiceFacade.getUser(userId);
-        UserDto outUserDto = userConverter.fromUser(outUser);
-        return ResponseBuilder.buildResponseGet(outUserDto);
+        User user = usersServiceFacade.getUser(userId);
+        UserDto userDto = userConverter.fromUser(user);
+        return ResponseBuilder.buildResponseGet(userDto);
     }
 
     @RequestMapping(value = "{user-id}", method = RequestMethod.PUT)

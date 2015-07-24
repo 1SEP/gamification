@@ -1,5 +1,6 @@
 package ru.fsep.enterprise.fseper;
 
+import ru.fsep.enterprise.fseper.controllers.dto.StepDto;
 import ru.fsep.enterprise.fseper.models.*;
 
 
@@ -13,7 +14,17 @@ import java.util.List;
  * Created by ���� on 10.07.2015.
  */
 public class TestData {
+
     public static final User USER = new User(1, initAuthData(), initPersonInfo(), initTasks());
+    public static final StepDto STEPDTO = initStepDto();
+    static public StepDto initStepDto(){
+        StepDto stepDto = new StepDto();
+        stepDto.setId("2");
+        stepDto.setTaskId("1");
+        stepDto.setDescription("step of steps");
+        stepDto.setFinished("false");
+        return stepDto;
+    }
 
     static public List<Post> initPosts() {
         List<Post> posts = new ArrayList<Post>();
@@ -26,6 +37,7 @@ public class TestData {
         posts.add(new Post(2, post, description));
         return posts;
     }
+
     static public List<Task> initTasks(){
         List<Task> tasks = new ArrayList<Task>();
         String description = "create controller";
@@ -36,6 +48,7 @@ public class TestData {
         tasks.add( new Task(1, true, description, date, initSteps(), false));
         return tasks;
     }
+
     static  public PersonInfo initPersonInfo(){
         PersonInfo personInfo;
         URL photo = null;
@@ -51,9 +64,11 @@ public class TestData {
         personInfo  = new PersonInfo(surname, name, 8.8, birthDay, initPosts(), role, photo);
         return personInfo;
     }
+
     static public AuthData initAuthData(){
         return new AuthData("password", "login");
     }
+
     static  public List<Step> initSteps(){
         List<Step> steps = new ArrayList<Step>();
         String description = "step by step perform";
@@ -61,5 +76,9 @@ public class TestData {
         description = "second step of task";
         steps.add(new Step(2, 1, description, false));
         return steps;
+    }
+
+    static public User initUser(){
+        return new User (0 ,null, initPersonInfo(), initTasks());
     }
 }

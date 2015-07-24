@@ -2,6 +2,7 @@ package ru.fsep.enterprise.fseper.service.dao;
 
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 import ru.fsep.enterprise.fseper.models.*;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.DaoArgumentsVerifier;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.ParamsMapper;
@@ -10,13 +11,13 @@ import ru.fsep.enterprise.fseper.service.jdbc.utils.SqlQueryExecutor;
 import java.net.URL;
 import java.util.*;
 import static java.util.Arrays.asList;
-
+@Repository
 public class UsersDaoImpl implements UsersDao {
 
     private SqlQueryExecutor sqlQueryExecutor;
     private ParamsMapper paramsMapper;
     private DaoArgumentsVerifier daoArgumentsVerifier;
-
+    public UsersDaoImpl(){}
     public static final RowMapper<User> USER_ROW_MAPPER = new BeanPropertyRowMapper<User>(User.class);
 
     public UsersDaoImpl(SqlQueryExecutor sqlQueryExecutor, ParamsMapper paramsMapper, DaoArgumentsVerifier verifier) {

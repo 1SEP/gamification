@@ -1,5 +1,6 @@
 package ru.fsep.enterprise.fseper.controllers.converters;
 
+import org.springframework.stereotype.Component;
 import ru.fsep.enterprise.fseper.controllers.dto.*;
 import ru.fsep.enterprise.fseper.models.*;
 
