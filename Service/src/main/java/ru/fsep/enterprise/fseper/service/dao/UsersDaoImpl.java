@@ -12,6 +12,7 @@ import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.*;
+
 import static java.util.Arrays.asList;
 
 public class UsersDaoImpl implements UsersDao {
@@ -19,6 +20,37 @@ public class UsersDaoImpl implements UsersDao {
     private SqlQueryExecutor sqlQueryExecutor;
     private ParamsMapper paramsMapper;
     private DaoArgumentsVerifier daoArgumentsVerifier;
+
+    public UsersDaoImpl(SqlQueryExecutor sqlQueryExecutor, ParamsMapper paramsMapper, DaoArgumentsVerifier verifier) {
+        this.sqlQueryExecutor = sqlQueryExecutor;
+        this.paramsMapper = paramsMapper;
+        this.daoArgumentsVerifier = verifier;
+    }
+
+    //language=SQL
+    public static final String SQL_GET_USER_BY_ID = "SELECT * FROM users WHERE  id = :userId;";
+    //language=SQL
+    public static final String SQL_DELETE_USER_BY_ID = "DELETE FROM users WHERE id = :userId;";
+    //language=SQL
+    public static final String SQL_UPDATE_USER = "UPDATE users SET first_name = :firstName, last_name = :lastName, " +
+            "birthday = :birthday, rating = :rating, photo = :photo, user_role = :role, login = :login, " +
+            "password_hash = :password WHERE id = :userId;";
+    //language=SQL
+    public static final String SQL_GET_ALL_USERS = "SELECT * FROM users;";
+    //language=SQL
+    public static final String SQL_GET_ALL_SORTED_USERS_BY_NAME = "SELECT * FROM users ORDER BY first_name, last_name;";
+    //language=SQL
+    public static final String SQL_GET_ALL_USERS_BY_NAME = "SELECT * FROM users WHERE (first_name = :firstName " +
+            "AND last_name = :lastName);";
+    //language=SQL
+    public static final String SQL_INSERT_USER = "INSERT INTO users(first_name, last_name, birthday, rating, " +
+            "photo, user_role, login, password_hash) " +
+            "VALUES (:firstName, :lastName, :birthday, :rating, :photo, :role, :login, :password);";
+    //language=SQL
+    public static final String SQL_GET_ALL_SORTED_USERS_BY_RATING = "SELECT * FROM users ORDER BY rating;";
+    //language=SQL
+    public static final String SQL_GET_USERS_BY_POST = "SELECT * FROM users WHERE (post.id = :postId) " +
+            "AND (post.name = :postName) AND (post.description = :postDescription);";
 
     public static final RowMapper<User> USER_ROW_MAPPER = new RowMapper<User>() {
         public User mapRow(ResultSet rs, int i) throws SQLException {
@@ -38,40 +70,8 @@ public class UsersDaoImpl implements UsersDao {
         }
     };
 
-    public UsersDaoImpl(SqlQueryExecutor sqlQueryExecutor, ParamsMapper paramsMapper, DaoArgumentsVerifier verifier) {
-        this.sqlQueryExecutor = sqlQueryExecutor;
-        this.paramsMapper = paramsMapper;
-        this.daoArgumentsVerifier = verifier;
-    }
-
-    //language=SQL
-    public static final String SQL_GET_USER_BY_ID = "SELECT * FROM users WHERE  id = :userId;";
-    //language=SQL
-    public static final String SQL_DELETE_USER_BY_ID = "DELETE FROM users WHERE id = :userId;";
-    //language=SQL
-    public static final String SQL_UPDATE_USER = "UPDATE users SET first_name = :firstName, last_name = :firstName, " +
-            "birthday = :birthday, rating = :rating, photo = :photo, role = :role, login = :login, " +
-            "password_hash = :password WHERE id = :userId";
-    //language=SQL
-    public static final String SQL_GET_ALL_USERS = "SELECT * FROM users;";
-    //language=SQL
-    public static final String SQL_GET_ALL_SORTED_USERS_BY_NAME = "SELECT * FROM users ORDER BY first_name, last_name;";
-    //language=SQL
-    public static final String SQL_GET_ALL_USERS_BY_NAME = "SELECT * FROM users WHERE (first_name = : firstName) " +
-            "AND (last_name = :lastName) ORDER BY first_name, last_name;";
-    //language=SQL
-    public static final String SQL_INSERT_USER = "INSERT INTO users(id, first_name, last_name, birthday, rating, " +
-            "photo, role, login, password_hash) " +
-            "VALUES (:userId, :firstName, :lastName, :birthday, :rating, :photo, :role, :login, :password);";
-    //language=SQL
-    public static final String SQL_GET_ALL_SORTED_USERS_BY_RATING = "SELECT * FROM users ORDER BY rating;";
-    //language=SQL
-    public static final String SQL_GET_USERS_BY_POST = "SELECT * FROM users where (post.id = :postId) " +
-            "AND (post.name = :postName) AND (post.description = :postDescription);";
-
-    public void logIn(User user) {
+    public void signUp(User user) {
         daoArgumentsVerifier.verifyUser(user);
-        int userId = user.getId();
 
         PersonInfo personInfo = user.getPersonInfo();
         String firstName = personInfo.getFirstName();
@@ -85,16 +85,16 @@ public class UsersDaoImpl implements UsersDao {
         String login = authData.getLogin();
         String passwordHash = authData.getPasswordHash();
 
-        Map<String, Object> paramMap = paramsMapper.asMap(asList("userId", "firstName", "lastName", "birthday",
+        Map<String, Object> paramMap = paramsMapper.asMap(asList("firstName", "lastName", "birthday",
                         "rating", "photo", "role", "login", "password"),
-                asList(userId, firstName, lastName, birthday, rating, photo, role, login, passwordHash));
+                asList(firstName, lastName, birthday, rating, photo, role, login, passwordHash));
         sqlQueryExecutor.updateQuery(SQL_INSERT_USER, paramMap);
     }
 
     public User getUser(int userId) {
         daoArgumentsVerifier.verifyUserById(userId);
         Map<String, Object> paramMap = paramsMapper.asMap(asList("userId"), asList(userId));
-        User user = sqlQueryExecutor.queryForObject(SQL_GET_USER_BY_ID, paramMap, USER_ROW_MAPPER );
+        User user = sqlQueryExecutor.queryForObject(SQL_GET_USER_BY_ID, paramMap, USER_ROW_MAPPER);
         return user;
     }
 

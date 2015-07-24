@@ -7,22 +7,22 @@ import java.util.*;
 
 public class TestData {
 
-    static final int USER_ID = 1;
-    static final int INCORRECT_USER_ID = 2;
-    static final String INCORRECT_FIRSTNAME = "Incorrect first name";
-    static final String INCORRECT_LASTNAME = "Incorrect last name";
-    static final User USER = new User(USER_ID, initAuthData(), initPersonInfo(), initTasks());
-    static final User INCORRECT_USER = new User(INCORRECT_USER_ID, initAuthData(), initPersonInfo(), initTasks());
-    static final Map<String, Object> USER_MAP = createUserMap();
-    static final Map<String, Object> USER_MAP_WITH_NAMES = getUserMapWithNames();
-    static final List<User> LIST_OF_USERS = getListOfUsers();
+    public static final int USER_ID = 0;
+    public static final int INCORRECT_USER_ID = 2;
+    public static final String INCORRECT_FIRSTNAME = "Incorrect first name";
+    public static final String INCORRECT_LASTNAME = "Incorrect last name";
+    public static final User USER = new User(USER_ID, initAuthData(), initPersonInfo(), initTasks());
+    public static final User INCORRECT_USER = new User(INCORRECT_USER_ID, initAuthData(), initPersonInfo(), initTasks());
+    public static final Map<String, Object> USER_MAP = createUserMap();
+    public static final Map<String, Object> USER_MAP_WITH_NAMES = getUserMapWithNames();
+    public static final List<User> LIST_OF_USERS = getListOfUsers();
 
-    static final int POST_ID = 1;
-    static final int INCORRECT_POST_ID = 2;
+    public static final int POST_ID = 1;
+    public static final int INCORRECT_POST_ID = 2;
     public static final Post POST = getPost();
-    static final Post INCORRECT_POST = getIncorrectPost();
-    static final Map<String, Object> POST_MAP = getPostMap();
-    static final List LIST_OF_POSTS = getListOfPosts();
+    public static final Post INCORRECT_POST = getIncorrectPost();
+    public static final Map<String, Object> POST_MAP = getPostMap();
+    public static final List LIST_OF_POSTS = getListOfPosts();
 
     private static Map<String, Object> getUserMapWithNames() {
         Map<String, Object> map = new HashMap<String, Object>();
@@ -78,7 +78,7 @@ public class TestData {
         description = "He is mentor of developer's crew";
         posts.add(new Post(2, post, description));
 
-        return posts;
+        return null;
     }
 
     static public List<Task> initTasks() {
@@ -97,15 +97,15 @@ public class TestData {
         URL photo = null;
         String surname = "Almakayev";
         String name = "Ildar";
-        String birthDay = "31.12.1991";
-        String role = "have responsibility for the recoupment project";
-        PersonInfo personInfo = new PersonInfo(surname, name, 8.8, birthDay, initPosts(), role, photo);
+        String birthDay = "1991-12-31";
+        String role = "java-dev";
+        PersonInfo personInfo = new PersonInfo(name, surname, 8.8, birthDay, initPosts(), role, photo);
 
         return personInfo;
     }
 
     static public AuthData initAuthData() {
-        return new AuthData("password", "login");
+        return new AuthData("ildar_pas", "ildar_login");
     }
 
     static public List<Step> initSteps() {
