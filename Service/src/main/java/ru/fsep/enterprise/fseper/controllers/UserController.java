@@ -39,7 +39,7 @@ public class UserController {
     {
         Task task = tasksAndStepsConverter.toTask(taskDto);
         usersServiceFacade.assignmentTask(task, userId);
-        return ResponseBuilder.buildResponsePost(taskDto);
+        return ResponseBuilder.buildResponsePut(taskDto);
     }
 
     @RequestMapping(value = "{user-id}/tasks.json/filter=privated", method = RequestMethod.GET)
@@ -74,7 +74,7 @@ public class UserController {
     public ResponseEntity<ResponseObjectDto> signUpUser(@RequestBody UserDto userDto){
         User entity = userConverter.toUser(userDto);
         usersServiceFacade.signUp(entity);
-        return ResponseBuilder.buildResponsePost(userDto);
+        return ResponseBuilder.buildResponsePut(userDto);
     }
 
     @RequestMapping(value = "{user-id}", method = RequestMethod.GET)
