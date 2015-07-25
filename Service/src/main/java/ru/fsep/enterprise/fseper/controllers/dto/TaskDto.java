@@ -29,26 +29,37 @@ public class TaskDto {
     @DtoField (converter = "BooleanAndStringConvert")
     private String finished;
 
+    public String getId() {
+        return id;
+    }
+
     public void setId(String id) {
         this.id = id;
+    }
+
+    public String getPrivated() {
+        return privated;
     }
 
     public void setPrivated(String privated) {
         this.privated = privated;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDueDate() {
+        return dueDate;
     }
 
     public void setDueDate(String dueDate) {
         this.dueDate = dueDate;
     }
-
-//    public void setSteps(StepsDto steps) {
-//        this.steps = steps;
-//    }
-
 
     public List<StepDto> getSteps() {
         return steps;
@@ -58,31 +69,11 @@ public class TaskDto {
         this.steps = steps;
     }
 
-    public void setFinished(String finished) {
-        this.finished = finished;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public String getPrivated() {
-        return privated;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public String getDueDate() {
-        return dueDate;
-    }
-
-//    public StepsDto getSteps() {
-//        return steps;
-//    }
-
     public String getFinished() {
         return finished;
+    }
+
+    public void setFinished(String finished) {
+        this.finished = finished;
     }
 }

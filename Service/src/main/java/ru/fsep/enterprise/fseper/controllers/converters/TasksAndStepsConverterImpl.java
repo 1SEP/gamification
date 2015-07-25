@@ -12,6 +12,7 @@ import ru.fsep.enterprise.fseper.controllers.dto.TasksDto;
 import ru.fsep.enterprise.fseper.models.Step;
 import ru.fsep.enterprise.fseper.models.Task;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -52,20 +53,20 @@ public class TasksAndStepsConverterImpl implements TasksAndStepsConverter {
         }
 
         public Object convertToEntity(Object o, Object o1, BeanFactory beanFactory) {
-            //TODO
-            SimpleDateFormat formatter= new SimpleDateFormat("MMM dd, yyyy");
+            DateFormat formatter ;
+            Date date = null;
+            formatter = new SimpleDateFormat("E MMM dd HH:mm:ss z yyyy");
             try {
-                return formatter.parse(o.toString());
+                date = formatter.parse(String.valueOf(o));
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-            return null;
+            return date;
         }
     };
 
     private final Assembler taskAssembler = DTOAssembler.newAssembler(TaskDto.class, Task.class);
     private final Assembler stepAssembler = DTOAssembler.newAssembler(StepDto.class, Step.class);
-
     public TaskDto fromTask(Task entity) {
         TaskDto taskDto = new TaskDto();
         Map<String, Object> adapters = new HashMap<String, Object>();
@@ -144,17 +145,15 @@ public class TasksAndStepsConverterImpl implements TasksAndStepsConverter {
         adapters.put(INT_STR_ADAPTER_NAME, integerAndStringConverter);
         adapters.put(BOOL_STR_ADAPTER_NAME, booleanAndStringConverter);
         adapters.put(DATE_STR_ADAPTER_NAME, dateAndStringConverter);
-      //  task.setSteps(toSteps(taskDto.getSteps()));
+        task.setSteps(toSteps(taskDto.getSteps()));
         taskAssembler.assembleEntity(taskDto, task, adapters, null);
         return task;
     }
 
-    public List<Task> toTasks(TasksDto tasksDto) {
+    public List<Task> toTasks(List<TaskDto> tasksDto) {
         List<Task> tasks = new LinkedList<Task>();
-        TaskDto taskDto;
         for(int i=0; i< tasks.size(); i++){
-            taskDto = tasksDto.getTaskDtos().get(i);
-            tasks.add(toTask(taskDto));
+            tasks.add(toTask(tasksDto.get(i)));
         }
         return tasks;
     }
@@ -165,15 +164,14 @@ public class TasksAndStepsConverterImpl implements TasksAndStepsConverter {
         adapters.put(INT_STR_ADAPTER_NAME, integerAndStringConverter);
         adapters.put(BOOL_STR_ADAPTER_NAME, booleanAndStringConverter);
         stepAssembler.assembleEntity(stepDto, step, adapters, null);
+        //stepAssembler.assembleEntity(step, stepDto, adapters,  null);
         return step;
     }
 
-    public List<Step> toSteps(StepsDto stepsDto) {
+    public List<Step> toSteps(List<StepDto> stepsDto) {
         List<Step> steps = new LinkedList<Step>();
-        StepDto stepDto;
         for(int i=0; i < steps.size(); i++){
-            stepDto = stepsDto.getStepDtos().get(i);
-            steps.add(toStep(stepDto));
+            steps.add(toStep(stepsDto.get(i)));
         }
         return steps;
     }

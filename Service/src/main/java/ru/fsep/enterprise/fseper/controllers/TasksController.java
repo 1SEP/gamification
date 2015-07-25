@@ -34,11 +34,11 @@ public class TasksController {
     }
 
     @RequestMapping(value = "/tasks/{task-id}", method = RequestMethod.PUT)
-    public ResponseEntity<ResponseObjectDto> updateTask(@RequestBody TaskDto taskDto)
+    public ResponseEntity<ResponseObjectDto> updateTask(@PathVariable("task-id") int taskId, @RequestBody TaskDto taskDto)
     {
         Task task = tasksAndStepsConverter.toTask(taskDto);
         usersServiceFacade.updateTask(task);
-        return ResponseBuilder.buildResponsePost(taskDto);
+        return ResponseBuilder.buildResponsePut(taskDto);
     }
 
     @RequestMapping(value = "/tasks/{task-id}", method = RequestMethod.DELETE)
@@ -81,17 +81,19 @@ public class TasksController {
         return ResponseBuilder.buildResponseGet(stepsDto);
     }
 
-    @RequestMapping(value = "/tasks/{task-id}/steps/assignments", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/tasks/{task-id}/steps/assignments", method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseObjectDto> addStep(@PathVariable("task-id") int taskId, @RequestBody StepDto stepDto)
     {
         Task task = usersServiceFacade.getTask(taskId);
         List<Step> steps = task.getSteps();
         Step step = tasksAndStepsConverter.toStep(stepDto);
         steps.add(step);
-        return ResponseBuilder.buildResponsePost(stepDto);
+        return ResponseBuilder.buildResponsePut(stepDto);
     }
 
-    @RequestMapping(value = "{task-id}/steps/{step-id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/tasks/{task-id}/steps/{step-id}", method = RequestMethod.PUT)
     public ResponseEntity<ResponseObjectDto> updateStep(@PathVariable("task-id") int taskId,
                                                         @PathVariable ("step-id") int stepId,@RequestBody StepDto stepDto)
     {
@@ -102,6 +104,7 @@ public class TasksController {
                 steps.remove(i);
                 step = tasksAndStepsConverter.toStep(stepDto);
                 steps.add(i, step);
+                break;
             }
         }
         return ResponseBuilder.buildResponseGet(stepDto);
