@@ -3,13 +3,13 @@ package ru.fsep.enterprise.fseper.controllers.dto;
 /**
  * Created by Fedorov on 14.07.2015.
  */
-public class ErrorObjectDto {
+public class ErrorDto {
     private String code;
     private String status;
     private String message;
     private String data;
 
-    public ErrorObjectDto(String code, String status, String message, String data) {
+    public ErrorDto(String code, String status, String message, String data) {
         this.code = code;
         this.status = status;
         this.message = message;

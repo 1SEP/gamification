@@ -26,7 +26,7 @@ public class TasksController {
     private TasksAndStepsConverter tasksAndStepsConverter;
 
     @RequestMapping(value = "/tasks/{task-id}.json", method = RequestMethod.GET)
-    public ResponseEntity<ResponseObjectDto> getTask(@PathVariable("task-id") int taskId)
+    public ResponseEntity<ResponseDto> getTask(@PathVariable("task-id") int taskId)
     {
         Task task = usersServiceFacade.getTask(taskId);
         TaskDto taskDto = tasksAndStepsConverter.fromTask(task);
@@ -34,7 +34,7 @@ public class TasksController {
     }
 
     @RequestMapping(value = "/tasks/{task-id}", method = RequestMethod.PUT)
-    public ResponseEntity<ResponseObjectDto> updateTask(@PathVariable("task-id") int taskId, @RequestBody TaskDto taskDto)
+    public ResponseEntity<ResponseDto> updateTask(@PathVariable("task-id") int taskId, @RequestBody TaskDto taskDto)
     {
         Task task = tasksAndStepsConverter.toTask(taskDto);
         usersServiceFacade.updateTask(task);
@@ -42,13 +42,13 @@ public class TasksController {
     }
 
     @RequestMapping(value = "/tasks/{task-id}", method = RequestMethod.DELETE)
-    public ResponseEntity<ResponseObjectDto> removeTask(@PathVariable("task-id") int taskId)
+    public ResponseEntity<ResponseDto> removeTask(@PathVariable("task-id") int taskId)
     {
         usersServiceFacade.removeTask(taskId);
         return ResponseBuilder.buildResponseDelete();
     }
     @RequestMapping(value = "/tasks/{task-id}/steps.json", method = RequestMethod.GET)
-    public ResponseEntity<ResponseObjectDto> getSteps(@PathVariable("task-id") int id)
+    public ResponseEntity<ResponseDto> getSteps(@PathVariable("task-id") int id)
     {
         List<Step> steps = usersServiceFacade.getTask(id).getSteps();
         List<StepDto> stepsDto = tasksAndStepsConverter.fromSteps(steps);
@@ -56,7 +56,7 @@ public class TasksController {
     }
 
     @RequestMapping(value = "/tasks/{task-id}/steps/{step-id}.json", method = RequestMethod.GET)
-    public ResponseEntity<ResponseObjectDto> getStep(@PathVariable("task-id") int taskId,
+    public ResponseEntity<ResponseDto> getStep(@PathVariable("task-id") int taskId,
                                                      @PathVariable ("step-id") int stepId)
     {
         List<Step> steps = usersServiceFacade.getTask(taskId).getSteps();
@@ -69,7 +69,7 @@ public class TasksController {
     }
 
     @RequestMapping(value = "/tasks/{task-id}/steps.json/filter={finished}", method = RequestMethod.GET)
-    public ResponseEntity<ResponseObjectDto> getStepsByFilter(@PathVariable("task-id") int taskId,
+    public ResponseEntity<ResponseDto> getStepsByFilter(@PathVariable("task-id") int taskId,
                                                               @PathVariable("finished") boolean finished)
     {
         List<Step> steps = usersServiceFacade.getTask(taskId).getSteps();
@@ -84,7 +84,7 @@ public class TasksController {
     @RequestMapping(value = "/tasks/{task-id}/steps/assignments", method = RequestMethod.POST,
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseObjectDto> addStep(@PathVariable("task-id") int taskId, @RequestBody StepDto stepDto)
+    public ResponseEntity<ResponseDto> addStep(@PathVariable("task-id") int taskId, @RequestBody StepDto stepDto)
     {
         Task task = usersServiceFacade.getTask(taskId);
         List<Step> steps = task.getSteps();
@@ -94,7 +94,7 @@ public class TasksController {
     }
 
     @RequestMapping(value = "/tasks/{task-id}/steps/{step-id}", method = RequestMethod.PUT)
-    public ResponseEntity<ResponseObjectDto> updateStep(@PathVariable("task-id") int taskId,
+    public ResponseEntity<ResponseDto> updateStep(@PathVariable("task-id") int taskId,
                                                         @PathVariable ("step-id") int stepId,@RequestBody StepDto stepDto)
     {
         List<Step> steps = usersServiceFacade.getTask(taskId).getSteps();
@@ -110,13 +110,13 @@ public class TasksController {
         return ResponseBuilder.buildResponseGet(stepDto);
     }
 
-    @RequestMapping(value = "{task-id}/steps/{step-id}", method = RequestMethod.DELETE)
-    public ResponseEntity.BodyBuilder removeStep(@PathVariable("task-id") int taskId, @PathVariable ("step-id") int stepId)
+    @RequestMapping(value = "/tasks/{task-id}/steps/{step-id}", method = RequestMethod.DELETE)
+    public ResponseEntity<ResponseDto> removeStep(@PathVariable("task-id") int taskId, @PathVariable ("step-id") int stepId)
     {
         List<Step> steps = usersServiceFacade.getTask(taskId).getSteps();
         for (int i=0; i < steps.size(); i++) {
             if (stepId == steps.get(i).getId() && taskId == steps.get(i).getTaskId()) steps.remove(i);
         }
-        return ResponseEntity.ok();
+        return ResponseBuilder.buildResponseDelete();
     }
 }

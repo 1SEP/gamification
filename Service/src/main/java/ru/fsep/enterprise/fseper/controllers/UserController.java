@@ -27,7 +27,7 @@ public class UserController {
     @Autowired
     private UserConverter userConverter;
     @RequestMapping(value = "{user-id}/tasks.json", method = RequestMethod.GET)
-    public ResponseEntity<ResponseObjectDto> getTasks(@PathVariable("user-id") int userId)
+    public ResponseEntity<ResponseDto> getTasks(@PathVariable("user-id") int userId)
     {
         List<Task> tasks = usersServiceFacade.getTasks(userId);
         List<TaskDto> tasksDto= tasksAndStepsConverter.fromTasks(tasks);
@@ -35,7 +35,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "{user-id}/tasks/assignments", method = RequestMethod.POST)
-    public ResponseEntity<ResponseObjectDto> assignmentsTask(@RequestBody TaskDto taskDto, @PathVariable("user-id") int userId)
+    public ResponseEntity<ResponseDto> assignmentsTask(@RequestBody TaskDto taskDto, @PathVariable("user-id") int userId)
     {
         Task task = tasksAndStepsConverter.toTask(taskDto);
         usersServiceFacade.assignmentTask(task, userId);
@@ -43,7 +43,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "{user-id}/tasks.json/filter=privated", method = RequestMethod.GET)
-    public ResponseEntity<ResponseObjectDto> getPrivatedTasks(@PathVariable("user-id") int userId)
+    public ResponseEntity<ResponseDto> getPrivatedTasks(@PathVariable("user-id") int userId)
     {
         List<Task> tasks;
         tasks = usersServiceFacade.getPrivatedTasks(userId);
@@ -52,7 +52,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "{user-id}}/tasks.json/filter=finished", method = RequestMethod.GET)
-    public ResponseEntity<ResponseObjectDto> getFinishedTasks(@PathVariable("user-id") int userId)
+    public ResponseEntity<ResponseDto> getFinishedTasks(@PathVariable("user-id") int userId)
     {
         List<Task> tasks;
         tasks = usersServiceFacade.getFinishedTasks(userId);
@@ -61,7 +61,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "{user-id}/tasks.json/filter={dueDate}", method = RequestMethod.GET)
-    public ResponseEntity<ResponseObjectDto> getTasksByDate(@PathVariable("dueDate") Date dueDate,
+    public ResponseEntity<ResponseDto> getTasksByDate(@PathVariable("dueDate") Date dueDate,
                                                             @PathVariable("user-id") int userId)
     {
         List<Task> tasks;
@@ -71,28 +71,28 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.POST)
-    public ResponseEntity<ResponseObjectDto> signUpUser(@RequestBody UserDto userDto){
+    public ResponseEntity<ResponseDto> signUpUser(@RequestBody UserDto userDto){
         User entity = userConverter.toUser(userDto);
         usersServiceFacade.signUp(entity);
         return ResponseBuilder.buildResponsePut(userDto);
     }
 
     @RequestMapping(value = "{user-id}", method = RequestMethod.GET)
-    public ResponseEntity<ResponseObjectDto> getUserById(@PathVariable("user-id") int userId){
+    public ResponseEntity<ResponseDto> getUserById(@PathVariable("user-id") int userId){
         User outUser = usersServiceFacade.getUser(userId);
         UserDto outUserDto = userConverter.fromUser(outUser);
         return ResponseBuilder.buildResponseGet(outUserDto);
     }
 
     @RequestMapping(value = "{user-id}", method = RequestMethod.PUT)
-    public ResponseEntity<ResponseObjectDto>  updateUserById(@RequestBody UserDto userDto, @PathVariable("user-id") int userId){
+    public ResponseEntity<ResponseDto>  updateUserById(@RequestBody UserDto userDto, @PathVariable("user-id") int userId){
         User user = userConverter.toUser(userDto);
         usersServiceFacade.updateUser(user);
         return ResponseBuilder.buildResponseGet(userDto);
     }
 
     @RequestMapping(value = "{user-id}", method = RequestMethod.DELETE)
-    public ResponseEntity<ResponseObjectDto> deleteUserById(@PathVariable("{user-id") int userId){
+    public ResponseEntity<ResponseDto> deleteUserById(@PathVariable("{user-id") int userId){
         User user = usersServiceFacade.getUser(userId);
         usersServiceFacade.removeUser(userId);
         return ResponseBuilder.buildResponseGet(user.getAuthData());
