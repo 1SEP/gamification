@@ -29,7 +29,7 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
     }
 
     public void signUp(User user){
-        //TODO
+        usersDao.signUp(user);
     }
 
     public User getUser(int userId) {

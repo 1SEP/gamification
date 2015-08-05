@@ -1,6 +1,7 @@
 package ru.fsep.enterprise.fseper.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import ru.fsep.enterprise.fseper.controllers.converters.TasksAndStepsConverter;
@@ -10,6 +11,7 @@ import ru.fsep.enterprise.fseper.models.Task;
 import ru.fsep.enterprise.fseper.models.User;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
 
+import java.awt.*;
 import java.util.Date;
 import java.util.List;
 
@@ -18,7 +20,7 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping(value = "user/")
+@RequestMapping(value = "/user/")
 public class UserController {
     @Autowired
     private UsersServiceFacade usersServiceFacade;
@@ -34,7 +36,9 @@ public class UserController {
         return ResponseBuilder.buildResponseGet(tasksDto);
     }
 
-    @RequestMapping(value = "{user-id}/tasks/assignments", method = RequestMethod.POST)
+    @RequestMapping(value = "{user-id}/tasks/assignments", method = RequestMethod.POST,
+            produces = MediaType.APPLICATION_JSON_VALUE,
+            consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDto> assignmentsTask(@RequestBody TaskDto taskDto, @PathVariable("user-id") int userId)
     {
         Task task = tasksAndStepsConverter.toTask(taskDto);

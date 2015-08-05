@@ -51,6 +51,10 @@ public class UsersDaoImpl implements UsersDao {
     public static final String SQL_GET_USERS_BY_POST = "SELECT * FROM users where (post.id = :postId) " +
             "AND (post.name = :postName) AND (post.description = :postDescription);";
 
+    public void signUp(User user) {
+        //TODO
+    }
+
     public void logIn(User user) {
         daoArgumentsVerifier.verifyUser(user);
         int userId = user.getId();
