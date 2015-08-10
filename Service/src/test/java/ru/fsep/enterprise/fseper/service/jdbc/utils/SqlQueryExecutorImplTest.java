@@ -17,7 +17,7 @@ import java.util.Map;
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static ru.fsep.enterprise.fseper.service.dao.TestData.*;
-import static ru.fsep.enterprise.fseper.service.dao.UsersDaoImpl.*;
+import static ru.fsep.enterprise.fseper.service.dao.UsersDaoImpl.USER_ROW_MAPPER;
 
 public class SqlQueryExecutorImplTest {
 
