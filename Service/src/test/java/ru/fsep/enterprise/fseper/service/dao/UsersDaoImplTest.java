@@ -88,6 +88,17 @@ public class UsersDaoImplTest {
     }
 
     @Test
+    public void testSignUp() throws Exception {
+        usersDaoImplTest.signUp(USER);
+        verify(daoArgumentsVerifierMock).verifyUser(USER);
+    }
+
+    @Test(expected = UserNotFoundException.class)
+    public void testSignUpForIncorrectUser() {
+        usersDaoImplTest.signUp(INCORRECT_USER);
+    }
+
+    @Test
     public void testGetUser() throws Exception {
         User actual = usersDaoImplTest.getUser(USER_ID);
         User expected = USER;
@@ -98,17 +109,6 @@ public class UsersDaoImplTest {
     @Test(expected = UserNotFoundException.class)
     public void testGetUserForIncorrectId() throws Exception {
         usersDaoImplTest.getUser(INCORRECT_USER_ID);
-    }
-
-    @Test
-    public void testLogIn() throws Exception {
-        usersDaoImplTest.logIn(USER);
-        verify(daoArgumentsVerifierMock).verifyUser(USER);
-    }
-
-    @Test(expected = UserNotFoundException.class)
-    public void testLogInForIncorrectUser() {
-        usersDaoImplTest.logIn(INCORRECT_USER);
     }
 
     @Test

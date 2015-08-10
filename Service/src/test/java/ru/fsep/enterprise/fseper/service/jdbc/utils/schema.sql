@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS users;
+
 CREATE TABLE users (
 	id INTEGER GENERATED ALWAYS AS IDENTITY PRIMARY KEY,
 	login VARCHAR(100),
@@ -6,6 +8,7 @@ CREATE TABLE users (
 	last_name VARCHAR(100),
 	rating DOUBLE,
 	birthday DATE,
-	role VARCHAR(100),
+	user_role VARCHAR(100),
 	photo VARCHAR(100)
 );
+
