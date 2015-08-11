@@ -42,11 +42,11 @@ public class ExceptionHandlerOfRequest extends ResponseEntityExceptionHandler {
         return new ErrorDto(code, "error", e.getMessage(), e.getClass().getSimpleName());
     }
 
-    @ExceptionHandler({TaskAlreadyFinishedException.class})
-    public ResponseEntity<Object> handleInvalidMarkOfImplementation(RuntimeException e, WebRequest request){
-        ErrorDto errorDto = createErrorDto("405", e);
-        return handleExceptionInternal(e, errorDto, headers, HttpStatus.METHOD_NOT_ALLOWED, request);
-    }
+//    @ExceptionHandler({TaskAlreadyFinishedException.class})
+//    public ResponseEntity<Object> handleInvalidMarkOfImplementation(RuntimeException e, WebRequest request){
+//        ErrorDto errorDto = createErrorDto("405", e);
+//        return handleExceptionInternal(e, errorDto, headers, HttpStatus.METHOD_NOT_ALLOWED, request);
+//    }
     public HttpHeaders createContentType() {
         HttpHeaders result = new HttpHeaders();
         result.setContentType(MediaType.APPLICATION_JSON);

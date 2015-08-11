@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -19,11 +20,13 @@ import ru.fsep.enterprise.fseper.controllers.converters.TasksAndStepsConverter;
 import ru.fsep.enterprise.fseper.controllers.dto.StepDto;
 import ru.fsep.enterprise.fseper.models.Step;
 import ru.fsep.enterprise.fseper.models.Task;
+import ru.fsep.enterprise.fseper.service.exceptions.TasksNotFoundException;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
 
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -55,6 +58,8 @@ public class TasksControllerTest {
         taskId = task.getId();
         Mockito.reset(usersServiceFacade);
         when(usersServiceFacade.getTask(taskId)).thenReturn(task);
+    //    doThrow(TasksNotFoundException.class).when(usersServiceFacade).getTask(Matchers.anyInt());
+        when(usersServiceFacade.getTask(Matchers.anyInt())).thenThrow(new TasksNotFoundException(5));
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
     }
 
@@ -78,6 +83,15 @@ public class TasksControllerTest {
                 .andExpect(jsonPath("$.data.steps[1].finished", is(String.valueOf(step2.isFinished()))))
                 .andExpect(jsonPath("$.data.finished", is(String.valueOf(task.isFinished()))));
         verify(usersServiceFacade).getTask(taskId);
+    }
+    @Test
+    public void testGetTaskWithIncorrectId() throws  Exception{
+        mockMvc.perform(get("/tasks/{task-id}.json", 5).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound())
+                .andExpect(jsonPath("$.code", is("404")))
+                .andExpect(jsonPath("$.status", is("error")))
+                .andExpect(jsonPath("$.message", is("Id of task is invalid")))
+                .andExpect(jsonPath("$.data", is("TaskNotFoundException")));
     }
 
     @Test
