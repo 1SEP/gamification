@@ -4,6 +4,7 @@ import ru.fsep.enterprise.fseper.controllers.dto.*;
 import ru.fsep.enterprise.fseper.models.*;
 
 import java.net.URL;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -36,10 +37,11 @@ public class TestData {
 
     static public TaskDto initTaskDto() {
 
-
-        Calendar c = Calendar.getInstance();
-        Date date = c.getTime();
-        String s = String.valueOf(date);
+//        Calendar c = Calendar.getInstance();
+//        Date date = c.getTime();
+        Date date = new Date();
+        SimpleDateFormat format = new SimpleDateFormat("dd.mm.yyyy hh:mm");
+        String s = String.valueOf(format.format(date));
 
         List<StepDto> stepDtos = new LinkedList<StepDto>();
         stepDtos.add(initStepDto("1", "3", "step of third task", "true"));

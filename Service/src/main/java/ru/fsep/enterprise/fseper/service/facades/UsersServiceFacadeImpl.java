@@ -28,8 +28,8 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
         usersDao.logIn(user);
     }
 
-    public void signUp(User user){
-        //TODO
+    public void signUp(User user) {
+        usersDao.signUp(user);
     }
 
     public User getUser(int userId) {

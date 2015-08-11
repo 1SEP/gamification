@@ -3,12 +3,12 @@ package ru.fsep.enterprise.fseper.controllers.dto;
 /**
  * Created by Ôëþð on 13.07.2015.
  */
-public class ResponseObjectDto {
+public class ResponseDto {
     private String code;
     private String status;
     private Object data;
 
-    public ResponseObjectDto(String code, String status, Object data) {
+    public ResponseDto(String code, String status, Object data) {
         this.code = code;
         this.status = status;
         this.data = data;

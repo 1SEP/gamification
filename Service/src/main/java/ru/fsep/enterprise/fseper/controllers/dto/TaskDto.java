@@ -23,9 +23,7 @@ public class TaskDto {
     private String description;
     @DtoField (converter = "DateAndStringConvert")
     private String dueDate;
-//    @DtoField
-//    private StepsDto steps;
- //   @DtoField(dtoBeanKey = "StepsDtoBeanKey")
+
     private List<StepDto> steps;
     @DtoField (converter = "BooleanAndStringConvert")
     private String finished;

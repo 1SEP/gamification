@@ -9,6 +9,7 @@ import java.util.List;
  * Created by Marsel Sidikov and Ildar Almakayev (First Software Engineering Platform))
  */
 public interface UsersDao {
+    void signUp(User user);
     void logIn(User user);
     User getUser(int userId);
     User updateUser(User user);
