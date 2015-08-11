@@ -9,11 +9,13 @@ import java.util.List;
  * Created by Ôëşğ on 07.07.2015.
  */
 public interface TasksDao {
-    void assignmentTask(Task task, int userId);
+
+    void assignmentTask(Task task, int taskId);
     Task getTask(int taskId);
-    void updateTask(Task task);
+    Task updateTask(Task task);
     void removeTask(int taskId);
-    List<Task> getPrivatedTasks();
-    List<Task> getFinishedTasks();
-    List<Task> getTasksByDate(Date date);
+    List<Task> getTasks(int userId);
+    List<Task> getPrivatedTasks(int taskId);
+    List<Task> getFinishedTasks(int taskId);
+    List<Task> getTasksByDate(int userId, Date date);
 }
