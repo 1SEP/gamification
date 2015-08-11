@@ -1,7 +1,6 @@
 package ru.fsep.enterprise.fseper;
 
-import ru.fsep.enterprise.fseper.controllers.dto.StepDto;
-import ru.fsep.enterprise.fseper.controllers.dto.TaskDto;
+import ru.fsep.enterprise.fseper.controllers.dto.*;
 import ru.fsep.enterprise.fseper.models.*;
 
 import java.net.URL;
@@ -11,17 +10,22 @@ import java.util.*;
  * Created by ���� on 10.07.2015.
  */
 public class TestData {
-
-    public static final User USER = new User(1, initAuthData(), initPersonInfo(), initTasks());
-    public static final StepDto STEPDTO = initStepDto();
-    static public StepDto initStepDto(){
     public static final User USER = new User(1, initAuthData(), initPersonInfo(), initTasks());
     public static final StepDto STEP_DTO = initStepDto("3", "2", "step of steps", "false");
     public static final TaskDto TASK_DTO = initTaskDto();
 
+    static private final URL photo = null;
+    static private final String surname = "Komarov";
+    static private final String name = "Nikita";
+    static private final String birthDay = "13.12.1990";
+    static private final String role = "have responsibility for the recoupment project";
+
+    static private final String postName1 = "It director";
+    static private final String postDescription1 = "He creates new steps of company development in IT";
+    static private final String postName2 = "Team Lead";
+    static private final String postDescription2 = "He is mentor of developer's crew";
 
     static public StepDto initStepDto(String id, String taskId, String Description, String Finished) {
->>>>>>> a8ed60a509d4ed07b8d729ee5276f5512a817f8d
         StepDto stepDto = new StepDto();
         stepDto.setId(id);
         stepDto.setTaskId(taskId);
@@ -31,6 +35,7 @@ public class TestData {
     }
 
     static public TaskDto initTaskDto() {
+
 
         Calendar c = Calendar.getInstance();
         Date date = c.getTime();
@@ -48,17 +53,21 @@ public class TestData {
         taskDto.setSteps(stepDtos);
         taskDto.setFinished("true");
         return taskDto;
+
+    }
+
+    static public List<TaskDto> initTasksDto(){
+        List<TaskDto> listOfTasks = new LinkedList<TaskDto>();
+        listOfTasks.add(initTaskDto());
+        TasksDto tasksDto = new TasksDto();
+        tasksDto.setTaskDtos(listOfTasks);
+        return listOfTasks;
     }
 
     static public List<Post> initPosts() {
         List<Post> posts = new ArrayList<Post>();
-        String post = "It director";
-        String description = "He creates new steps of company development in IT";
-        posts.add(new Post(1, post, description));
-
-        post = "Team Lead";
-        description = "He is mentor of developer's crew";
-        posts.add(new Post(2, post, description));
+        posts.add(new Post(1, postName1, postDescription1));
+        posts.add(new Post(2, postName2, postDescription2));
         return posts;
     }
 
@@ -75,25 +84,14 @@ public class TestData {
 
     static public PersonInfo initPersonInfo() {
         PersonInfo personInfo;
-        URL photo = null;
 //        try {
 //            photo = new URL("C:\\Users\\Flyur\\gamification\\Service\\src\\test\\java\\resources");
 //        } catch (MalformedURLException e) {
 //            e.printStackTrace();
 //        }
-        String surname = "Komarov";
-        String name = "Nikita";
-        String birthDay = "13.12.1990";
-        String role = "have responsibility for the recoupment project";
-        personInfo = new PersonInfo(surname, name, 8.8, birthDay, initPosts(), role, photo);
+        personInfo = new PersonInfo(surname, name, 8.8, birthDay, initPosts(), role, null);
         return personInfo;
     }
-
-    static public AuthData initAuthData(){
-        return new AuthData("password", "login");
-    }
-
-    static  public List<Step> initSteps(){
 
     static public AuthData initAuthData() {
         return new AuthData("password", "login");
@@ -111,4 +109,20 @@ public class TestData {
     static public User initUser(){
         return new User (0 ,null, initPersonInfo(), initTasks());
     }
+
+    static public List<PostDto>  initPostsDto() {
+        List<PostDto> listOfPostDto = new LinkedList<PostDto>();
+        listOfPostDto.add(new PostDto("1", postName1, postDescription1));
+        listOfPostDto.add(new PostDto("2", postName2, postDescription2));
+        return listOfPostDto;
+    }
+
+    static public PersonInfoDto initPersonInfoDto(){
+        return new PersonInfoDto(surname, name ,"8.8" , birthDay, role, null, initPostsDto());
+    }
+
+    static public UserDto initUserDto(){
+        return new UserDto("1", initTasksDto(), initPersonInfoDto());
+    }
+
 }

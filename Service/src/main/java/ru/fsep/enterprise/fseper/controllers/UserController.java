@@ -18,7 +18,6 @@ import java.util.List;
  */
 
 @RestController
-//@RequestMapping(value = "user/")
 public class UserController {
     @Autowired
     private UsersServiceFacade usersServiceFacade;
@@ -26,7 +25,7 @@ public class UserController {
     private TasksAndStepsConverter tasksAndStepsConverter;
     @Autowired
     private UserConverter userConverter;
-    @RequestMapping(value = "{user-id}/tasks.json", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/{user-id}/tasks.json", method = RequestMethod.GET)
     public ResponseEntity<ResponseObjectDto> getTasks(@PathVariable("user-id") int userId)
     {
         List<Task> tasks = usersServiceFacade.getTasks(userId);
@@ -34,7 +33,7 @@ public class UserController {
         return ResponseBuilder.buildResponseGet(tasksDto);
     }
 
-    @RequestMapping(value = "{user-id}/tasks/assignments", method = RequestMethod.POST)
+    @RequestMapping(value = "/user/{user-id}/tasks/assignments", method = RequestMethod.POST)
     public ResponseEntity<ResponseObjectDto> assignmentsTask(@RequestBody TaskDto taskDto, @PathVariable("user-id") int userId)
     {
         Task task = tasksAndStepsConverter.toTask(taskDto);
@@ -42,7 +41,7 @@ public class UserController {
         return ResponseBuilder.buildResponsePut(taskDto);
     }
 
-    @RequestMapping(value = "{user-id}/tasks.json/filter=privated", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/{user-id}/tasks.json/filter=privated", method = RequestMethod.GET)
     public ResponseEntity<ResponseObjectDto> getPrivatedTasks(@PathVariable("user-id") int userId)
     {
         List<Task> tasks;
@@ -51,7 +50,7 @@ public class UserController {
         return ResponseBuilder.buildResponseGet(tasksDto);
     }
 
-    @RequestMapping(value = "{user-id}}/tasks.json/filter=finished", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/{user-id}}/tasks.json/filter=finished", method = RequestMethod.GET)
     public ResponseEntity<ResponseObjectDto> getFinishedTasks(@PathVariable("user-id") int userId)
     {
         List<Task> tasks;
@@ -60,7 +59,7 @@ public class UserController {
         return ResponseBuilder.buildResponseGet(tasksDto);
     }
 
-    @RequestMapping(value = "{user-id}/tasks.json/filter={dueDate}", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/{user-id}/tasks.json/filter={dueDate}", method = RequestMethod.GET)
     public ResponseEntity<ResponseObjectDto> getTasksByDate(@PathVariable("dueDate") Date dueDate,
                                                             @PathVariable("user-id") int userId)
     {
@@ -77,21 +76,21 @@ public class UserController {
         return ResponseBuilder.buildResponsePut(userDto);
     }
 
-    @RequestMapping(value = "/user/{user-id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/{user-id}.json", method = RequestMethod.GET)
     public ResponseEntity<ResponseObjectDto> getUserById(@PathVariable("user-id") int userId){
         User user = usersServiceFacade.getUser(userId);
         UserDto userDto = userConverter.fromUser(user);
         return ResponseBuilder.buildResponseGet(userDto);
     }
 
-    @RequestMapping(value = "{user-id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/user/{user-id}", method = RequestMethod.PUT)
     public ResponseEntity<ResponseObjectDto>  updateUserById(@RequestBody UserDto userDto, @PathVariable("user-id") int userId){
         User user = userConverter.toUser(userDto);
         usersServiceFacade.updateUser(user);
         return ResponseBuilder.buildResponseGet(userDto);
     }
 
-    @RequestMapping(value = "{user-id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/user/{user-id}", method = RequestMethod.DELETE)
     public ResponseEntity<ResponseObjectDto> deleteUserById(@PathVariable("{user-id") int userId){
         User user = usersServiceFacade.getUser(userId);
         usersServiceFacade.removeUser(userId);

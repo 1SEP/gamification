@@ -19,34 +19,7 @@ public class Post {
 
     private String description;
 
-    public Post(){};
-
-    public Post(int id, String name, String description) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("id", id)
-                .add("name", name)
-                .add("description", description)
-                .toString();
-    }
+    public Post(){}
 
     @Override
     public int hashCode() {
@@ -65,6 +38,21 @@ public class Post {
         return Objects.equal(this.id, other.id)
                 && Objects.equal(this.name, other.name)
                 && Objects.equal(this.description, other.description);
+    }
+
+    public Post(int id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("id", id)
+                .add("name", name)
+                .add("description", description)
+                .toString();
     }
 
     public void setId(int id) {

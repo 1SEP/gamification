@@ -82,7 +82,8 @@ public class TasksAndStepsConverterImpl implements TasksAndStepsConverter {
 //        System.out.println(taskDto.getId());
 //        System.out.println(taskDto.getDescription());
 //        System.out.println(taskDto.getDueDate());
-//        System.out.println(taskDto.getFinished());
+// //        System.out.println(taskDto.getDueDate());
+        System.out.println(taskDto.getFinished());
 //        System.out.println(taskDto.getPrivated());
 //        ///
 //        List<StepDto> stepDtos = taskDto.getSteps();

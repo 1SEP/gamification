@@ -16,7 +16,6 @@ import org.springframework.web.context.WebApplicationContext;
 import ru.fsep.enterprise.fseper.AppContext;
 import ru.fsep.enterprise.fseper.AppTestContext;
 import ru.fsep.enterprise.fseper.controllers.converters.TasksAndStepsConverter;
-import ru.fsep.enterprise.fseper.controllers.dto.StepDto;
 import ru.fsep.enterprise.fseper.models.Step;
 import ru.fsep.enterprise.fseper.models.Task;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
@@ -24,15 +23,13 @@ import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.fsep.enterprise.fseper.TestData.TASK_DTO;
-import static ru.fsep.enterprise.fseper.TestData.USER;
 import static ru.fsep.enterprise.fseper.TestData.STEP_DTO;
+import static ru.fsep.enterprise.fseper.TestData.USER;
 
 /**
  * Created by Ôëþð on 20.07.2015.
@@ -50,6 +47,7 @@ public class TasksControllerTest {
     WebApplicationContext context;
 
     final ObjectMapper mapper = new ObjectMapper();
+
     @Before
     public void setUp() throws Exception {
         Mockito.reset(usersServiceFacade);
@@ -125,7 +123,7 @@ public class TasksControllerTest {
         int taskId = task.getId();
         when(usersServiceFacade.getTask(taskId)).thenReturn(task);
         List<Step> steps = task.getSteps();
-        mockMvc.perform(get("/tasks/{task-id}/steps.json",taskId).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/tasks/{task-id}/steps.json", taskId).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data[0].id", is(String.valueOf(steps.get(0).getId()))))
                 .andExpect(jsonPath("$.data[0].taskId", is(String.valueOf(steps.get(0).getTaskId()))))
