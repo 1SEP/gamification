@@ -15,13 +15,7 @@ public interface TasksDao {
     Task updateTask(Task task);
     void removeTask(int taskId);
     List<Task> getTasks(int userId);
-<<<<<<< HEAD
-    List<Task> getPrivatedTasks(int userId);
-    List<Task> getFinishedTasks(int userId);
-    List<Task> getTasksByDate(int usersId, Date date);
-=======
     List<Task> getPrivatedTasks(int taskId);
     List<Task> getFinishedTasks(int taskId);
     List<Task> getTasksByDate(int userId, Date date);
->>>>>>> origin/TaskDao
 }

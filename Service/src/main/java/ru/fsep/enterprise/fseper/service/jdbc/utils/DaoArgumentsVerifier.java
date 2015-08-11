@@ -1,5 +1,6 @@
 package ru.fsep.enterprise.fseper.service.jdbc.utils;
 
+<<<<<<< HEAD
 import ru.fsep.enterprise.fseper.models.Post;
 import ru.fsep.enterprise.fseper.models.User;
 
@@ -10,4 +11,10 @@ public interface DaoArgumentsVerifier {
     void verifyTask(int taskId);
     void verifyPostById(int postId);
     void verifyPost(Post post);
+=======
+public interface DaoArgumentsVerifier {
+    void verifyUser(int userId);
+    void verifyTask(int taskId);
+    void verifyAssignment(int userId, int taskId);
+>>>>>>> origin/TaskDao
 }

@@ -41,30 +41,6 @@ public class Task {
         this.steps_id = steps_id;
     }
 
-    public Task() {
-
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setPrivated(boolean privated) {
-        this.privated = privated;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setDueDate(Date dueDate) {
-        this.dueDate = dueDate;
-    }
-
-    public void setFinished(boolean finished) {
-        this.finished = finished;
-    }
-
     public int getId() {
 
         return id;
@@ -113,13 +89,8 @@ public class Task {
         return finished;
     }
 
-<<<<<<< HEAD
-    public void setSteps(List<Step> steps) {
-        this.steps = steps;
-=======
     public int getSteps_id() {
         return steps_id;
->>>>>>> origin/TaskDao
     }
 
     @Override

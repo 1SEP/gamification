@@ -4,7 +4,6 @@ import ru.fsep.enterprise.fseper.models.Post;
 import ru.fsep.enterprise.fseper.models.Task;
 import ru.fsep.enterprise.fseper.models.User;
 
-
 import java.util.Date;
 import java.util.List;
 
@@ -13,8 +12,7 @@ import java.util.List;
  */
 
 public interface UsersServiceFacade {
-    void signIn(User user);
-    void signUp(User user);
+    void logIn(User user);
     User getUser(int userId);
     User updateUser(User user);
     void removeUser(int userId);
@@ -34,10 +32,5 @@ public interface UsersServiceFacade {
     List<Task> getTasks(int userId);
     List<Task> getPrivatedTasks(int userId);
     List<Task> getFinishedTasks(int userId);
-<<<<<<< HEAD
-    List<Task> getTasksByDate(int usersId, Date date);
-
-=======
     List<Task> getTasksByDate(int userId, Date date);
->>>>>>> origin/TaskDao
 }
