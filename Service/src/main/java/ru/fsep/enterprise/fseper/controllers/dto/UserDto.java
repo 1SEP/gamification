@@ -2,6 +2,8 @@ package ru.fsep.enterprise.fseper.controllers.dto;
 
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
 import com.inspiresoftware.lib.dto.geda.annotations.Dto;
 import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
 
@@ -18,11 +20,31 @@ public class UserDto {
     @DtoField(converter = "IntegerToString")
     private String id;
 
-    @DtoField (value = "instructions", converter = "TaskToTaskDto", readOnly = true)
+ //   @DtoField (value = "instructions", converter = "TaskToTaskDto", readOnly = true)
     private List<TaskDto> tasks;
 
-    @DtoField (value = "instructions", converter = "PersonInfoToPersonInfoDto", readOnly = true)
+    //   @DtoField (value = "instructions", converter = "PersonInfoToPersonInfoDto", readOnly = true)
     private   PersonInfoDto PersonInfo;
+
+    public UserDto() {
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("id", id)
+                .add("tasks", tasks)
+                .add("PersonInfo", PersonInfo)
+                .toString();
+    }
+
+    public UserDto(String id, List<TaskDto> tasks, PersonInfoDto personInfo) {
+        this.id = id;
+        this.tasks = tasks;
+        this.PersonInfo = personInfo;
+    }
+
+
 
     public String getId() {
         return id;
@@ -46,5 +68,24 @@ public class UserDto {
 
     public void setPersonInfo(PersonInfoDto personInfo) {
         PersonInfo = personInfo;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id, tasks, PersonInfo);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final UserDto other = (UserDto) obj;
+        return Objects.equal(this.id, other.id)
+                && Objects.equal(this.tasks, other.tasks)
+                && Objects.equal(this.PersonInfo, other.PersonInfo);
     }
 }

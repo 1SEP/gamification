@@ -1,6 +1,8 @@
 package ru.fsep.enterprise.fseper.controllers.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
 import com.inspiresoftware.lib.dto.geda.annotations.Dto;
 import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
 
@@ -49,5 +51,35 @@ public class StepDto {
 
     public void setFinished(String finished) {
         this.finished = finished;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id, taskId, description, finished);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final StepDto other = (StepDto) obj;
+        return Objects.equal(this.id, other.id)
+                && Objects.equal(this.taskId, other.taskId)
+                && Objects.equal(this.description, other.description)
+                && Objects.equal(this.finished, other.finished);
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("id", id)
+                .add("taskId", taskId)
+                .add("description", description)
+                .add("finished", finished)
+                .toString();
     }
 }
