@@ -26,9 +26,7 @@ import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
 import java.util.List;
 
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -57,9 +55,9 @@ public class TasksControllerTest {
         task = USER.getTasks().get(0);
         taskId = task.getId();
         Mockito.reset(usersServiceFacade);
-        when(usersServiceFacade.getTask(taskId)).thenReturn(task);
-    //    doThrow(TasksNotFoundException.class).when(usersServiceFacade).getTask(Matchers.anyInt());
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
+        when(usersServiceFacade.getTask(Matchers.anyInt())).thenThrow(new TaskNotFoundException(5));
+        doReturn(task).when(usersServiceFacade).getTask(taskId);
     }
 
     @Test
@@ -83,14 +81,14 @@ public class TasksControllerTest {
                 .andExpect(jsonPath("$.data.finished", is(String.valueOf(task.isFinished()))));
         verify(usersServiceFacade).getTask(taskId);
     }
+
     @Test
-    public void testGetTaskWithIncorrectId() throws  Exception{
-        when(usersServiceFacade.getTask(Matchers.anyInt())).thenThrow(new TaskNotFoundException(5));
+    public void testGetTaskWithIncorrectId() throws Exception {
         mockMvc.perform(get("/tasks/{task-id}.json", 5).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.code", is("404")))
                 .andExpect(jsonPath("$.status", is("error")))
-                .andExpect(jsonPath("$.message", is("Id of task is invalid")))
+                .andExpect(jsonPath("$.message", is("Task with id <" + 5 + "> not found")))
                 .andExpect(jsonPath("$.data", is("TaskNotFoundException")));
     }
 

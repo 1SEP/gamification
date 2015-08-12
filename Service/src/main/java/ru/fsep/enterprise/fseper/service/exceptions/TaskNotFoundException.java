@@ -5,7 +5,7 @@ package ru.fsep.enterprise.fseper.service.exceptions;
  */
 public class TaskNotFoundException extends RuntimeException {
     private String message = null;
-    public TaskNotFoundException(int taskId) { this.message = "Task with id < " + taskId + "> not found";}
+    public TaskNotFoundException(int taskId) { this.message = "Task with id <" + taskId + "> not found";}
 
     @Override
     public String toString() { return message;}

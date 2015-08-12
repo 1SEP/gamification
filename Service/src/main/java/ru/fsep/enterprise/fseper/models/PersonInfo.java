@@ -30,9 +30,10 @@ public class PersonInfo {
 
     private URL photo;
 
-    public PersonInfo(){}
+    public PersonInfo() {
+    }
 
-    public PersonInfo(String firstName, String lastName, double rating, String birthday,List<Post> posts, String role, URL photo) {
+    public PersonInfo(String firstName, String lastName, double rating, String birthday, List<Post> posts, String role, URL photo) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.rating = rating;
