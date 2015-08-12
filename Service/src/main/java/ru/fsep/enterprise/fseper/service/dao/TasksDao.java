@@ -9,7 +9,8 @@ import java.util.List;
  * Created by Ôëşğ on 07.07.2015.
  */
 public interface TasksDao {
-    void assignmentTask(Task task, int userId);
+
+    void assignmentTask(Task task, int taskId);
     Task getTask(int taskId);
     Task updateTask(Task task);
     void removeTask(int taskId);

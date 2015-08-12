@@ -3,15 +3,20 @@ package ru.fsep.enterprise.fseper.service.jdbc.utils;
 import ru.fsep.enterprise.fseper.models.Post;
 import ru.fsep.enterprise.fseper.models.User;
 import ru.fsep.enterprise.fseper.service.exceptions.PostsNotFoundException;
+import ru.fsep.enterprise.fseper.service.exceptions.TaskNotAssignedToUserException;
+import ru.fsep.enterprise.fseper.service.exceptions.TaskNotFoundException;
 import ru.fsep.enterprise.fseper.service.exceptions.UserNotFoundException;
 import java.util.Map;
+
 import static java.util.Arrays.asList;
 
 public class DaoArgumentsVerifierImpl implements DaoArgumentsVerifier {
 
     private SqlQueryExecutor sqlQueryExecutor;
     private ParamsMapper paramsMapper;
-
+    //language=SQL
+    private static final String SQL_COUNT_OF_ASSIGNMENTS_BY_IDS =
+            "SELECT COUNT (*) FROM task WHERE (user_id = :userId AND task_id = :taskId)";
     //language=SQL
     private static final String SQL_COUNT_USERS_BY_ID =
             "SELECT COUNT (*) FROM users WHERE (id = :userId)";
@@ -47,8 +52,6 @@ public class DaoArgumentsVerifierImpl implements DaoArgumentsVerifier {
         }
     }
 
-    public void verifyTask(int taskId) {
-    }
 
     public void verifyPostById(int postId) {
         Map<String, Object> paramMap = paramsMapper.asMap(asList("postId"), asList(postId));
@@ -60,5 +63,25 @@ public class DaoArgumentsVerifierImpl implements DaoArgumentsVerifier {
 
     public void verifyPost(Post post) {
         verifyPostById(post.getId());
+    }
+    static final String SQL_GET_TASKS_BY_ID =
+            "SELECT * FROM tasks WHERE (id = :taskId)";
+
+
+    public void verifyTask(int taskId) {
+        Map<String , Object> paramMap = paramsMapper.asMap(asList("taskId") , asList(taskId));
+        int taskCount = sqlQueryExecutor.queryForInt(SQL_GET_TASKS_BY_ID, paramMap);
+        if(taskCount !=1 )
+            throw new TaskNotFoundException(taskId);
+    }
+
+    public void verifyAssignment(int userId, int taskId) {
+        verifyUserById(userId);
+        verifyTask(taskId);
+        Map<String, Object> paramMap = paramsMapper.asMap(asList("userId", "taskId"), asList(userId, taskId));
+        int assignmentsCount = sqlQueryExecutor.queryForInt(SQL_COUNT_OF_ASSIGNMENTS_BY_IDS, paramMap);
+        if (assignmentsCount != 1) {
+            throw new TaskNotAssignedToUserException(userId, taskId);
+        }
     }
 }
