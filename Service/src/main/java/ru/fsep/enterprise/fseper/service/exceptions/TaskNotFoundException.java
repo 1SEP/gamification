@@ -1,4 +1,4 @@
-package ru.fsep.enterprise.fseper.Exception;
+package ru.fsep.enterprise.fseper.service.exceptions;
 
 /**
  * Created by ramil on 20.07.2015.

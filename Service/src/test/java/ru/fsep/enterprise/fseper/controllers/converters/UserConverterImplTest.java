@@ -2,16 +2,14 @@ package ru.fsep.enterprise.fseper.controllers.converters;
 
 import org.junit.Before;
 import org.junit.Test;
-import ru.fsep.enterprise.fseper.TestData;
+import ru.fsep.enterprise.fseper.testDatas.TestData;
 import ru.fsep.enterprise.fseper.controllers.dto.PostDto;
 import ru.fsep.enterprise.fseper.controllers.dto.UserDto;
 import ru.fsep.enterprise.fseper.models.Post;
 import ru.fsep.enterprise.fseper.models.User;
 
 import static org.junit.Assert.*;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.when;
 
 /**
  * Author Fedorov Juriy on 22.07.2015

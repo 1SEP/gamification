@@ -4,13 +4,10 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.util.List;
 import java.util.Map;
-
-<<<<<<< HEAD
-=======
 /**
  * Created by Ôëþð on 09.07.2015.
  */
->>>>>>> origin/TaskDao
+
 public interface SqlQueryExecutor {
     <T> List<T> queryForObjects(String sql, RowMapper<T> rowMapper);
     <T> List<T> queryForObjects(String sql, Map<String, Object> paramMap, RowMapper<T> rowMapper);

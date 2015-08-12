@@ -34,10 +34,5 @@ public interface UsersServiceFacade {
     List<Task> getTasks(int userId);
     List<Task> getPrivatedTasks(int userId);
     List<Task> getFinishedTasks(int userId);
-<<<<<<< HEAD
     List<Task> getTasksByDate(int usersId, Date date);
-
-=======
-    List<Task> getTasksByDate(int userId, Date date);
->>>>>>> origin/TaskDao
 }

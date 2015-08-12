@@ -10,8 +10,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.fsep.enterprise.fseper.controllers.dto.ErrorDto;
 import ru.fsep.enterprise.fseper.service.exceptions.PostsNotFoundException;
-import ru.fsep.enterprise.fseper.service.exceptions.TaskAlreadyFinishedException;
-import ru.fsep.enterprise.fseper.service.exceptions.TasksNotFoundException;
+import ru.fsep.enterprise.fseper.service.exceptions.TaskNotFoundException;
 import ru.fsep.enterprise.fseper.service.exceptions.UserNotFoundException;
 
 /**
@@ -32,7 +31,7 @@ public class ExceptionHandlerOfRequest extends ResponseEntityExceptionHandler {
         return handleExceptionInternal(e, errorDto, headers, HttpStatus.NOT_FOUND, request);
     }
 
-    @ExceptionHandler({TasksNotFoundException.class})
+    @ExceptionHandler({TaskNotFoundException.class})
     public ResponseEntity<Object> handleInvalidTaskRequest(RuntimeException e, WebRequest request) {
         ErrorDto errorDto = createErrorDto("404", e);
         return handleExceptionInternal(e, errorDto, headers, HttpStatus.NOT_FOUND, request);
@@ -42,11 +41,6 @@ public class ExceptionHandlerOfRequest extends ResponseEntityExceptionHandler {
         return new ErrorDto(code, "error", e.getMessage(), e.getClass().getSimpleName());
     }
 
-//    @ExceptionHandler({TaskAlreadyFinishedException.class})
-//    public ResponseEntity<Object> handleInvalidMarkOfImplementation(RuntimeException e, WebRequest request){
-//        ErrorDto errorDto = createErrorDto("405", e);
-//        return handleExceptionInternal(e, errorDto, headers, HttpStatus.METHOD_NOT_ALLOWED, request);
-//    }
     public HttpHeaders createContentType() {
         HttpHeaders result = new HttpHeaders();
         result.setContentType(MediaType.APPLICATION_JSON);

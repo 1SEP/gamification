@@ -27,20 +27,6 @@ public class Task {
 
     private boolean finished;
 
-    private int steps_id;
-
-
-
-    public Task(int id, boolean privated, String description, Date dueDate, int steps_id, List<Step> steps, boolean finished) {
-        this.id = id;
-        this.privated = privated;
-        this.description = description;
-        this.dueDate = dueDate;
-        this.steps = steps;
-        this.finished = finished;
-        this.steps_id = steps_id;
-    }
-
     public Task() {
 
     }
@@ -82,28 +68,7 @@ public class Task {
         return dueDate;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hashCode(id, privated, description, dueDate, steps, finished, steps_id);
-    }
 
-    @Override
-    public boolean equals(Object obj) {
-        if (this == obj) {
-            return true;
-        }
-        if (obj == null || getClass() != obj.getClass()) {
-            return false;
-        }
-        final Task other = (Task) obj;
-        return Objects.equal(this.id, other.id)
-                && Objects.equal(this.privated, other.privated)
-                && Objects.equal(this.description, other.description)
-                && Objects.equal(this.dueDate, other.dueDate)
-                && Objects.equal(this.steps, other.steps)
-                && Objects.equal(this.finished, other.finished)
-                && Objects.equal(this.steps_id, other.steps_id);
-    }
 
     public List<Step> getSteps() {
         return steps;
@@ -113,26 +78,34 @@ public class Task {
         return finished;
     }
 
-<<<<<<< HEAD
     public void setSteps(List<Step> steps) {
         this.steps = steps;
-=======
-    public int getSteps_id() {
-        return steps_id;
->>>>>>> origin/TaskDao
+    }
+
+    public Task(int id, boolean privated, String description, Date dueDate, List<Step> steps, boolean finished) {
+        this.id = id;
+        this.privated = privated;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.steps = steps;
+        this.finished = finished;
     }
 
     @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("id", id)
-                .add("privated", privated)
-                .add("description", description)
-                .add("dueDate", dueDate)
-                .add("steps", steps)
-                .add("finished", finished)
-
-                .toString();
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Task task = (Task) o;
+        return Objects.equal(id, task.id) &&
+                Objects.equal(privated, task.privated) &&
+                Objects.equal(finished, task.finished) &&
+                Objects.equal(description, task.description) &&
+                Objects.equal(dueDate, task.dueDate) &&
+                Objects.equal(steps, task.steps);
     }
 
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id, privated, description, dueDate, steps, finished);
+    }
 }

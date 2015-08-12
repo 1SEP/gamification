@@ -1,4 +1,4 @@
-package ru.fsep.enterprise.fseper;
+package ru.fsep.enterprise.fseper.testDatas;
 
 import ru.fsep.enterprise.fseper.controllers.dto.*;
 import ru.fsep.enterprise.fseper.models.*;

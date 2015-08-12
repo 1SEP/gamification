@@ -1,27 +1,23 @@
 package ru.fsep.enterprise.fseper.service.jdbc.utils;
 
-<<<<<<< HEAD
 import ru.fsep.enterprise.fseper.models.Post;
 import ru.fsep.enterprise.fseper.models.User;
 import ru.fsep.enterprise.fseper.service.exceptions.PostsNotFoundException;
+import ru.fsep.enterprise.fseper.service.exceptions.TaskNotAssignedToUserException;
+import ru.fsep.enterprise.fseper.service.exceptions.TaskNotFoundException;
 import ru.fsep.enterprise.fseper.service.exceptions.UserNotFoundException;
 import java.util.Map;
-=======
-import ru.fsep.enterprise.fseper.Exception.TaskNotAssignedToUserException;
-import ru.fsep.enterprise.fseper.Exception.TaskNotFoundException;
 
-import java.util.Map;
-
->>>>>>> origin/TaskDao
 import static java.util.Arrays.asList;
 
 public class DaoArgumentsVerifierImpl implements DaoArgumentsVerifier {
 
     private SqlQueryExecutor sqlQueryExecutor;
     private ParamsMapper paramsMapper;
-
     //language=SQL
-<<<<<<< HEAD
+    private static final String SQL_COUNT_OF_ASSIGNMENTS_BY_IDS =
+            "SELECT COUNT (*) FROM task WHERE (user_id = :userId AND task_id = :taskId)";
+    //language=SQL
     private static final String SQL_COUNT_USERS_BY_ID =
             "SELECT COUNT (*) FROM users WHERE (id = :userId)";
     //language=SQL
@@ -56,8 +52,6 @@ public class DaoArgumentsVerifierImpl implements DaoArgumentsVerifier {
         }
     }
 
-    public void verifyTask(int taskId) {
-    }
 
     public void verifyPostById(int postId) {
         Map<String, Object> paramMap = paramsMapper.asMap(asList("postId"), asList(postId));
@@ -70,18 +64,9 @@ public class DaoArgumentsVerifierImpl implements DaoArgumentsVerifier {
     public void verifyPost(Post post) {
         verifyPostById(post.getId());
     }
-=======
     static final String SQL_GET_TASKS_BY_ID =
             "SELECT * FROM tasks WHERE (id = :taskId)";
 
-    //language=SQL
-    private static final String SQL_COUNT_OF_ASSIGNMENTS_BY_IDS =
-            "SELECT COUNT (*) FROM task WHERE (user_id = :userId AND task_id = :taskId)";
-
-    //language=SQL
-    public void verifyUser(int userId) {
-
-    }
 
     public void verifyTask(int taskId) {
         Map<String , Object> paramMap = paramsMapper.asMap(asList("taskId") , asList(taskId));
@@ -90,9 +75,8 @@ public class DaoArgumentsVerifierImpl implements DaoArgumentsVerifier {
             throw new TaskNotFoundException(taskId);
     }
 
-    @Override
     public void verifyAssignment(int userId, int taskId) {
-        verifyUser(userId);
+        verifyUserById(userId);
         verifyTask(taskId);
         Map<String, Object> paramMap = paramsMapper.asMap(asList("userId", "taskId"), asList(userId, taskId));
         int assignmentsCount = sqlQueryExecutor.queryForInt(SQL_COUNT_OF_ASSIGNMENTS_BY_IDS, paramMap);
@@ -100,5 +84,4 @@ public class DaoArgumentsVerifierImpl implements DaoArgumentsVerifier {
             throw new TaskNotAssignedToUserException(userId, taskId);
         }
     }
->>>>>>> origin/TaskDao
 }

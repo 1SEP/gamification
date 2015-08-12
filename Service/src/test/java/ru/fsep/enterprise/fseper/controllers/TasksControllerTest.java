@@ -20,7 +20,7 @@ import ru.fsep.enterprise.fseper.controllers.converters.TasksAndStepsConverter;
 import ru.fsep.enterprise.fseper.controllers.dto.StepDto;
 import ru.fsep.enterprise.fseper.models.Step;
 import ru.fsep.enterprise.fseper.models.Task;
-import ru.fsep.enterprise.fseper.service.exceptions.TasksNotFoundException;
+import ru.fsep.enterprise.fseper.service.exceptions.TaskNotFoundException;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
 
 import java.util.List;
@@ -32,7 +32,7 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.fsep.enterprise.fseper.TestData.*;
+import static ru.fsep.enterprise.fseper.testDatas.TestData.*;
 
 /**
  * Created by Ôëþð on 20.07.2015.
@@ -59,7 +59,6 @@ public class TasksControllerTest {
         Mockito.reset(usersServiceFacade);
         when(usersServiceFacade.getTask(taskId)).thenReturn(task);
     //    doThrow(TasksNotFoundException.class).when(usersServiceFacade).getTask(Matchers.anyInt());
-        when(usersServiceFacade.getTask(Matchers.anyInt())).thenThrow(new TasksNotFoundException(5));
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
     }
 
@@ -86,6 +85,7 @@ public class TasksControllerTest {
     }
     @Test
     public void testGetTaskWithIncorrectId() throws  Exception{
+        when(usersServiceFacade.getTask(Matchers.anyInt())).thenThrow(new TaskNotFoundException(5));
         mockMvc.perform(get("/tasks/{task-id}.json", 5).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.code", is("404")))

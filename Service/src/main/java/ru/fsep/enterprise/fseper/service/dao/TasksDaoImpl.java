@@ -72,12 +72,12 @@ public class TasksDaoImpl implements TasksDao {
     }
 
     public Task updateTask(Task task) {
-        verifier.verifyTask(task.getId());
-        Map<String, Object> paramMap = paramsMapper.asMap(asList("taskId, privated", "description", "due_data", "steps_id",
-                "steps", "finished"), asList(task.getId(), task.isPrivated(), task.getDescription(),
-                task.getDueDate(), task.getSteps_id(), task.getSteps(), task.isFinished()));
-
-        sqlQueryExecutor.updateQuery(SQL_UPDATE_TASK, paramMap);
+//        verifier.verifyTask(task.getId());
+//        Map<String, Object> paramMap = paramsMapper.asMap(asList("taskId, privated", "description", "due_data", "steps_id",
+//                "steps", "finished"), asList(task.getId(), task.isPrivated(), task.getDescription(),
+//                task.getDueDate(), task.getSteps_id(), task.getSteps(), task.isFinished()));
+//
+//        sqlQueryExecutor.updateQuery(SQL_UPDATE_TASK, paramMap);
         return task;
     }
 
@@ -89,11 +89,11 @@ public class TasksDaoImpl implements TasksDao {
     }
 
     public void assignmentTask(Task task, int userId) {
-        verifier.verifyTask(task.getId());
-        Map<String, Object> paramMap = paramsMapper.asMap(asList("taskId, privated", "description", "due_data", "steps_id",
-                "steps", "finished"), asList(task.getId(), task.isPrivated(), task.getDescription(),
-                task.getDueDate(), task.getSteps_id(), task.getSteps(), task.isFinished()));
-        sqlQueryExecutor.queryForObject(SQL_INSERT_INTO_TASK, paramMap, USER_ROW_MAPPER);
+//        verifier.verifyTask(task.getId());
+//        Map<String, Object> paramMap = paramsMapper.asMap(asList("taskId, privated", "description", "due_data", "steps_id",
+//                "steps", "finished"), asList(task.getId(), task.isPrivated(), task.getDescription(),
+//                task.getDueDate(), task.getSteps_id(), task.getSteps(), task.isFinished()));
+//        sqlQueryExecutor.queryForObject(SQL_INSERT_INTO_TASK, paramMap, USER_ROW_MAPPER);
     }
 
     public void removeTask(int taskId) {
