@@ -23,14 +23,12 @@ import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
 
 import java.util.List;
 
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.fsep.enterprise.fseper.TestData.STEP_DTO;
 import static ru.fsep.enterprise.fseper.TestData.USER;
 
 /**
@@ -46,6 +44,7 @@ public class UserControllerTest {
     private UsersServiceFacade usersServiceFacade;
     @Autowired
     WebApplicationContext context;
+
     final ObjectMapper mapper = new ObjectMapper();
 
     @Before
@@ -105,6 +104,7 @@ public class UserControllerTest {
 
     }
 
+
     @Test
     public void testUpdateUserById() throws Exception {
         User user = USER;
@@ -117,10 +117,13 @@ public class UserControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.data.id", is("1")))
                 .andExpect(jsonPath("$.data.personInfo.birthday", is("13.12.1990")));
+
     }
 
     @Test
     public void testDeleteUserById() throws Exception {
-
+        int userId = 1;
+        mockMvc.perform(delete("/user/{user-id}", userId).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
     }
 }

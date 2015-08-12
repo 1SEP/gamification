@@ -96,7 +96,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "{user-id}", method = RequestMethod.DELETE)
-    public ResponseEntity<ResponseDto> deleteUserById(@PathVariable("{user-id") int userId){
+    public ResponseEntity<ResponseDto> deleteUserById(@PathVariable("user-id") int userId){
         User user = usersServiceFacade.getUser(userId);
         usersServiceFacade.removeUser(userId);
         return ResponseBuilder.buildResponseGet(user.getAuthData());
