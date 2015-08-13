@@ -11,6 +11,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 import ru.fsep.enterprise.fseper.controllers.dto.ErrorDto;
 import ru.fsep.enterprise.fseper.service.exceptions.PostsNotFoundException;
+import ru.fsep.enterprise.fseper.service.exceptions.TaskNotAssignedToUserException;
 import ru.fsep.enterprise.fseper.service.exceptions.TaskNotFoundException;
 import ru.fsep.enterprise.fseper.service.exceptions.UserNotFoundException;
 

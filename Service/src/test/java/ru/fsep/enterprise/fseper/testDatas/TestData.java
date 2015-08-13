@@ -12,6 +12,7 @@ import java.util.*;
  */
 public class TestData {
     public static final User USER = new User(1, initAuthData(), initPersonInfo(), initTasks());
+    public static final User SECOND_USER = new User(2, initAuthData(), initPersonInfo(), initTasksToSecondUser());
     public static final StepDto STEP_DTO = initStepDto("3", "2", "step of steps", "false");
     public static final TaskDto TASK_DTO = initTaskDto();
 
@@ -84,6 +85,16 @@ public class TestData {
         return tasks;
     }
 
+    static public List<Task> initTasksToSecondUser() {
+        List<Task> tasks = new ArrayList<Task>();
+        String description = "first task";
+        Calendar c = Calendar.getInstance();
+        Date date = c.getTime();
+        tasks.add(new Task(3, true, description, date, initSteps(), false));
+        description = "second task";
+        tasks.add(new Task(4, true, description, date, initSteps(), false));
+        return tasks;
+    }
     static public PersonInfo initPersonInfo() {
         PersonInfo personInfo;
 //        try {
