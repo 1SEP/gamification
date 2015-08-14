@@ -1,20 +1,12 @@
 package ru.fsep.enterprise.fseper.service.dao;
 
-import org.junit.Before;
-import org.junit.Test;
 import org.mockito.Mock;
-import ru.fsep.enterprise.fseper.models.Task;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.DaoArgumentsVerifier;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.ParamsMapper;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.SqlQueryExecutor;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.*;
-import static ru.fsep.enterprise.fseper.testDatas.TestDataForTaskDao.*;
+
 /**
  * Created by ramil on 13.07.2015.
  */

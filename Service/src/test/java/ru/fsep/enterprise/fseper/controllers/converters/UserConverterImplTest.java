@@ -2,7 +2,7 @@ package ru.fsep.enterprise.fseper.controllers.converters;
 
 import org.junit.Before;
 import org.junit.Test;
-import ru.fsep.enterprise.fseper.testDatas.TestData;
+import ru.fsep.enterprise.fseper.test.data.TestData;
 import ru.fsep.enterprise.fseper.controllers.dto.PostDto;
 import ru.fsep.enterprise.fseper.controllers.dto.UserDto;
 import ru.fsep.enterprise.fseper.models.Post;

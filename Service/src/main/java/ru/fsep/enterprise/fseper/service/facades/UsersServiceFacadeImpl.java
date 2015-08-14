@@ -21,7 +21,7 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
     private UsersDao usersDao;
     @Autowired
     private PostsDao postsDao;
-//    @Autowired
+    @Autowired
     private TasksDao tasksDao;
 
     public void signIn(User user) {

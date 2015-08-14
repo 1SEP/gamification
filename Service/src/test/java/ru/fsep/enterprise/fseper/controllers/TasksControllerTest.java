@@ -16,20 +16,15 @@ import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 import ru.fsep.enterprise.fseper.AppContext;
 import ru.fsep.enterprise.fseper.AppTestContext;
-import ru.fsep.enterprise.fseper.controllers.dto.StepDto;
-import ru.fsep.enterprise.fseper.models.Step;
-import ru.fsep.enterprise.fseper.models.Task;
 import ru.fsep.enterprise.fseper.service.exceptions.TaskNotFoundException;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
-
-import java.util.List;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.fsep.enterprise.fseper.testDatas.TestData.*;
+import static ru.fsep.enterprise.fseper.test.data.TestData.*;
 
 /**
  * Created by Ôëþð on 20.07.2015.
@@ -38,45 +33,43 @@ import static ru.fsep.enterprise.fseper.testDatas.TestData.*;
 @ContextConfiguration(classes = {AppTestContext.class, AppContext.class})
 @WebAppConfiguration
 public class TasksControllerTest {
+
     private MockMvc mockMvc;
+
     @Autowired
     private UsersServiceFacade usersServiceFacade;
+
     @Autowired
     WebApplicationContext context;
-    Task task;
-    int taskId;
+
     final ObjectMapper mapper = new ObjectMapper();
 
     @Before
     public void setUp() throws Exception {
-        task = USER.getTasks().get(0);
-        taskId = task.getId();
         Mockito.reset(usersServiceFacade);
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
         when(usersServiceFacade.getTask(Matchers.anyInt())).thenThrow(new TaskNotFoundException(5));
-        doReturn(task).when(usersServiceFacade).getTask(taskId);
+        doReturn(TASK_1).when(usersServiceFacade).getTask(TASK_1.getId());
     }
 
     @Test
     public void testGetTask() throws Exception {
-        Step step = task.getSteps().get(0);
-        Step step2 = task.getSteps().get(1);
-        mockMvc.perform(get("/tasks/{task-id}.json", taskId).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/tasks/{task-id}.json", TASK_1.getId()).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.id", is(String.valueOf(taskId))))
-                .andExpect(jsonPath("$.data.privated", is(String.valueOf(task.isPrivated()))))
-                .andExpect(jsonPath("$.data.description", is(task.getDescription())))
-                .andExpect(jsonPath("$.data.dueDate", is(String.valueOf(task.getDueDate()))))
-                .andExpect(jsonPath("$.data.steps[0].id", is(String.valueOf(step.getId()))))
-                .andExpect(jsonPath("$.data.steps[0].taskId", is(String.valueOf(step.getTaskId()))))
-                .andExpect(jsonPath("$.data.steps[0].description", is(step.getDescription())))
-                .andExpect(jsonPath("$.data.steps[0].finished", is(String.valueOf(step.isFinished()))))
-                .andExpect(jsonPath("$.data.steps[1].id", is(String.valueOf(step2.getId()))))
-                .andExpect(jsonPath("$.data.steps[1].taskId", is(String.valueOf(step2.getTaskId()))))
-                .andExpect(jsonPath("$.data.steps[1].description", is(step2.getDescription())))
-                .andExpect(jsonPath("$.data.steps[1].finished", is(String.valueOf(step2.isFinished()))))
-                .andExpect(jsonPath("$.data.finished", is(String.valueOf(task.isFinished()))));
-        verify(usersServiceFacade).getTask(taskId);
+                .andExpect(jsonPath("$.data.id", is(String.valueOf(TASK_1.getId()))))
+                .andExpect(jsonPath("$.data.privated", is(String.valueOf(TASK_1.isPrivated()))))
+                .andExpect(jsonPath("$.data.description", is(TASK_1.getDescription())))
+                .andExpect(jsonPath("$.data.dueDate", is(String.valueOf(TASK_1.getDueDate()))))
+                .andExpect(jsonPath("$.data.steps[0].id", is(String.valueOf(STEP_1_OF_TASK_2.getId()))))
+                .andExpect(jsonPath("$.data.steps[0].taskId", is(String.valueOf(STEP_1_OF_TASK_2.getTaskId()))))
+                .andExpect(jsonPath("$.data.steps[0].description", is(STEP_1_OF_TASK_2.getDescription())))
+                .andExpect(jsonPath("$.data.steps[0].finished", is(String.valueOf(STEP_1_OF_TASK_2.isFinished()))))
+                .andExpect(jsonPath("$.data.steps[1].id", is(String.valueOf(STEP_2_OF_TASK_1.getId()))))
+                .andExpect(jsonPath("$.data.steps[1].taskId", is(String.valueOf(STEP_2_OF_TASK_1.getTaskId()))))
+                .andExpect(jsonPath("$.data.steps[1].description", is(STEP_2_OF_TASK_1.getDescription())))
+                .andExpect(jsonPath("$.data.steps[1].finished", is(String.valueOf(STEP_2_OF_TASK_1.isFinished()))))
+                .andExpect(jsonPath("$.data.finished", is(String.valueOf(TASK_1.isFinished()))));
+        verify(usersServiceFacade).getTask(TASK_1.getId());
     }
 
     @Test
@@ -92,11 +85,7 @@ public class TasksControllerTest {
     @Test
     public void testUpdateTask() throws Exception {
         String json = mapper.writeValueAsString(TASK_DTO);
-        List<StepDto> stepDtos = TASK_DTO.getSteps();
-        String stepDtoId = stepDtos.get(0).getId();
-        String stepDtoId2 = stepDtos.get(1).getId();
-        String stepDtoTaskId = stepDtos.get(0).getTaskId();
-        mockMvc.perform(put("/tasks/{task-id}", taskId)
+        mockMvc.perform(put("/tasks/{task-id}", TASK_DTO.getId())
                 .content(json.getBytes())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
@@ -104,75 +93,68 @@ public class TasksControllerTest {
                 .andExpect(jsonPath("$.data.privated", is(TASK_DTO.getPrivated())))
                 .andExpect(jsonPath("$.data.description", is(TASK_DTO.getDescription())))
                 .andExpect(jsonPath("$.data.dueDate", is(TASK_DTO.getDueDate())))
-                .andExpect(jsonPath("$.data.steps[0].id", is(stepDtoId)))
-                .andExpect(jsonPath("$.data.steps[0].taskId", is(stepDtoTaskId)))
-                .andExpect(jsonPath("$.data.steps[0].description", is(stepDtos.get(0).getDescription())))
-                .andExpect(jsonPath("$.data.steps[0].finished", is(stepDtos.get(0).getFinished())))
-                .andExpect(jsonPath("$.data.steps[1].id", is(stepDtoId2)))
-                .andExpect(jsonPath("$.data.steps[1].taskId", is(stepDtoTaskId)))
-                .andExpect(jsonPath("$.data.steps[1].description", is(stepDtos.get(1).getDescription())))
-                .andExpect(jsonPath("$.data.steps[1].finished", is(stepDtos.get(1).getFinished())))
+                .andExpect(jsonPath("$.data.steps[0].id", is(STEP_DTO_1_OF_TASK.getId())))
+                .andExpect(jsonPath("$.data.steps[0].taskId", is(STEP_DTO_1_OF_TASK.getTaskId())))
+                .andExpect(jsonPath("$.data.steps[0].description", is(STEP_DTO_1_OF_TASK.getDescription())))
+                .andExpect(jsonPath("$.data.steps[0].finished", is(STEP_DTO_1_OF_TASK.getFinished())))
+                .andExpect(jsonPath("$.data.steps[1].id", is(STEP_DTO_2_OF_TASK.getId())))
+                .andExpect(jsonPath("$.data.steps[1].taskId", is(STEP_DTO_2_OF_TASK.getTaskId())))
+                .andExpect(jsonPath("$.data.steps[1].description", is(STEP_DTO_2_OF_TASK.getDescription())))
+                .andExpect(jsonPath("$.data.steps[1].finished", is(STEP_DTO_2_OF_TASK.getFinished())))
                 .andExpect(jsonPath("$.data.finished", is(String.valueOf(TASK_DTO.getFinished()))));
     }
 
     @Test
     public void testRemoveTask() throws Exception {
-        mockMvc.perform(delete("/tasks/{task-id}", taskId).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(delete("/tasks/{task-id}", TASK_1.getId()).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-        verify(usersServiceFacade).removeTask(taskId);
+        verify(usersServiceFacade).removeTask(TASK_1.getId());
     }
 
     @Test
     public void testGetSteps() throws Exception {
-        List<Step> steps = task.getSteps();
-        mockMvc.perform(get("/tasks/{task-id}/steps.json", taskId).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(get("/tasks/{task-id}/steps.json", TASK_1.getId()).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data[0].id", is(String.valueOf(steps.get(0).getId()))))
-                .andExpect(jsonPath("$.data[0].taskId", is(String.valueOf(steps.get(0).getTaskId()))))
-                .andExpect(jsonPath("$.data[0].description", is(steps.get(0).getDescription())))
-                .andExpect(jsonPath("$.data[0].finished", is(String.valueOf(steps.get(0).isFinished()))))
-                .andExpect(jsonPath("$.data[1].id", is(String.valueOf(steps.get(1).getId()))))
-                .andExpect(jsonPath("$.data[1].taskId", is(String.valueOf(steps.get(1).getTaskId()))))
-                .andExpect(jsonPath("$.data[1].description", is(steps.get(1).getDescription())))
-                .andExpect(jsonPath("$.data[1].finished", is(String.valueOf(steps.get(1).isFinished()))));
+                .andExpect(jsonPath("$.data[0].id", is(String.valueOf(STEP_1_OF_TASK_2.getId()))))
+                .andExpect(jsonPath("$.data[0].taskId", is(String.valueOf(STEP_1_OF_TASK_2.getTaskId()))))
+                .andExpect(jsonPath("$.data[0].description", is(STEP_1_OF_TASK_2.getDescription())))
+                .andExpect(jsonPath("$.data[0].finished", is(String.valueOf(STEP_1_OF_TASK_2.isFinished()))))
+                .andExpect(jsonPath("$.data[1].id", is(String.valueOf(STEP_2_OF_TASK_1.getId()))))
+                .andExpect(jsonPath("$.data[1].taskId", is(String.valueOf(STEP_2_OF_TASK_1.getTaskId()))))
+                .andExpect(jsonPath("$.data[1].description", is(STEP_2_OF_TASK_1.getDescription())))
+                .andExpect(jsonPath("$.data[1].finished", is(String.valueOf(STEP_2_OF_TASK_1.isFinished()))));
     }
 
     @Test
     public void testGetStep() throws Exception {
-        List<Step> steps = task.getSteps();
-        int stepId = steps.get(0).getId();
-        mockMvc.perform(get("/tasks/{task-id}/steps/{step-id}.json", taskId, stepId)
+        mockMvc.perform(get("/tasks/{task-id}/steps/{step-id}.json", TASK_1.getId(), STEP_1_OF_TASK_2.getId())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.id", is(String.valueOf(stepId))))
-                .andExpect(jsonPath("$.data.taskId", is(String.valueOf(taskId))))
-                .andExpect(jsonPath("$.data.description", is(steps.get(0).getDescription())))
-                .andExpect(jsonPath("$.data.finished", is(String.valueOf(steps.get(0).isFinished()))));
+                .andExpect(jsonPath("$.data.id", is(String.valueOf(STEP_1_OF_TASK_2.getId()))))
+                .andExpect(jsonPath("$.data.taskId", is(String.valueOf(STEP_1_OF_TASK_2.getTaskId()))))
+                .andExpect(jsonPath("$.data.description", is(STEP_1_OF_TASK_2.getDescription())))
+                .andExpect(jsonPath("$.data.finished", is(String.valueOf(STEP_1_OF_TASK_2.isFinished()))));
     }
 
     @Test
     public void testGetStepsByFilter() throws Exception {
-        List<Step> steps = task.getSteps();
-        boolean finished = steps.get(0).isFinished();
-        int stepId = steps.get(0).getId();
-        int stepId2 = steps.get(1).getId();
-        mockMvc.perform(get("/tasks/{task-id}/steps.json/filter={finished}", taskId, finished)
+        mockMvc.perform(get("/tasks/{task-id}/steps.json/filter={finished}", TASK_1.getId(), STEP_1_OF_TASK_2.isFinished())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data[0].id", is(String.valueOf(stepId))))
-                .andExpect(jsonPath("$.data[0].taskId", is(String.valueOf(taskId))))
-                .andExpect(jsonPath("$.data[0].description", is(steps.get(0).getDescription())))
-                .andExpect(jsonPath("$.data[0].finished", is(String.valueOf(steps.get(0).isFinished()))))
-                .andExpect(jsonPath("$.data[1].id", is(String.valueOf(stepId2))))
-                .andExpect(jsonPath("$.data[1].taskId", is(String.valueOf(taskId))))
-                .andExpect(jsonPath("$.data[1].description", is(steps.get(1).getDescription())))
-                .andExpect(jsonPath("$.data[1].finished", is(String.valueOf(steps.get(1).isFinished()))));
+                .andExpect(jsonPath("$.data[0].id", is(String.valueOf(STEP_1_OF_TASK_2.getId()))))
+                .andExpect(jsonPath("$.data[0].taskId", is(String.valueOf(STEP_1_OF_TASK_2.getTaskId()))))
+                .andExpect(jsonPath("$.data[0].description", is(STEP_1_OF_TASK_2.getDescription())))
+                .andExpect(jsonPath("$.data[0].finished", is(String.valueOf(STEP_1_OF_TASK_2.isFinished()))))
+                .andExpect(jsonPath("$.data[1].id", is(String.valueOf(STEP_2_OF_TASK_1.getId()))))
+                .andExpect(jsonPath("$.data[1].taskId", is(String.valueOf(STEP_2_OF_TASK_1.getTaskId()))))
+                .andExpect(jsonPath("$.data[1].description", is(STEP_2_OF_TASK_1.getDescription())))
+                .andExpect(jsonPath("$.data[1].finished", is(String.valueOf(STEP_2_OF_TASK_1.isFinished()))));
     }
 
     @Test
     public void testAddStep() throws Exception {
         String json = mapper.writeValueAsString(STEP_DTO);
-        mockMvc.perform(post("/tasks/{task-id}/steps/assignments", taskId)
+        mockMvc.perform(post("/tasks/{task-id}/steps/assignments", TASK_1.getId())
                 .content(json.getBytes())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated())
@@ -184,10 +166,9 @@ public class TasksControllerTest {
 
     @Test
     public void testUpdateStep() throws Exception {
-        List<Step> steps = task.getSteps();
-        int stepId = steps.get(0).getId();
+        ;
         String json = mapper.writeValueAsString(STEP_DTO);
-        mockMvc.perform(put("/tasks/{task-id}/steps/{step-id}", taskId, stepId)
+        mockMvc.perform(put("/tasks/{task-id}/steps/{step-id}", TASK_1.getId(), STEP_DTO.getId())
                 .content(json.getBytes())
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
@@ -199,9 +180,8 @@ public class TasksControllerTest {
 
     @Test
     public void testRemoveStep() throws Exception {
-        Step step = task.getSteps().get(0);
-        int stepId = step.getId();
-        mockMvc.perform(delete("/tasks/{task-id}/steps/{step-id}", taskId, stepId).contentType(MediaType.APPLICATION_JSON))
+        mockMvc.perform(delete("/tasks/{task-id}/steps/{step-id}", TASK_1.getId(), STEP_1_OF_TASK_2.getId())
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
     }
 }
