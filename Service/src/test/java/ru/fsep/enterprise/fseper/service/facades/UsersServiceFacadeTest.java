@@ -22,7 +22,7 @@ import static org.mockito.Mockito.verify;
  * Created by Ôëþð on 12.07.2015.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AppTestContext.class, AppContext.class})
+@ContextConfiguration(classes = {AppTestContext.class})
 public class UsersServiceFacadeTest {
     User user;
     int userId;
@@ -30,6 +30,7 @@ public class UsersServiceFacadeTest {
     Task task;
     @Autowired
     UsersServiceFacade usersServiceFacade;
+
     @Before
     public void setUp() throws Exception{
    //     usersServiceFacade = mock(UsersServiceFacadeImpl.class);

@@ -119,7 +119,7 @@
         </dependency>
 
         <dependency>
-            <groupId> org.apache.cassandra</groupId>
+            <groupId>org.apache.cassandra</groupId>
             <artifactId>cassandra-all</artifactId>
             <version>0.8.1</version>
 
@@ -135,7 +135,6 @@
             </exclusions>
 
         </dependency>
-
 
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
@@ -167,6 +166,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-
 </project>
