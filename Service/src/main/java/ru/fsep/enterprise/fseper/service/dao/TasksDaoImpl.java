@@ -1,5 +1,6 @@
 package ru.fsep.enterprise.fseper.service.dao;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
@@ -20,20 +21,17 @@ import static java.util.Arrays.asList;
 @Repository
 public class TasksDaoImpl implements TasksDao {
 
-
-    public TasksDaoImpl(DaoArgumentsVerifier verifier, ParamsMapper paramsMapper, SqlQueryExecutor sqlQueryExecutor) {
-        this.verifier = verifier;
-        this.paramsMapper = paramsMapper;
-        this.sqlQueryExecutor = sqlQueryExecutor;
-    }
-
+    @Autowired
     private DaoArgumentsVerifier verifier;
 
-
+    @Autowired
     private ParamsMapper paramsMapper;
 
-
+    @Autowired
     private SqlQueryExecutor sqlQueryExecutor;
+
+    public TasksDaoImpl() {
+    }
 
     static final String SQL_GET_TASKS_BY_ID =
             "SELECT * FROM task WHERE (id = :taskId)";
