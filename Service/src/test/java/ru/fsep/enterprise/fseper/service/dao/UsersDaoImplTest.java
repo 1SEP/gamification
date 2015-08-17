@@ -17,7 +17,7 @@ import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
-import static ru.fsep.enterprise.fseper.service.dao.TestData.*;
+import static ru.fsep.enterprise.fseper.test.data.TestDataForUserDao.*;
 import static ru.fsep.enterprise.fseper.service.dao.UsersDaoImpl.*;
 
 public class UsersDaoImplTest {

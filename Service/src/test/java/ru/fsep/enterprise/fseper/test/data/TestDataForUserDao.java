@@ -1,11 +1,10 @@
-package ru.fsep.enterprise.fseper.service.dao;
-
+package ru.fsep.enterprise.fseper.test.data;
 import ru.fsep.enterprise.fseper.models.*;
 
 import java.net.URL;
 import java.util.*;
 
-public class TestData {
+public class TestDataForUserDao {
 
     public static final int USER_ID = 0;
     public static final int INCORRECT_USER_ID = 2;
@@ -118,3 +117,5 @@ public class TestData {
         return steps;
     }
 }
+
+

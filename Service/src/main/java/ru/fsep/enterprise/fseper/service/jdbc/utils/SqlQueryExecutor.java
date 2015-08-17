@@ -4,6 +4,9 @@ import org.springframework.jdbc.core.RowMapper;
 
 import java.util.List;
 import java.util.Map;
+/**
+ * Created by дыў№ on 09.07.2015.
+ */
 
 public interface SqlQueryExecutor {
     <T> List<T> queryForObjects(String sql, RowMapper<T> rowMapper);

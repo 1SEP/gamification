@@ -10,4 +10,5 @@ public interface DaoArgumentsVerifier {
     void verifyTask(int taskId);
     void verifyPostById(int postId);
     void verifyPost(Post post);
+    void verifyAssignment(int userId, int taskId);
 }

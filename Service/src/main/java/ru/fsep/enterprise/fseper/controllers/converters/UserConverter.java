@@ -14,11 +14,11 @@ public interface UserConverter {
     UserDto fromUser(User entity);
     UsersDto fromUsers(List<User> entities);
     PostDto fromPost(Post entity);
-    PostsDto fromPosts(List<Post> entities);
+    List<PostDto>  fromPosts(List<Post> entities);
     PersonInfoDto fromPersonInfo(PersonInfo entity);
     User toUser(UserDto dto);
     List<User> toUsers(UsersDto dto);
     Post toPost(PostDto dto);
-    List<Post> toPosts(PostsDto dtos);
+    List<Post> toPosts(List<PostDto>  dtos);
     PersonInfo toPersonInfo (PersonInfoDto dto);
 }

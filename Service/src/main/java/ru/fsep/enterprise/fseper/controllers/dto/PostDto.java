@@ -1,6 +1,7 @@
 package ru.fsep.enterprise.fseper.controllers.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.google.common.base.Objects;
 import com.inspiresoftware.lib.dto.geda.annotations.Dto;
 import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
 
@@ -18,10 +19,40 @@ public class PostDto {
     @DtoField
     private String name;
 
+    public PostDto(String id, String name, String description) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(id, name, description);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final PostDto other = (PostDto) obj;
+        return Objects.equal(this.id, other.id)
+                && Objects.equal(this.name, other.name)
+                && Objects.equal(this.description, other.description);
+    }
+
+    public PostDto() {
+
+    }
+
     @DtoField
     private String description;
 
     public String getId() {
+
         return id;
     }
 

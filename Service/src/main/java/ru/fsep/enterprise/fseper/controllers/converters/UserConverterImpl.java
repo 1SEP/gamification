@@ -61,6 +61,7 @@ public class UserConverterImpl implements UserConverter {
     };
 
     private final Assembler postAssembler = DTOAssembler.newAssembler(PostDto.class, Post.class);
+    private final Assembler personInfoAssembler = DTOAssembler.newAssembler(PersonInfoDto.class, PersonInfo.class);
 
     public PostDto fromPost(Post entity) {
         PostDto postDto = new PostDto();
@@ -71,14 +72,12 @@ public class UserConverterImpl implements UserConverter {
         return postDto;
     }
 
-    public PostsDto fromPosts(List<Post> entities) {
+    public List<PostDto> fromPosts(List<Post> entities) {
         List<PostDto> postsDto = new LinkedList<PostDto>();
         for (Post post : entities) {
             postsDto.add(fromPost(post));
         }
-        PostsDto postsDtoOut = new PostsDto();
-        postsDtoOut.setPosts(postsDto);
-        return postsDtoOut;
+        return postsDto;
     }
 
     public PersonInfoDto fromPersonInfo(PersonInfo entity) {
@@ -87,26 +86,21 @@ public class UserConverterImpl implements UserConverter {
         adapter.put(DOUBLE_TO_STR_ADAPTER_NAME, doubleToStringConverter);
         adapter.put(URL_TO_STR_ADAPTER_NAME, urlToStringConverter);
 
-        BeanFactory bean = new BeanFactory() {
-            public Class getClazz(String s) {
-                return null;
-            }
-
-            public Object get(String s) {
-                return null;
-            }
-        };
-        postAssembler.assembleDto(PIDto, entity, adapter, bean);
+        personInfoAssembler.assembleDto(PIDto, entity, adapter, null);
         PIDto.setPosts(fromPosts(entity.getPosts()));
+        PIDto.setFirstName(entity.getFirstName());
+        PIDto.setLastName(entity.getLastName());
+        PIDto.setBirthday(entity.getBirthday());
+        PIDto.setRole(entity.getRole());
         return PIDto;
     }
 
     public UserDto fromUser(User entity) {
-        UserDto userDto = new UserDto();
-        userDto.setId(String.valueOf(entity.getId()));
-        userDto.setPersonInfo(fromPersonInfo(entity.getPersonInfo()));
         TasksAndStepsConverterImpl converterForTask = new TasksAndStepsConverterImpl();
-        userDto.setTasks(converterForTask.fromTasks(entity.getTasks()));
+        UserDto userDto = new UserDto(String.valueOf(entity.getId()),
+                converterForTask.fromTasks(entity.getTasks()),
+                fromPersonInfo(entity.getPersonInfo()));
+
         return userDto;
     }
 
@@ -135,9 +129,9 @@ public class UserConverterImpl implements UserConverter {
 //        Posts posts = new Posts();
 //        List<Post> listPost = new LinkedList<Post>();
 
-    public List<Post> toPosts(PostsDto dtos) {
+    public List<Post> toPosts(List<PostDto> dtos) {
         List<Post> posts = new LinkedList<Post>();
-        for (PostDto postDto : dtos.getPosts()) {
+        for (PostDto postDto : dtos) {
             posts.add(toPost(postDto));
         }
         return posts;

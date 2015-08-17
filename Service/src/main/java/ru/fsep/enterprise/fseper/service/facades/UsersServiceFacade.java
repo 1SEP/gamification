@@ -11,6 +11,7 @@ import java.util.List;
 /**
  * Created by Ôëþð on 06.07.2015.
  */
+
 public interface UsersServiceFacade {
     void signIn(User user);
     void signUp(User user);
@@ -34,5 +35,4 @@ public interface UsersServiceFacade {
     List<Task> getPrivatedTasks(int userId);
     List<Task> getFinishedTasks(int userId);
     List<Task> getTasksByDate(int usersId, Date date);
-
 }

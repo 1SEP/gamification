@@ -30,9 +30,10 @@ public class PersonInfo {
 
     private URL photo;
 
-    public PersonInfo(){}
+    public PersonInfo() {
+    }
 
-    public PersonInfo(String firstName, String lastName, double rating, String birthday,List<Post> posts, String role, URL photo) {
+    public PersonInfo(String firstName, String lastName, double rating, String birthday, List<Post> posts, String role, URL photo) {
         this.firstName = firstName;
         this.lastName = lastName;
         this.rating = rating;
@@ -68,6 +69,34 @@ public class PersonInfo {
 
     public URL getPhoto() {
         return photo;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setRating(double rating) {
+        this.rating = rating;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public void setPosts(List<Post> posts) {
+        this.posts = posts;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public void setPhoto(URL photo) {
+        this.photo = photo;
     }
 
     @Override

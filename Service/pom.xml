@@ -1,4 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE project [
+        <!ELEMENT project (modelVersion|groupId|artifactId|version|dependencies)*>
+        <!ATTLIST project
+                xmlns CDATA #REQUIRED
+                xmlns:xsi CDATA #REQUIRED
+                xsi:schemaLocation CDATA #REQUIRED>
+        <!ELEMENT modelVersion (#PCDATA)>
+        <!ELEMENT groupId (#PCDATA)>
+        <!ELEMENT artifactId (#PCDATA)>
+        <!ELEMENT version (#PCDATA)>
+        <!ELEMENT dependencies (dependency)*>
+        <!ELEMENT dependency (groupId|artifactId|version|scope|exclusions)*>
+        <!ELEMENT scope (#PCDATA)>
+        <!ELEMENT exclusions (exclusion)*>
+        <!ELEMENT exclusion (groupId|artifactId)*>
+        ]>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -119,7 +135,7 @@
         </dependency>
 
         <dependency>
-            <groupId> org.apache.cassandra</groupId>
+            <groupId>org.apache.cassandra</groupId>
             <artifactId>cassandra-all</artifactId>
             <version>0.8.1</version>
 
@@ -136,11 +152,11 @@
 
         </dependency>
 
-
         <dependency>
             <groupId>com.jayway.jsonpath</groupId>
             <artifactId>json-path-parent</artifactId>
-            <version>1.1.0</version>
+            <version>2.0.0</version>
+
         </dependency>
 
         <dependency>
@@ -168,6 +184,4 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-
-
 </project>

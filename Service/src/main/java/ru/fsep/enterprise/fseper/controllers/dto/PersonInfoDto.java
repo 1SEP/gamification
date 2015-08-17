@@ -1,8 +1,13 @@
 package ru.fsep.enterprise.fseper.controllers.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.google.common.base.MoreObjects;
+import com.google.common.base.Objects;
 import com.inspiresoftware.lib.dto.geda.annotations.Dto;
 import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
+import ru.fsep.enterprise.fseper.models.Post;
+
+import java.util.List;
 
 /**
  * Created by Fedorov on 15.07.2015.
@@ -12,27 +17,62 @@ import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
 @Dto
 public class PersonInfoDto {
 
-    @DtoField
+    //@DtoField
     private String firstName;
 
-    @DtoField
+    //@DtoField
     private String lastName;
 
     @DtoField (converter = "DoubleToString")
     private String rating;
 
-    @DtoField
+    //@DtoField
     private String birthday;
 
-    @DtoField
+    //@DtoField
     private String role;
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(firstName, lastName, rating, birthday, role, photo, posts);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        final PersonInfoDto other = (PersonInfoDto) obj;
+        return Objects.equal(this.firstName, other.firstName)
+                && Objects.equal(this.lastName, other.lastName)
+                && Objects.equal(this.rating, other.rating)
+                && Objects.equal(this.birthday, other.birthday)
+                && Objects.equal(this.role, other.role)
+                && Objects.equal(this.photo, other.photo)
+                && Objects.equal(this.posts, other.posts);
+    }
 
     @DtoField (converter = "UrlToString")
     private String photo;
 
+    //@DtoField (value = "instruktions", converter = "PostsToPostsDto", readOnly = true)
+    private List<PostDto> posts;
 
-    @DtoField (value = "instruktions", converter = "PostsToPostsDto", readOnly = true)
-    private   PostsDto posts;
+    public PersonInfoDto() {
+    }
+
+    public PersonInfoDto(String firstName, String lastName, String rating, String birthday, String role, String photo, List<PostDto> posts) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.rating = rating;
+        this.birthday = birthday;
+        this.role = role;
+        this.photo = photo;
+        this.posts = posts;
+    }
 
     public String getFirstName() {
         return firstName;
@@ -82,11 +122,24 @@ public class PersonInfoDto {
         this.photo = photo;
     }
 
-    public PostsDto getPosts() {
+    public List<PostDto> getPosts() {
         return posts;
     }
 
-    public void setPosts(PostsDto posts) {
+    public void setPosts(List<PostDto> posts) {
         this.posts = posts;
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("firstName", firstName)
+                .add("lastName", lastName)
+                .add("rating", rating)
+                .add("birthday", birthday)
+                .add("role", role)
+                .add("photo", photo)
+                .add("posts", posts)
+                .toString();
     }
 }
