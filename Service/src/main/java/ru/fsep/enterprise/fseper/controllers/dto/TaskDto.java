@@ -15,17 +15,21 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Dto
 public class TaskDto {
-    @DtoField  (converter = "IntegerAndStringConvert")
+    @DtoField(converter = "IntegerAndStringConvert")
     private String id;
-    @DtoField (converter = "BooleanAndStringConvert")
+
+    @DtoField(converter = "BooleanAndStringConvert")
     private String privated;
+
     @DtoField
     private String description;
-    @DtoField (converter = "DateAndStringConvert")
+
+    @DtoField(converter = "DateAndStringConvert")
     private String dueDate;
 
     private List<StepDto> steps;
-    @DtoField (converter = "BooleanAndStringConvert")
+
+    @DtoField(converter = "BooleanAndStringConvert")
     private String finished;
 
     public String getId() {

@@ -1,5 +1,7 @@
 package ru.fsep.enterprise.fseper.service.jdbc.utils;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ru.fsep.enterprise.fseper.models.Post;
 import ru.fsep.enterprise.fseper.models.User;
 import ru.fsep.enterprise.fseper.service.exceptions.PostsNotFoundException;
@@ -9,10 +11,12 @@ import ru.fsep.enterprise.fseper.service.exceptions.UserNotFoundException;
 import java.util.Map;
 
 import static java.util.Arrays.asList;
-
+@Component
 public class DaoArgumentsVerifierImpl implements DaoArgumentsVerifier {
-
+    @Autowired
     private SqlQueryExecutor sqlQueryExecutor;
+
+    @Autowired
     private ParamsMapper paramsMapper;
     //language=SQL
     private static final String SQL_COUNT_OF_ASSIGNMENTS_BY_IDS =

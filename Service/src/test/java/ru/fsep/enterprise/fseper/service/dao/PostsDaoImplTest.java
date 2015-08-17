@@ -20,7 +20,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static ru.fsep.enterprise.fseper.service.dao.PostsDaoImpl.POST_ROW_MAPPER;
 import static ru.fsep.enterprise.fseper.service.dao.PostsDaoImpl.SQL_GET_POSTS;
-import static ru.fsep.enterprise.fseper.testDatas.TestDataForUserDao.*;
+import static ru.fsep.enterprise.fseper.test.data.TestDataForUserDao.*;
 
 public class PostsDaoImplTest {
 

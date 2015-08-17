@@ -1,4 +1,4 @@
-package ru.fsep.enterprise.fseper.testDatas;
+package ru.fsep.enterprise.fseper.test.data;
 
 import ru.fsep.enterprise.fseper.controllers.dto.*;
 import ru.fsep.enterprise.fseper.models.*;
@@ -12,9 +12,19 @@ import java.util.*;
  */
 public class TestData {
     public static final User USER = new User(1, initAuthData(), initPersonInfo(), initTasks());
-    public static final User SECOND_USER = new User(2, initAuthData(), initPersonInfo(), initTasksToSecondUser());
+    public static final Task TASK_1 = USER.getTasks().get(0);
+    public static final Step STEP_1_OF_TASK_1 = TASK_1.getSteps().get(0);
+    public static final Step STEP_2_OF_TASK_1 = TASK_1.getSteps().get(1);
+
+    public static final Task TASK_2 = USER.getTasks().get(1);
+    public static final Step STEP_1_OF_TASK_2 = TASK_2.getSteps().get(0);
+    public static final Step STEP_2_OF_TASK_2 = TASK_2.getSteps().get(1);
+
     public static final StepDto STEP_DTO = initStepDto("3", "2", "step of steps", "false");
+
     public static final TaskDto TASK_DTO = initTaskDto();
+    public static final StepDto STEP_DTO_1_OF_TASK = TASK_DTO.getSteps().get(0);
+    public static final StepDto STEP_DTO_2_OF_TASK = TASK_DTO.getSteps().get(1);
 
     static private final URL photo = null;
     static private final String surname = "Komarov";
@@ -27,6 +37,7 @@ public class TestData {
     static private final String postName2 = "Team Lead";
     static private final String postDescription2 = "He is mentor of developer's crew";
 
+
     static public StepDto initStepDto(String id, String taskId, String Description, String Finished) {
         StepDto stepDto = new StepDto();
         stepDto.setId(id);
@@ -38,8 +49,6 @@ public class TestData {
 
     static public TaskDto initTaskDto() {
 
-//        Calendar c = Calendar.getInstance();
-//        Date date = c.getTime();
         Date date = new Date();
         SimpleDateFormat format = new SimpleDateFormat("dd.mm.yyyy hh:mm");
         String s = String.valueOf(format.format(date));
@@ -59,7 +68,7 @@ public class TestData {
 
     }
 
-    static public List<TaskDto> initTasksDto(){
+    static public List<TaskDto> initTasksDto() {
         List<TaskDto> listOfTasks = new LinkedList<TaskDto>();
         listOfTasks.add(initTaskDto());
         TasksDto tasksDto = new TasksDto();
@@ -95,13 +104,9 @@ public class TestData {
         tasks.add(new Task(4, true, description, date, initSteps(), false));
         return tasks;
     }
+
     static public PersonInfo initPersonInfo() {
         PersonInfo personInfo;
-//        try {
-//            photo = new URL("C:\\Users\\Flyur\\gamification\\Service\\src\\test\\java\\resources");
-//        } catch (MalformedURLException e) {
-//            e.printStackTrace();
-//        }
         personInfo = new PersonInfo(surname, name, 8.8, birthDay, initPosts(), role, null);
         return personInfo;
     }
@@ -119,22 +124,22 @@ public class TestData {
         return steps;
     }
 
-    static public User initUser(){
-        return new User (0 ,null, initPersonInfo(), initTasks());
+    static public User initUser() {
+        return new User(0, null, initPersonInfo(), initTasks());
     }
 
-    static public List<PostDto>  initPostsDto() {
+    static public List<PostDto> initPostsDto() {
         List<PostDto> listOfPostDto = new LinkedList<PostDto>();
         listOfPostDto.add(new PostDto("1", postName1, postDescription1));
         listOfPostDto.add(new PostDto("2", postName2, postDescription2));
         return listOfPostDto;
     }
 
-    static public PersonInfoDto initPersonInfoDto(){
-        return new PersonInfoDto(surname, name ,"8.8" , birthDay, role, null, initPostsDto());
+    static public PersonInfoDto initPersonInfoDto() {
+        return new PersonInfoDto(surname, name, "8.8", birthDay, role, null, initPostsDto());
     }
 
-    static public UserDto initUserDto(){
+    static public UserDto initUserDto() {
         return new UserDto("1", initTasksDto(), initPersonInfoDto());
     }
 

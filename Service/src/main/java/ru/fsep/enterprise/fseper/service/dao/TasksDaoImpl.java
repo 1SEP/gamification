@@ -1,7 +1,9 @@
 package ru.fsep.enterprise.fseper.service.dao;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 import ru.fsep.enterprise.fseper.models.Task;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.DaoArgumentsVerifier;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.ParamsMapper;
@@ -15,24 +17,21 @@ import static java.util.Arrays.asList;
 
 /**
  * Created by ramil on 09.07.2015.
-
  */
+@Repository
 public class TasksDaoImpl implements TasksDao {
 
-
-    public TasksDaoImpl(DaoArgumentsVerifier verifier, ParamsMapper paramsMapper, SqlQueryExecutor sqlQueryExecutor) {
-        this.verifier = verifier;
-        this.paramsMapper = paramsMapper;
-        this.sqlQueryExecutor = sqlQueryExecutor;
-    }
-
+    @Autowired
     private DaoArgumentsVerifier verifier;
 
-
+    @Autowired
     private ParamsMapper paramsMapper;
 
-
+    @Autowired
     private SqlQueryExecutor sqlQueryExecutor;
+
+    public TasksDaoImpl() {
+    }
 
     static final String SQL_GET_TASKS_BY_ID =
             "SELECT * FROM task WHERE (id = :taskId)";
@@ -60,7 +59,6 @@ public class TasksDaoImpl implements TasksDao {
             "SELECT finished FROM task WHERE (id = :taskId)";
 
 
-
     public static final RowMapper<Task> USER_ROW_MAPPER = new BeanPropertyRowMapper<Task>(Task.class);
 
 
@@ -84,7 +82,7 @@ public class TasksDaoImpl implements TasksDao {
     public List<Task> getTasksByDate(int taskId, Date date) {
         verifier.verifyTask(taskId);
         Map<String, Object> paramMap = paramsMapper.asMap(asList("taskId", "due_data"), asList(taskId, date));
-        List<Task> task =  sqlQueryExecutor.queryForObjects(SQL_GET_TASK_BY_DATE, paramMap, USER_ROW_MAPPER);
+        List<Task> task = sqlQueryExecutor.queryForObjects(SQL_GET_TASK_BY_DATE, paramMap, USER_ROW_MAPPER);
         return task;
     }
 
@@ -109,14 +107,14 @@ public class TasksDaoImpl implements TasksDao {
     public List<Task> getPrivatedTasks(int taskId) {
         verifier.verifyTask(taskId);
         Map<String, Object> paramMap = paramsMapper.asMap(asList("taskId"), asList(taskId));
-        List<Task> task =  sqlQueryExecutor.queryForObjects(SQL_GET_PRIVATED, paramMap , USER_ROW_MAPPER);
+        List<Task> task = sqlQueryExecutor.queryForObjects(SQL_GET_PRIVATED, paramMap, USER_ROW_MAPPER);
         return task;
     }
 
     public List<Task> getFinishedTasks(int taskId) {
         verifier.verifyTask(taskId);
         Map<String, Object> paramMap = paramsMapper.asMap(asList("taskId"), asList(taskId));
-        List<Task> task =  sqlQueryExecutor.queryForObjects(SQL_GET_FINISHED, paramMap , USER_ROW_MAPPER);
+        List<Task> task = sqlQueryExecutor.queryForObjects(SQL_GET_FINISHED, paramMap, USER_ROW_MAPPER);
         return task;
     }
 }

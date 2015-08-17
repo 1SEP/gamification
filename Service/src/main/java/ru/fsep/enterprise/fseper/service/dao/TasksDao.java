@@ -11,11 +11,18 @@ import java.util.List;
 public interface TasksDao {
 
     void assignmentTask(Task task, int taskId);
+
     Task getTask(int taskId);
+
     Task updateTask(Task task);
+
     void removeTask(int taskId);
+
     List<Task> getTasks(int userId);
+
     List<Task> getPrivatedTasks(int userId);
+
     List<Task> getFinishedTasks(int userId);
+
     List<Task> getTasksByDate(int usersId, Date date);
 }

@@ -1,5 +1,6 @@
 package ru.fsep.enterprise.fseper.service.dao;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import ru.fsep.enterprise.fseper.models.AuthData;
@@ -20,9 +21,13 @@ import static java.util.Arrays.asList;
 
 @Repository
 public class UsersDaoImpl implements UsersDao {
-
+    @Autowired
     private SqlQueryExecutor sqlQueryExecutor;
+
+    @Autowired
     private ParamsMapper paramsMapper;
+
+    @Autowired
     private DaoArgumentsVerifier daoArgumentsVerifier;
 
     public UsersDaoImpl() {

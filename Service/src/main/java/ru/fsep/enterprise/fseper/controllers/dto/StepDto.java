@@ -14,10 +14,13 @@ import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
 public class StepDto {
     @DtoField(converter = "IntegerAndStringConvert")
     private String id;
+
     @DtoField(converter = "IntegerAndStringConvert")
     private String taskId;
+
     @DtoField
     private String description;
+
     @DtoField(converter = "BooleanAndStringConvert")
     private String finished;
 

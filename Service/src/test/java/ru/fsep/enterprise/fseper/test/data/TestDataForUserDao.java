@@ -1,4 +1,4 @@
-package ru.fsep.enterprise.fseper.testDatas;
+package ru.fsep.enterprise.fseper.test.data;
 import ru.fsep.enterprise.fseper.models.*;
 
 import java.net.URL;

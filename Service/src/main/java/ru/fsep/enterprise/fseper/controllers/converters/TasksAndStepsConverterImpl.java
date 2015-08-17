@@ -92,6 +92,7 @@ public class TasksAndStepsConverterImpl implements TasksAndStepsConverter {
         stepAssembler.assembleDto(stepDto, entity, adapters, null);
         return stepDto;
     }
+
     public List<StepDto> fromSteps(List<Step> entities) {
         List<StepDto> stepDtos = new LinkedList<StepDto>();
         for (Step step : entities) {
