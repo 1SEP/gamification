@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Matchers;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -18,11 +19,15 @@ import ru.fsep.enterprise.fseper.AppContext;
 import ru.fsep.enterprise.fseper.AppTestContext;
 import ru.fsep.enterprise.fseper.models.Task;
 import ru.fsep.enterprise.fseper.models.User;
+import ru.fsep.enterprise.fseper.service.exceptions.TaskNotFoundException;
+import ru.fsep.enterprise.fseper.service.exceptions.UserNotFoundException;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
 
 import java.util.List;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
+import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -43,11 +48,12 @@ public class UserControllerTest {
     private UsersServiceFacade usersServiceFacade;
     @Autowired
     WebApplicationContext context;
-
     final ObjectMapper mapper = new ObjectMapper();
 
     @Before
     public void setUp() throws Exception {
+        User user = USER;
+        int userId = user.getId();
         Mockito.reset(usersServiceFacade);
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
     }
@@ -56,7 +62,6 @@ public class UserControllerTest {
     public void testGetUserById() throws Exception {
         User user = USER;
         int userId = user.getId();
-        List<Task> listOfTask = user.getTasks();
 
         when(usersServiceFacade.getUser(userId)).thenReturn(user);
         //when(usersServiceFacade.getTasks(userId)).thenReturn(listOfTask);
@@ -71,6 +76,17 @@ public class UserControllerTest {
                 .andExpect(jsonPath("$.data.personInfo.posts[0].name", is("It director")));
                 //.andExpect(jsonPath("$.data.tasks.privated", is("true")));
         verify(usersServiceFacade).getUser(userId);
+    }
+
+    @Test
+    public void testGetUserWithIncorrectId() throws Exception{
+        User user = USER;
+        int userId = user.getId();
+        //doReturn(user).when(usersServiceFacade).getTask(userId);
+        when(usersServiceFacade.getUser(userId)).thenReturn(user);
+        when(usersServiceFacade.getUser(Matchers.anyInt())).thenThrow(new UserNotFoundException(5));
+        mockMvc.perform(get("/user/{user-id}.json", 5).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isNotFound());
     }
 
     @Test
@@ -100,7 +116,11 @@ public class UserControllerTest {
 
     @Test
     public void testGetTask() throws Exception {
+        User user = USER;
+        String json = mapper.writeValueAsString(user);
 
+        mockMvc.perform(post("/user/", user).content(json.getBytes()).contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated());
     }
 
 
@@ -121,8 +141,11 @@ public class UserControllerTest {
 
     @Test
     public void testDeleteUserById() throws Exception {
-        int userId = 1;
+        User user = USER;
+        int userId = user.getId();
+        when(usersServiceFacade.getUser(userId)).thenReturn(user);
         mockMvc.perform(delete("/user/{user-id}", userId).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk());
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.data.login", is("login")));
     }
 }
