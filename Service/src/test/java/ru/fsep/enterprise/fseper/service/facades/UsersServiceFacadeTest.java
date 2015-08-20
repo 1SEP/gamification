@@ -8,13 +8,13 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.fsep.enterprise.fseper.AppTestContext;
 import ru.fsep.enterprise.fseper.models.Post;
-import ru.fsep.enterprise.fseper.test.data.TestData;
+import ru.fsep.enterprise.fseper.test.data.TestDataCore;
 
 import java.util.Date;
 import java.util.List;
 
 import static org.mockito.Mockito.verify;
-import static ru.fsep.enterprise.fseper.test.data.TestData.*;
+import static ru.fsep.enterprise.fseper.test.data.TestDataCore.*;
 /**
  * Created by Ôëþð on 12.07.2015.
  */
@@ -81,7 +81,7 @@ public class UsersServiceFacadeTest {
 
     @Test
     public void partOfPostService() throws Exception {
-        Post post = TestData.USER.getPersonInfo().getPosts().get(0);
+        Post post = TestDataCore.USER.getPersonInfo().getPosts().get(0);
 
         int postId = post.getId();
         usersServiceFacade.addPost(post, USER.getId());

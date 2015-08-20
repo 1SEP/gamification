@@ -34,7 +34,9 @@ import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.fsep.enterprise.fseper.test.data.TestData.*;
+import static ru.fsep.enterprise.fseper.test.data.TestDataAPI.*;
+import static ru.fsep.enterprise.fseper.test.data.TestDataCore.*;
+
 
 /**
  * Author Fedorov Juriy on 24.07.2015

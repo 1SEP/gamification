@@ -30,6 +30,7 @@ public class SqlQueryExecutorImpl implements SqlQueryExecutor {
     }
 
     public <T> List<T> queryForObjects(String sql, Map<String, Object> paramMap, RowMapper<T> rowMapper) {
+
         return namedParameterJdbcTemplate.query(sql, paramMap, rowMapper);
     }
 

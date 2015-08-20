@@ -2,7 +2,9 @@ package ru.fsep.enterprise.fseper.controllers.converters;
 
 import org.junit.Before;
 import org.junit.Test;
-import ru.fsep.enterprise.fseper.test.data.TestData;
+import ru.fsep.enterprise.fseper.test.data.TestDataCore;
+import ru.fsep.enterprise.fseper.test.data.TestDataAPI;
+
 import ru.fsep.enterprise.fseper.controllers.dto.PostDto;
 import ru.fsep.enterprise.fseper.controllers.dto.UserDto;
 import ru.fsep.enterprise.fseper.models.Post;
@@ -24,7 +26,7 @@ public class UserConverterImplTest {
     public void setUp() throws Exception {
         userConverter = new UserConverterImpl();
         taskConverter = new TasksAndStepsConverterImpl();
-        user = TestData.USER;
+        user = TestDataCore.USER;
     }
 
     @Test
@@ -48,7 +50,7 @@ public class UserConverterImplTest {
 
     @Test
     public void testFromUser() throws Exception {
-        User user = TestData.USER;
+        User user = TestDataCore.USER;
         userConverterMock = mock(UserConverter.class);
         taskConverter = mock(TasksAndStepsConverter.class);
 
@@ -57,7 +59,7 @@ public class UserConverterImplTest {
 
         UserDto actual;
         actual = userConverter.fromUser(user);
-        UserDto expected = TestData.initUserDto();
+        UserDto expected = TestDataAPI.initUserDto();
         assertEquals(expected, actual);
 
     }

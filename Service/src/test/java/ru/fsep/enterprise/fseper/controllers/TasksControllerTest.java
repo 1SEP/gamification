@@ -24,7 +24,8 @@ import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-import static ru.fsep.enterprise.fseper.test.data.TestData.*;
+import static ru.fsep.enterprise.fseper.test.data.TestDataAPI.*;
+import static ru.fsep.enterprise.fseper.test.data.TestDataCore.*;
 
 /**
  * Created by Ôëþð on 20.07.2015.
