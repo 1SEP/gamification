@@ -86,9 +86,9 @@ public class UsersDaoImpl implements UsersDao {
                 //TODO
             }
 
-            List<Post> posts = new ArrayList<>();
+            List<Post> posts = new ArrayList<Post>();
             //TODO
-            List<Task> tasks = new ArrayList<>();
+            List<Task> tasks = new ArrayList<Task>();
             //TODO
 
             return new User(id, new AuthData(password_hash, login),
