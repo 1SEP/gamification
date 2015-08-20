@@ -7,7 +7,7 @@
     <groupId>ru.fsep.enterprise.fseper</groupId>
     <artifactId>core</artifactId>
     <version>1.0-SNAPSHOT</version>
-
+    <packaging>war</packaging>
     <dependencies>
 
         <dependency>
@@ -106,13 +106,12 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.5.2</version>
         </dependency>
-        <dependency>
 
+        <dependency>
             <groupId>ch.qos.logback</groupId>
             <artifactId>logback-classic</artifactId>
             <version>0.9.24</version>
