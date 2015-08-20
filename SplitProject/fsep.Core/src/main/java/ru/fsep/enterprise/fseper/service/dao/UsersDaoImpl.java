@@ -45,7 +45,7 @@ public class UsersDaoImpl implements UsersDao {
     public static final String SQL_DELETE_USER_BY_ID = "DELETE FROM users WHERE id = :userId;";
     //language=SQL
     public static final String SQL_UPDATE_USER = "UPDATE users SET first_name = :firstName, last_name = :lastName, " +
-            "birthday = :birthday, rating = :rating, photo = :photo, role = :role, login = :login, " +
+            "birthday = :birthday, rating = :rating, photo = :photo, user_role = :role, login = :login, " +
             "password_hash = :password WHERE id = :userId;";
     //language=SQL
     public static final String SQL_GET_ALL_USERS = "SELECT * FROM users;";
@@ -56,7 +56,7 @@ public class UsersDaoImpl implements UsersDao {
             "AND last_name = :lastName);";
     //language=SQL
     public static final String SQL_INSERT_USER = "INSERT INTO users(first_name, last_name, birthday, rating, " +
-            "photo, role, login, password_hash) " +
+            "photo, user_role, login, password_hash) " +
             "VALUES (:firstName, :lastName, :birthday, :rating, :photo, :role, :login, :password);";
     //language=SQL
     public static final String SQL_GET_ALL_SORTED_USERS_BY_RATING = "SELECT * FROM users ORDER BY rating;";

@@ -26,7 +26,7 @@ public class SqlQueryExecutorImplTest {
     ParamsMapperJDBCImpl paramsMapperTest;
 
     //language=SQL
-    private final String TEST_SQL_GET_USER_BY_ID = "SELECT * FROM users WHERE  id = :userId";
+    private final String TEST_SQL_GET_USER_BY_ID = "SELECT * FROM users WHERE  id = :userId;";
     //language=SQL
     private final String TEST_SQL_GET_ALL_USERS = "SELECT * FROM users;";
     //language=SQL
