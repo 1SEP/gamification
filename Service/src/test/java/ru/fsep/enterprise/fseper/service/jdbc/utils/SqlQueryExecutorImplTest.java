@@ -10,7 +10,9 @@ import ru.fsep.enterprise.fseper.models.AuthData;
 import ru.fsep.enterprise.fseper.models.PersonInfo;
 import ru.fsep.enterprise.fseper.models.User;
 
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -97,7 +99,8 @@ public class SqlQueryExecutorImplTest {
         double rating = 100.0;
         URL photo = null;
         String role = "cpp-dev";
-        PersonInfo personInfo = new PersonInfo(firstName, lastName, rating, birthday, null, role, photo);
+        PersonInfo personInfo = new PersonInfo(firstName, lastName, rating, birthday, Collections.EMPTY_LIST, role,
+                photo);
         String login = "ivanovLogin";
         String passwordHash = "Ivanov_password_hash";
         AuthData authData = new AuthData(login, passwordHash);
@@ -135,7 +138,7 @@ public class SqlQueryExecutorImplTest {
         double rating = 99.0;
         URL photo = null;
         String role = "ruby-dev";
-        PersonInfo personInfo = new PersonInfo(firstName, lastName, rating, birthday, null, role, photo);
+        PersonInfo personInfo = new PersonInfo(firstName, lastName, rating, birthday, Collections.EMPTY_LIST, role, photo);
         String login = "mishaLogin";
         String passwordHash = "Misha_password_hash";
         AuthData authData = new AuthData(login, passwordHash);

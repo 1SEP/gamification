@@ -77,7 +77,7 @@ public class TestDataForUserDao {
         description = "He is mentor of developer's crew";
         posts.add(new Post(2, post, description));
 
-        return null;
+        return Collections.EMPTY_LIST;
     }
 
     static public List<Task> initTasks() {

@@ -3,17 +3,17 @@ package ru.fsep.enterprise.fseper.service.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import ru.fsep.enterprise.fseper.models.AuthData;
-import ru.fsep.enterprise.fseper.models.PersonInfo;
-import ru.fsep.enterprise.fseper.models.Post;
-import ru.fsep.enterprise.fseper.models.User;
+import ru.fsep.enterprise.fseper.models.*;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.DaoArgumentsVerifier;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.ParamsMapper;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.SqlQueryExecutor;
 
+import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Array;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -77,12 +77,22 @@ public class UsersDaoImpl implements UsersDao {
             String last_name = rs.getString("last_name");
             double rating = rs.getDouble("rating");
             String birthday = rs.getString("birthday");
-            List<Post> posts = null;
             String role = rs.getString("user_role");
-            URL photo = rs.getURL("photo");
+
+            URL photo = null;
+            try {
+                photo = new URL(rs.getString("photo"));
+            } catch (MalformedURLException e) {
+                //TODO
+            }
+
+            List<Post> posts = new ArrayList<>();
+            //TODO
+            List<Task> tasks = new ArrayList<>();
+            //TODO
 
             return new User(id, new AuthData(password_hash, login),
-                    new PersonInfo(first_name, last_name, rating, birthday, posts, role, photo), null);
+                    new PersonInfo(first_name, last_name, rating, birthday, posts, role, photo), tasks);
         }
     };
 

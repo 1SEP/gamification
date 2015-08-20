@@ -14,7 +14,7 @@ hs_err_pid*
 .project
 .classpath
 .springBeans
-/*/target/
+**/target/
 /commit.txt
 /*/logs/
 /*/wrk/
