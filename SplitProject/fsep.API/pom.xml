@@ -23,10 +23,7 @@
         <!--</plugin>-->
     <!--</plugins>-->
 
-
-
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>api</artifactId>
     <packaging>war</packaging>
 
@@ -66,7 +63,6 @@
     </build>
 
     <dependencies>
-
         <dependency>
             <groupId>jstl</groupId>
             <artifactId>jstl</artifactId>

@@ -18,17 +18,11 @@ import org.springframework.web.context.WebApplicationContext;
 import ru.fsep.enterprise.fseper.AppContext;
 import ru.fsep.enterprise.fseper.AppTestContext;
 import ru.fsep.enterprise.fseper.controllers.converters.TasksAndStepsConverterImpl;
-import ru.fsep.enterprise.fseper.models.Task;
 import ru.fsep.enterprise.fseper.models.User;
-import ru.fsep.enterprise.fseper.service.exceptions.TaskNotFoundException;
 import ru.fsep.enterprise.fseper.service.exceptions.UserNotFoundException;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
 
-import java.util.List;
-
-import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.Matchers.is;
-import static org.mockito.Mockito.doReturn;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -53,13 +47,11 @@ public class UserControllerTest {
 
     @Autowired
     WebApplicationContext context;
-<<<<<<< HEAD
-=======
 
     @Autowired
     TasksAndStepsConverterImpl tasksAndStepsConverter;
 
->>>>>>> db6818bd43898ce542cdf9199b9bcd81e7a81d57
+
     final ObjectMapper mapper = new ObjectMapper();
 
     @Before
@@ -91,7 +83,7 @@ public class UserControllerTest {
     }
 
     @Test
-    public void testGetUserWithIncorrectId() throws Exception{
+    public void testGetUserWithIncorrectId() throws Exception {
         User user = USER;
         int userId = user.getId();
         //doReturn(user).when(usersServiceFacade).getTask(userId);
@@ -129,70 +121,67 @@ public class UserControllerTest {
     }
 
     @Test
-<<<<<<< HEAD
     public void testGetTask() throws Exception {
         User user = USER;
         String json = mapper.writeValueAsString(user);
 
         mockMvc.perform(post("/user/", user).content(json.getBytes()).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
-=======
-    public void testGetTasks() throws Exception {
-        when(usersServiceFacade.getTasks(USER.getId())).thenReturn(USER.getTasks());
-        mockMvc.perform(get("/user/{user-id}/tasks.json", USER.getId()).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data[0].id", is(String.valueOf(1))))
-                .andExpect(jsonPath("$.data[0].privated", is(String.valueOf(TASK_1.isPrivated()))))
-                .andExpect(jsonPath("$.data[0].description", is(TASK_1.getDescription())))
-                .andExpect(jsonPath("$.data[0].dueDate", is(String.valueOf(TASK_1.getDueDate()))))
-                .andExpect(jsonPath("$.data[0].steps[0].id", is(String.valueOf(STEP_1_OF_TASK_1.getId()))))
-                .andExpect(jsonPath("$.data[0].steps[0].taskId", is(String.valueOf(STEP_1_OF_TASK_1.getTaskId()))))
-                .andExpect(jsonPath("$.data[0].steps[0].description", is(STEP_1_OF_TASK_1.getDescription())))
-                .andExpect(jsonPath("$.data[0].steps[0].finished", is(String.valueOf(STEP_1_OF_TASK_1.isFinished()))))
-                .andExpect(jsonPath("$.data[0].steps[1].id", is(String.valueOf(STEP_2_OF_TASK_1.getId()))))
-                .andExpect(jsonPath("$.data[0].steps[1].taskId", is(String.valueOf(STEP_2_OF_TASK_1.getTaskId()))))
-                .andExpect(jsonPath("$.data[0].steps[1].description", is(STEP_2_OF_TASK_1.getDescription())))
-                .andExpect(jsonPath("$.data[0].steps[1].finished", is(String.valueOf(STEP_2_OF_TASK_1.isFinished()))))
-                .andExpect(jsonPath("$.data[0].finished", is(String.valueOf(TASK_1.isFinished()))))
-                .andExpect(jsonPath("$.data[1].id", is(String.valueOf(2))))
-                .andExpect(jsonPath("$.data[1].privated", is(String.valueOf(TASK_2.isPrivated()))))
-                .andExpect(jsonPath("$.data[1].description", is(TASK_2.getDescription())))
-                .andExpect(jsonPath("$.data[1].dueDate", is(String.valueOf(TASK_2.getDueDate()))))
-                .andExpect(jsonPath("$.data[1].steps[0].id", is(String.valueOf(STEP_1_OF_TASK_2.getId()))))
-                .andExpect(jsonPath("$.data[1].steps[0].taskId", is(String.valueOf(STEP_1_OF_TASK_2.getTaskId()))))
-                .andExpect(jsonPath("$.data[1].steps[0].description", is(STEP_1_OF_TASK_2.getDescription())))
-                .andExpect(jsonPath("$.data[1].steps[0].finished", is(String.valueOf(STEP_1_OF_TASK_2.isFinished()))))
-                .andExpect(jsonPath("$.data[1].steps[1].id", is(String.valueOf(STEP_2_OF_TASK_2.getId()))))
-                .andExpect(jsonPath("$.data[1].steps[1].taskId", is(String.valueOf(STEP_2_OF_TASK_2.getTaskId()))))
-                .andExpect(jsonPath("$.data[1].steps[1].description", is(STEP_2_OF_TASK_2.getDescription())))
-                .andExpect(jsonPath("$.data[1].steps[1].finished", is(String.valueOf(STEP_2_OF_TASK_2.isFinished()))))
-                .andExpect(jsonPath("$.data[1].finished", is(String.valueOf(TASK_2.isFinished()))));
->>>>>>> db6818bd43898ce542cdf9199b9bcd81e7a81d57
+        public void testGetTasks ()throws Exception {
+            when(usersServiceFacade.getTasks(USER.getId())).thenReturn(USER.getTasks());
+            mockMvc.perform(get("/user/{user-id}/tasks.json", USER.getId()).contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.data[0].id", is(String.valueOf(1))))
+                    .andExpect(jsonPath("$.data[0].privated", is(String.valueOf(TASK_1.isPrivated()))))
+                    .andExpect(jsonPath("$.data[0].description", is(TASK_1.getDescription())))
+                    .andExpect(jsonPath("$.data[0].dueDate", is(String.valueOf(TASK_1.getDueDate()))))
+                    .andExpect(jsonPath("$.data[0].steps[0].id", is(String.valueOf(STEP_1_OF_TASK_1.getId()))))
+                    .andExpect(jsonPath("$.data[0].steps[0].taskId", is(String.valueOf(STEP_1_OF_TASK_1.getTaskId()))))
+                    .andExpect(jsonPath("$.data[0].steps[0].description", is(STEP_1_OF_TASK_1.getDescription())))
+                    .andExpect(jsonPath("$.data[0].steps[0].finished", is(String.valueOf(STEP_1_OF_TASK_1.isFinished()))))
+                    .andExpect(jsonPath("$.data[0].steps[1].id", is(String.valueOf(STEP_2_OF_TASK_1.getId()))))
+                    .andExpect(jsonPath("$.data[0].steps[1].taskId", is(String.valueOf(STEP_2_OF_TASK_1.getTaskId()))))
+                    .andExpect(jsonPath("$.data[0].steps[1].description", is(STEP_2_OF_TASK_1.getDescription())))
+                    .andExpect(jsonPath("$.data[0].steps[1].finished", is(String.valueOf(STEP_2_OF_TASK_1.isFinished()))))
+                    .andExpect(jsonPath("$.data[0].finished", is(String.valueOf(TASK_1.isFinished()))))
+                    .andExpect(jsonPath("$.data[1].id", is(String.valueOf(2))))
+                    .andExpect(jsonPath("$.data[1].privated", is(String.valueOf(TASK_2.isPrivated()))))
+                    .andExpect(jsonPath("$.data[1].description", is(TASK_2.getDescription())))
+                    .andExpect(jsonPath("$.data[1].dueDate", is(String.valueOf(TASK_2.getDueDate()))))
+                    .andExpect(jsonPath("$.data[1].steps[0].id", is(String.valueOf(STEP_1_OF_TASK_2.getId()))))
+                    .andExpect(jsonPath("$.data[1].steps[0].taskId", is(String.valueOf(STEP_1_OF_TASK_2.getTaskId()))))
+                    .andExpect(jsonPath("$.data[1].steps[0].description", is(STEP_1_OF_TASK_2.getDescription())))
+                    .andExpect(jsonPath("$.data[1].steps[0].finished", is(String.valueOf(STEP_1_OF_TASK_2.isFinished()))))
+                    .andExpect(jsonPath("$.data[1].steps[1].id", is(String.valueOf(STEP_2_OF_TASK_2.getId()))))
+                    .andExpect(jsonPath("$.data[1].steps[1].taskId", is(String.valueOf(STEP_2_OF_TASK_2.getTaskId()))))
+                    .andExpect(jsonPath("$.data[1].steps[1].description", is(STEP_2_OF_TASK_2.getDescription())))
+                    .andExpect(jsonPath("$.data[1].steps[1].finished", is(String.valueOf(STEP_2_OF_TASK_2.isFinished()))))
+                    .andExpect(jsonPath("$.data[1].finished", is(String.valueOf(TASK_2.isFinished()))));
+        }
+
+
+        @Test
+        public void testUpdateUserById ()throws Exception {
+            User user = USER;
+            user.getPersonInfo().setRole("new role");
+            int userId = user.getId();
+
+            String json = mapper.writeValueAsString(user);
+            mockMvc.perform(put("/user/{user-id}", userId, user).content(json.getBytes())
+                    .contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.data.id", is("1")))
+                    .andExpect(jsonPath("$.data.personInfo.birthday", is("13.12.1990")));
+
+        }
+
+        @Test
+        public void testDeleteUserById ()throws Exception {
+            User user = USER;
+            int userId = user.getId();
+            when(usersServiceFacade.getUser(userId)).thenReturn(user);
+            mockMvc.perform(delete("/user/{user-id}", userId).contentType(MediaType.APPLICATION_JSON))
+                    .andExpect(status().isOk())
+                    .andExpect(jsonPath("$.data.login", is("login")));
+        }
     }
-
-
-    @Test
-    public void testUpdateUserById() throws Exception {
-        User user = USER;
-        user.getPersonInfo().setRole("new role");
-        int userId = user.getId();
-
-        String json = mapper.writeValueAsString(user);
-        mockMvc.perform(put("/user/{user-id}", userId, user).content(json.getBytes())
-                .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.id", is("1")))
-                .andExpect(jsonPath("$.data.personInfo.birthday", is("13.12.1990")));
-
-    }
-
-    @Test
-    public void testDeleteUserById() throws Exception {
-        User user = USER;
-        int userId = user.getId();
-        when(usersServiceFacade.getUser(userId)).thenReturn(user);
-        mockMvc.perform(delete("/user/{user-id}", userId).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data.login", is("login")));
-    }
-}
