@@ -1,6 +1,7 @@
 package ru.fsep.enterprise.fseper.test.data;
 import ru.fsep.enterprise.fseper.models.*;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 
@@ -77,7 +78,7 @@ public class TestDataForUserDao {
         description = "He is mentor of developer's crew";
         posts.add(new Post(2, post, description));
 
-        return null;
+        return Collections.EMPTY_LIST;
     }
 
     static public List<Task> initTasks() {
@@ -94,6 +95,11 @@ public class TestDataForUserDao {
 
     static public PersonInfo initPersonInfo() {
         URL photo = null;
+        try {
+            photo = new URL("http://cs627828.vk.me/v627828952/1121a/dVYbT2kT7ps.jpg");
+        } catch (MalformedURLException e) {
+            throw new IllegalArgumentException(e);
+        }
         String surname = "Almakayev";
         String name = "Ildar";
         String birthDay = "1991-12-31";

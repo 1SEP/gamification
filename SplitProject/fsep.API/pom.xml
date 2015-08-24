@@ -39,12 +39,20 @@
             <!--<groupId>org.springframework.boot</groupId>-->
             <!--<artifactId>spring-boot-starter-thymeleaf</artifactId>-->
         <!--</dependency>-->
+<<<<<<< HEAD
         <!-- tag::security[] -->
+=======
+        <!--&lt;!&ndash; tag::security[] &ndash;&gt;-->
+>>>>>>> 0f34be9997a7046ecd2545bc7c3c1a3be2fbc100
         <!--<dependency>-->
             <!--<groupId>org.springframework.boot</groupId>-->
             <!--<artifactId>spring-boot-starter-security</artifactId>-->
         <!--</dependency>-->
+<<<<<<< HEAD
         <!-- end::security[] -->
+=======
+        <!--&lt;!&ndash; end::security[] &ndash;&gt;-->
+>>>>>>> 0f34be9997a7046ecd2545bc7c3c1a3be2fbc100
 
         <dependency>
             <groupId>ru.fsep.enterprise.fseper</groupId>

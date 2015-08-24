@@ -27,14 +27,14 @@ public class AppContext extends WebMvcConfigurerAdapter {
     public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
-//        String userName = " ";
-//        String password = " ";
-//        String dbUrl = "";
-//        String driverClassName = " ";
-//        dataSource.setUsername(userName);
-//        dataSource.setPassword(password);
-//        dataSource.setUrl(dbUrl);
-//        dataSource.setDriverClassName(driverClassName);
+        String userName = "lqcbqfvsdadqgx";
+        String password = "3sRCuOUA5BykbMTFMaE639sc3l";
+        String dbUrl = "jdbc:postgresql://ec2-107-22-175-206.compute-1.amazonaws.com:5432/d26p0f71d1ckne?ssl=true&sslfactory=org.postgresql.ssl.NonValidatingFactory";
+        String driverClassName = "org.postgresql.Driver";
+        dataSource.setUsername(userName);
+        dataSource.setPassword(password);
+        dataSource.setUrl(dbUrl);
+        dataSource.setDriverClassName(driverClassName);
 
         return dataSource;
     }

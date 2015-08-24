@@ -3,17 +3,16 @@ package ru.fsep.enterprise.fseper.service.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import ru.fsep.enterprise.fseper.models.AuthData;
-import ru.fsep.enterprise.fseper.models.PersonInfo;
-import ru.fsep.enterprise.fseper.models.Post;
-import ru.fsep.enterprise.fseper.models.User;
+import ru.fsep.enterprise.fseper.models.*;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.DaoArgumentsVerifier;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.ParamsMapper;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.SqlQueryExecutor;
 
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
@@ -44,9 +43,15 @@ public class UsersDaoImpl implements UsersDao {
     //language=SQL
     public static final String SQL_DELETE_USER_BY_ID = "DELETE FROM users WHERE id = :userId;";
     //language=SQL
+<<<<<<< HEAD
     public static final String SQL_UPDATE_USER = "UPDATE users SET first_name = :firstName, last_name = :lastName, " +
-            "birthday = :birthday, rating = :rating, photo = :photo, role = :role, login = :login, " +
+            "birthday = :birthday, rating = :rating, photo = :photo, user_role = :role, login = :login, " +
             "password_hash = :password WHERE id = :userId;";
+=======
+    public static final String SQL_UPDATE_USER = "UPDATE users SET first_name = :firstName, last_name = :lastName, birthday = :birthday, " +
+            "rating = :rating, photo = :photo, login = :login, user_role = :role, password_hash = :password WHERE id = :userId";
+
+>>>>>>> 8c38ea5d358ecb9d81015234827a6c4a955609f0
     //language=SQL
     public static final String SQL_GET_ALL_USERS = "SELECT * FROM users;";
     //language=SQL
@@ -55,9 +60,15 @@ public class UsersDaoImpl implements UsersDao {
     public static final String SQL_GET_ALL_USERS_BY_NAME = "SELECT * FROM users WHERE (first_name = :firstName " +
             "AND last_name = :lastName);";
     //language=SQL
+<<<<<<< HEAD
     public static final String SQL_INSERT_USER = "INSERT INTO users(first_name, last_name, birthday, rating, " +
-            "photo, role, login, password_hash) " +
+            "photo, user_role, login, password_hash) " +
             "VALUES (:firstName, :lastName, :birthday, :rating, :photo, :role, :login, :password);";
+=======
+    public static final String SQL_INSERT_USER = "INSERT INTO users (first_name, last_name, birthday, rating, photo, user_role, " +
+            "login, password_hash)" +
+            " VALUES (:firstName, :lastName, :birthday, :rating, :photo, :role, :login, :password);";
+>>>>>>> 8c38ea5d358ecb9d81015234827a6c4a955609f0
     //language=SQL
     public static final String SQL_GET_ALL_SORTED_USERS_BY_RATING = "SELECT * FROM users ORDER BY rating;";
     //language=SQL
@@ -77,12 +88,21 @@ public class UsersDaoImpl implements UsersDao {
             String last_name = rs.getString("last_name");
             double rating = rs.getDouble("rating");
             String birthday = rs.getString("birthday");
-            List<Post> posts = null;
             String role = rs.getString("user_role");
-            URL photo = rs.getURL("photo");
+
+            List<Post> posts = Collections.emptyList();
+
+            URL photo = null;
+            try {
+                photo = new URL(rs.getString("photo"));
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
+
+            List<Task> tasks = Collections.EMPTY_LIST;
 
             return new User(id, new AuthData(password_hash, login),
-                    new PersonInfo(first_name, last_name, rating, birthday, posts, role, photo), null);
+                    new PersonInfo(first_name, last_name, rating, birthday, posts, role, photo), tasks);
         }
     };
 
@@ -103,7 +123,7 @@ public class UsersDaoImpl implements UsersDao {
 
         Map<String, Object> paramMap = paramsMapper.asMap(asList("firstName", "lastName", "birthday",
                         "rating", "photo", "role", "login", "password"),
-                asList(firstName, lastName, birthday, rating, photo, role, login, passwordHash));
+                asList(firstName, lastName, birthday, rating, photo.toString(), role, login, passwordHash));
         sqlQueryExecutor.updateQuery(SQL_INSERT_USER, paramMap);
     }
 
@@ -132,7 +152,7 @@ public class UsersDaoImpl implements UsersDao {
 
         Map<String, Object> paramMap = paramsMapper.asMap(asList("userId", "firstName", "lastName", "birthday",
                         "rating", "photo", "role", "login", "password"),
-                asList(userId, firstName, lastName, birthday, rating, photo, role, login, passwordHash));
+                asList(userId, firstName, lastName, birthday, rating, photo.toString(), role, login, passwordHash));
         sqlQueryExecutor.updateQuery(SQL_UPDATE_USER, paramMap);
         return user;
     }
