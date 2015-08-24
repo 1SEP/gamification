@@ -43,15 +43,10 @@ public class UsersDaoImpl implements UsersDao {
     //language=SQL
     public static final String SQL_DELETE_USER_BY_ID = "DELETE FROM users WHERE id = :userId;";
     //language=SQL
-<<<<<<< HEAD
     public static final String SQL_UPDATE_USER = "UPDATE users SET first_name = :firstName, last_name = :lastName, " +
             "birthday = :birthday, rating = :rating, photo = :photo, user_role = :role, login = :login, " +
             "password_hash = :password WHERE id = :userId;";
-=======
-    public static final String SQL_UPDATE_USER = "UPDATE users SET first_name = :firstName, last_name = :lastName, birthday = :birthday, " +
-            "rating = :rating, photo = :photo, login = :login, user_role = :role, password_hash = :password WHERE id = :userId";
 
->>>>>>> 8c38ea5d358ecb9d81015234827a6c4a955609f0
     //language=SQL
     public static final String SQL_GET_ALL_USERS = "SELECT * FROM users;";
     //language=SQL
@@ -60,15 +55,10 @@ public class UsersDaoImpl implements UsersDao {
     public static final String SQL_GET_ALL_USERS_BY_NAME = "SELECT * FROM users WHERE (first_name = :firstName " +
             "AND last_name = :lastName);";
     //language=SQL
-<<<<<<< HEAD
     public static final String SQL_INSERT_USER = "INSERT INTO users(first_name, last_name, birthday, rating, " +
             "photo, user_role, login, password_hash) " +
             "VALUES (:firstName, :lastName, :birthday, :rating, :photo, :role, :login, :password);";
-=======
-    public static final String SQL_INSERT_USER = "INSERT INTO users (first_name, last_name, birthday, rating, photo, user_role, " +
-            "login, password_hash)" +
-            " VALUES (:firstName, :lastName, :birthday, :rating, :photo, :role, :login, :password);";
->>>>>>> 8c38ea5d358ecb9d81015234827a6c4a955609f0
+
     //language=SQL
     public static final String SQL_GET_ALL_SORTED_USERS_BY_RATING = "SELECT * FROM users ORDER BY rating;";
     //language=SQL
