@@ -8,14 +8,22 @@
         <version>1.0-SNAPSHOT</version>
         <relativePath>../fsep.Parent/pom.xml</relativePath>
     </parent>
-    <!--<parent>-->
-        <!--<groupId>org.springframework.boot</groupId>-->
-        <!--<artifactId>spring-boot-starter-parent</artifactId>-->
-        <!--<version>1.2.5.RELEASE</version>-->
-    <!--</parent>-->
+
+
+    <!--<plugins>-->
+        <!--<plugin>-->
+            <!--<groupid>org.codehaus.mojo</groupid>-->
+            <!--<artifactid>tomcat-maven-plugin</artifactid>-->
+            <!--<version>1.0-beta-1</version>-->
+            <!--<configuration>-->
+                <!--<path>/</path>-->
+                <!--<url>http://localhost:8080/manager</url>-->
+                <!--<server>localhost</server>-->
+            <!--</configuration>-->
+        <!--</plugin>-->
+    <!--</plugins>-->
 
     <modelVersion>4.0.0</modelVersion>
-
     <artifactId>api</artifactId>
     <packaging>war</packaging>
 
@@ -23,18 +31,45 @@
         <java.version>1.8</java.version>
     </properties>
 
-
     <build>
+        <finalName>fsep.enterprise.fseper</finalName>
+
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.2</version>
             </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>tomcat-maven-plugin</artifactId>
+                <version>1.0-beta-1</version>
+            </plugin>
+
+            <!--<plugin>-->
+                <!--<groupid>org.codehaus.mojo</groupid>-->
+                <!--<artifactid>tomcat-maven-plugin</artifactid>-->
+                <!--<version>1.0-beta-1</version>-->
+                <!--<configuration>-->
+                    <!--<path>/</path>-->
+                    <!--<url>http://localhost:8080/manager</url>-->
+                    <!--<server>localhost</server>-->
+                <!--</configuration>-->
+            <!--</plugin>-->
+
         </plugins>
+
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>jstl</groupId>
+            <artifactId>jstl</artifactId>
+            <version>1.2</version>
+        </dependency>
 
+<<<<<<< HEAD
         <!--<dependency>-->
             <!--<groupId>org.springframework.boot</groupId>-->
             <!--<artifactId>spring-boot-starter-thymeleaf</artifactId>-->
@@ -47,6 +82,13 @@
         <!--</dependency>-->
         <!-- end::security[] -->
         <!--&lt;!&ndash; end::security[] &ndash;&gt;-->
+=======
+        <dependency>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-war-plugin</artifactId>
+            <version>2.1.1</version>
+        </dependency>
+>>>>>>> 6c31e3621d822fa52f4620b013292ac30b3f128d
 
         <dependency>
             <groupId>ru.fsep.enterprise.fseper</groupId>
