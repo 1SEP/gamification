@@ -69,7 +69,6 @@
             <version>1.2</version>
         </dependency>
 
-<<<<<<< HEAD
         <!--<dependency>-->
             <!--<groupId>org.springframework.boot</groupId>-->
             <!--<artifactId>spring-boot-starter-thymeleaf</artifactId>-->
@@ -82,13 +81,11 @@
         <!--</dependency>-->
         <!-- end::security[] -->
         <!--&lt;!&ndash; end::security[] &ndash;&gt;-->
-=======
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-war-plugin</artifactId>
             <version>2.1.1</version>
         </dependency>
->>>>>>> 6c31e3621d822fa52f4620b013292ac30b3f128d
 
         <dependency>
             <groupId>ru.fsep.enterprise.fseper</groupId>
