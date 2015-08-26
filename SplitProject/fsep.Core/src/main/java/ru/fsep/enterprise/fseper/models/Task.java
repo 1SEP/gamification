@@ -27,7 +27,15 @@ public class Task {
     private boolean finished;
 
     public Task() {
+    }
 
+    public Task(int id, boolean privated, String description, Date dueDate, List<Step> steps, boolean finished) {
+        this.id = id;
+        this.privated = privated;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.steps = steps;
+        this.finished = finished;
     }
 
     public void setId(int id) {
@@ -51,7 +59,6 @@ public class Task {
     }
 
     public int getId() {
-
         return id;
     }
 
@@ -68,7 +75,6 @@ public class Task {
     }
 
 
-
     public List<Step> getSteps() {
         return steps;
     }
@@ -79,15 +85,6 @@ public class Task {
 
     public void setSteps(List<Step> steps) {
         this.steps = steps;
-    }
-
-    public Task(int id, boolean privated, String description, Date dueDate, List<Step> steps, boolean finished) {
-        this.id = id;
-        this.privated = privated;
-        this.description = description;
-        this.dueDate = dueDate;
-        this.steps = steps;
-        this.finished = finished;
     }
 
     @Override

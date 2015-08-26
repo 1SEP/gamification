@@ -3,6 +3,8 @@ package ru.fsep.enterprise.fseper.service.dao;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.springframework.test.context.ContextConfiguration;
+import ru.fsep.enterprise.fseper.AppContext;
 import ru.fsep.enterprise.fseper.models.Post;
 import ru.fsep.enterprise.fseper.service.exceptions.PostsNotFoundException;
 import ru.fsep.enterprise.fseper.service.exceptions.UserNotFoundException;
@@ -14,14 +16,13 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
-import static org.mockito.Mockito.doReturn;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static ru.fsep.enterprise.fseper.service.dao.PostsDaoImpl.POST_ROW_MAPPER;
 import static ru.fsep.enterprise.fseper.service.dao.PostsDaoImpl.SQL_GET_POSTS;
 import static ru.fsep.enterprise.fseper.test.data.TestDataForUserDao.*;
 
+@ContextConfiguration(classes = {AppContext.class})
 public class PostsDaoImplTest {
 
     private PostsDaoImpl postsDaoImplTest;

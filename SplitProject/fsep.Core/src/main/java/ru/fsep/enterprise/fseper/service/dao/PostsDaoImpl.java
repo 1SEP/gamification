@@ -1,6 +1,6 @@
 package ru.fsep.enterprise.fseper.service.dao;
 
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import ru.fsep.enterprise.fseper.models.Post;
@@ -8,6 +8,8 @@ import ru.fsep.enterprise.fseper.service.jdbc.utils.DaoArgumentsVerifier;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.ParamsMapper;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.SqlQueryExecutor;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
@@ -15,16 +17,14 @@ import static java.util.Arrays.asList;
 
 @Repository
 public class PostsDaoImpl implements PostsDao {
-//    @Autowired
+    @Autowired
     private SqlQueryExecutor sqlQueryExecutor;
 
-//    @Autowired
+    @Autowired
     private ParamsMapper paramsMapper;
 
-//    @Autowired
+    @Autowired
     private DaoArgumentsVerifier daoArgumentsVerifier;
-
-    public static final RowMapper<Post> POST_ROW_MAPPER = new BeanPropertyRowMapper<Post>(Post.class);
 
     public PostsDaoImpl() {
     }
@@ -34,6 +34,15 @@ public class PostsDaoImpl implements PostsDao {
         this.paramsMapper = paramsMapper;
         this.daoArgumentsVerifier = daoArgumentsVerifier;
     }
+
+    public static final RowMapper<Post> POST_ROW_MAPPER = new RowMapper<Post>() {
+        public Post mapRow(ResultSet rs, int rowNum) throws SQLException {
+            int id = rs.getInt("id");
+            String name = rs.getString("name");
+            String description = rs.getString("description");
+            return new Post(id, name, description);
+        }
+    };
 
     //language=SQL
     static final String SQL_ADD_POST = "INSERT INTO post(id, name, description) " +
