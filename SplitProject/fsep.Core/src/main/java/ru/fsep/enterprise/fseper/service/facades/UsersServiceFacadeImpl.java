@@ -58,11 +58,6 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
         return usersDao.getSortedUsersByName();
     }
 
-
-    public List<User> getSortedUsers() {
-        return usersDao.getSortedUsersByName();
-    }
-
     public List<User> getSortedUsersByRating() {
         return usersDao.getSortedUsersByRating();
     }
@@ -83,7 +78,7 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
 
     }
 
-    public Step updateStep(int taskId, int stepId, Step step) {
+    public Step updateStep(int taskId, Step step) {
         return null;
     }
 

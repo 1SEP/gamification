@@ -20,8 +20,6 @@ public interface UsersServiceFacade {
     Task updateTask(Task task);
     void removeTask(int taskId);
     Tasks getTasks(int userId);
-    Tasks getTasksByPrivatedFilter(int userId, boolean privated);
-    Tasks getTasksByFinishedFilter(int userId, boolean finished);
     Tasks getTasksByDate(int usersId, Date date);
 
     void signUp(User user);
@@ -39,6 +37,6 @@ public interface UsersServiceFacade {
     Step getStep(int taskId, int stepId);
     Steps getStepsByFinishedFilter(int taskId, boolean finished);
     void addStep(int taskId, Step step);
-    Step updateStep(int taskId, int stepId, Step step);
+    Step updateStep(int taskId, Step step);
     void removeStep(int taskId, int stepId);
 }

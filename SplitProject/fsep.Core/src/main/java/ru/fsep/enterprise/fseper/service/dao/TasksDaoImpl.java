@@ -101,12 +101,12 @@ public class TasksDaoImpl implements TasksDao {
     public Tasks getTasksByDate(int taskId, Date date) {
         verifier.verifyTask(taskId);
         Map<String, Object> paramMap = paramsMapper.asMap(asList("taskId", "due_data"), asList(taskId, date));
-<<<<<<< HEAD
+
         List<Task> tasksList = sqlQueryExecutor.queryForObjects(SQL_GET_TASK_BY_DATE, paramMap, USER_ROW_MAPPER);
         Tasks tasks = new Tasks(tasksList);
-=======
+
         List<Task> tasks = sqlQueryExecutor.queryForObjects(SQL_GET_TASKS_BY_DATE, paramMap, TASK_ROW_MAPPER);
->>>>>>> a79b63c22a666c8ec0dde03703178e8e4e28a15f
+
         return tasks;
     }
 
@@ -125,7 +125,7 @@ public class TasksDaoImpl implements TasksDao {
         sqlQueryExecutor.updateQuery(SQL_DELETE_FROM_TASK_BY_ID, paramMap);
     }
 
-<<<<<<< HEAD
+
     public Tasks getTasks(int userId) {
         return null;
     }
