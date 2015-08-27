@@ -15,17 +15,19 @@ import java.util.List;
 import java.util.Map;
 
 import static java.util.Arrays.asList;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
-import static ru.fsep.enterprise.fseper.service.dao.StepsDaoImpl.SQL_GET_STEP;
-import static ru.fsep.enterprise.fseper.service.dao.StepsDaoImpl.STEPS_ROW_MAPPER;
+import static ru.fsep.enterprise.fseper.service.dao.StepsDaoImpl.*;
 import static ru.fsep.enterprise.fseper.test.data.TestDataForTaskDao.INCORRECT_TASK_ID;
 import static ru.fsep.enterprise.fseper.test.data.TestDataForTaskDao.TASK_ID;
 
 public class StepsDaoImplTest {
 
-    StepsDao stepsDao;
+    private Step testStep;
+    private StepsDao stepsDao;
+    private Steps testSteps;
     @Mock
     SqlQueryExecutor sqlQueryExecutor;
     @Mock
@@ -37,12 +39,16 @@ public class StepsDaoImplTest {
         doThrow(TaskNotFoundException.class).when(argumentsVerifier).verifyTask(INCORRECT_TASK_ID);
 
         List<Step> testStepsList = new ArrayList<Step>();
-        Step testStep = new Step(1, TASK_ID, "test_description", true);
+        testStep = new Step(1, TASK_ID, "test_description", true);
         testStepsList.add(testStep);
+
         Map<String, Object> testParamMap = paramsMapper.asMap(asList("taskId"), asList(TASK_ID));
 
         doReturn(testStepsList).when(sqlQueryExecutor).queryForObjects(StepsDaoImpl.SQL_GET_STEPS_BY_TASKID, testParamMap, STEPS_ROW_MAPPER);
         doReturn(testStep).when(sqlQueryExecutor).queryForObject(SQL_GET_STEP, testParamMap, STEPS_ROW_MAPPER);
+        doReturn(testStepsList).when(sqlQueryExecutor).queryForObjects(SQL_GET_ALL_FINISHED_STEPS, testParamMap, STEPS_ROW_MAPPER);
+
+        testSteps = new Steps(testStepsList);
     }
 
     @Before
@@ -67,27 +73,35 @@ public class StepsDaoImplTest {
 
     @Test
     public void testGetStep() throws Exception {
-        Step step = stepsDao.getStep(TASK_ID, 1);
-        
+        Step actual = stepsDao.getStep(TASK_ID, 1);
+        Step expected = new Step(1, TASK_ID, "test_description", true);
+        assertEquals(expected, actual);
     }
 
     @Test
     public void testAdd() throws Exception {
-        stepsDao.addStep(TASK_ID, null);
+        Step step = new Step(1, TASK_ID, "test_description", true);
+        stepsDao.addStep(TASK_ID, step);
+        verify(argumentsVerifier).verifyTask(TASK_ID);
     }
 
     @Test
     public  void testRemove() throws Exception {
-
+        int testStepId = 1;
+        stepsDao.removeStep(TASK_ID, testStepId);
+        verify(argumentsVerifier).verifyTask(TASK_ID);
     }
 
     @Test
     public void testUpdate() throws Exception {
-
+        Step testStep = new Step(1, TASK_ID, "test_description", true);
+        Step actual = stepsDao.updateStep(TASK_ID, testStep);
+        assertEquals(testStep, actual);
     }
 
     @Test
-    public void testgetStepsByFinishedFilter() throws Exception {
-
+    public void testGetStepsByFinishedFilter() throws Exception {
+        Steps actual = stepsDao.getStepsByFinishedFilter(TASK_ID, true);
+        assertNotNull(actual);
     }
 }
