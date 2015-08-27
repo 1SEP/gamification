@@ -33,6 +33,9 @@ public class TasksDaoImpl implements TasksDao {
     @Autowired
     private SqlQueryExecutor sqlQueryExecutor;
 
+    @Autowired
+    StepsDao stepsDao;
+
     public TasksDaoImpl() {
     }
 
@@ -40,6 +43,7 @@ public class TasksDaoImpl implements TasksDao {
         this.sqlQueryExecutor = sqlQueryExecutor;
         this.paramsMapper = paramsMapper;
         this.verifier = verifier;
+        stepsDao = new StepsDaoImpl(sqlQueryExecutor, paramsMapper, verifier);
     }
 
     public static final String SQL_GET_TASKS_BY_ID =
@@ -77,6 +81,7 @@ public class TasksDaoImpl implements TasksDao {
             Date duedate = new Date(str_due_date);
             List<Step> steps = Collections.EMPTY_LIST;
             boolean finished = rs.getBoolean("finished");
+
             return new Task(id, isPrivate, description, duedate, steps, finished);
         }
     };
@@ -85,6 +90,7 @@ public class TasksDaoImpl implements TasksDao {
         verifier.verifyTask(taskId);
         Map<String, Object> paramMap = paramsMapper.asMap(asList("taskId"), asList(taskId));
         Task task = sqlQueryExecutor.queryForObject(SQL_GET_TASK_BY_ID, paramMap, TASK_ROW_MAPPER);
+        task.setSteps(stepsDao.getSteps(taskId));
         return task;
     }
 
@@ -93,14 +99,24 @@ public class TasksDaoImpl implements TasksDao {
         Map<String, Object> paramMap = paramsMapper.asMap(
                 asList("taskId", "privated", "description", "due_data", "steps", "finished"),
                 asList(task.getId(), task.isPrivated(), task.getDescription(), task.getDueDate(), task.getSteps(), task.isFinished()));
+
         sqlQueryExecutor.updateQuery(SQL_UPDATE_TASK, paramMap);
+
+        List<Step> steps = stepsDao.getSteps(task.getId());
+        task.setSteps(steps);
+
         return task;
     }
 
-    public List<Task> getTasksByDate(int taskId, Date date) {
-        verifier.verifyTask(taskId);
-        Map<String, Object> paramMap = paramsMapper.asMap(asList("taskId", "due_data"), asList(taskId, date));
+    public List<Task> getTasksByDate(int userId, Date date) {
+        verifier.verifyUserById(userId);
+        Map<String, Object> paramMap = paramsMapper.asMap(asList("userId", "due_data"), asList(userId, date));
         List<Task> tasks = sqlQueryExecutor.queryForObjects(SQL_GET_TASKS_BY_DATE, paramMap, TASK_ROW_MAPPER);
+        for (Task task : tasks) {
+            int taskId = task.getId();
+            List<Step> steps = stepsDao.getSteps(taskId);
+            task.setSteps(steps);
+        }
         return tasks;
     }
 
@@ -123,6 +139,12 @@ public class TasksDaoImpl implements TasksDao {
         verifier.verifyUserById(userId);
         Map<String, Object> paramMap = paramsMapper.asMap(asList("userId"), asList(userId));
         List<Task> tasks = sqlQueryExecutor.queryForObjects(SQL_GET_TASKS_BY_ID, paramMap, TASK_ROW_MAPPER);
+
+        for (Task task : tasks) {
+            int taskId = task.getId();
+            List<Step> steps = stepsDao.getSteps(taskId);
+            task.setSteps(steps);
+        }
         return tasks;
     }
 
@@ -130,6 +152,13 @@ public class TasksDaoImpl implements TasksDao {
         verifier.verifyUserById(userId);
         Map<String, Object> paramMap = paramsMapper.asMap(asList("userId"), asList(userId));
         List<Task> tasks = sqlQueryExecutor.queryForObjects(SQL_GET_PRIVATED_TASKS, paramMap, TASK_ROW_MAPPER);
+
+        for (Task task : tasks) {
+            int taskId = task.getId();
+            List<Step> steps = stepsDao.getSteps(taskId);
+            task.setSteps(steps);
+        }
+
         return tasks;
     }
 
@@ -137,6 +166,13 @@ public class TasksDaoImpl implements TasksDao {
         verifier.verifyUserById(userId);
         Map<String, Object> paramMap = paramsMapper.asMap(asList("userId"), asList(userId));
         List<Task> tasks = sqlQueryExecutor.queryForObjects(SQL_GET_FINISHED_TASKS, paramMap, TASK_ROW_MAPPER);
+
+        for (Task task : tasks) {
+            int taskId = task.getId();
+            List<Step> steps = stepsDao.getSteps(taskId);
+            task.setSteps(steps);
+        }
+
         return tasks;
     }
 }

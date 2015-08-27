@@ -80,13 +80,12 @@ public class UsersDaoImpl implements UsersDao {
             String birthday = rs.getString("birthday");
             String role = rs.getString("user_role");
 
-            List<Post> posts = Collections.emptyList();
+            List<Post> posts = Collections.EMPTY_LIST;
+
             URL photo = null;
             try {
                 photo = new URL(rs.getString("photo"));
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            }
+            } catch (MalformedURLException e) {e.printStackTrace();}
 
             List<Task> tasks = Collections.EMPTY_LIST;
 
