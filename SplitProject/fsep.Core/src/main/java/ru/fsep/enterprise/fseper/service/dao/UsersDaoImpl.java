@@ -81,7 +81,6 @@ public class UsersDaoImpl implements UsersDao {
             String role = rs.getString("user_role");
 
             List<Post> posts = Collections.emptyList();
-
             URL photo = null;
             try {
                 photo = new URL(rs.getString("photo"));

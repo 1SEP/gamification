@@ -27,7 +27,15 @@ public class Task {
     private boolean finished;
 
     public Task() {
+    }
 
+    public Task(int id, boolean privated, String description, Date dueDate, List<Step> steps, boolean finished) {
+        this.id = id;
+        this.privated = privated;
+        this.description = description;
+        this.dueDate = dueDate;
+        this.steps = steps;
+        this.finished = finished;
     }
 
     public Task(int id, boolean privated, String description, Date dueDate, Steps steps, boolean finished) {
@@ -71,7 +79,11 @@ public class Task {
         this.dueDate = dueDate;
     }
 
+<<<<<<< HEAD
     public Steps getSteps() {
+=======
+    public List<Step> getSteps() {
+>>>>>>> a79b63c22a666c8ec0dde03703178e8e4e28a15f
         return steps;
     }
 
@@ -83,10 +95,13 @@ public class Task {
         return finished;
     }
 
+<<<<<<< HEAD
     public void setFinished(boolean finished) {
         this.finished = finished;
     }
 
+=======
+>>>>>>> a79b63c22a666c8ec0dde03703178e8e4e28a15f
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

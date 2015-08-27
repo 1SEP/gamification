@@ -3,6 +3,10 @@ package ru.fsep.enterprise.fseper.service.dao;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+import ru.fsep.enterprise.fseper.AppContext;
+import ru.fsep.enterprise.fseper.AppTestContext;
 import ru.fsep.enterprise.fseper.models.User;
 import ru.fsep.enterprise.fseper.service.exceptions.PostsNotFoundException;
 import ru.fsep.enterprise.fseper.service.exceptions.UserNotFoundException;
@@ -20,6 +24,7 @@ import static org.mockito.MockitoAnnotations.initMocks;
 import static ru.fsep.enterprise.fseper.test.data.TestDataForUserDao.*;
 import static ru.fsep.enterprise.fseper.service.dao.UsersDaoImpl.*;
 
+@ContextConfiguration(classes = {AppContext.class})
 public class UsersDaoImplTest {
 
     private UsersDaoImpl usersDaoImplTest;
