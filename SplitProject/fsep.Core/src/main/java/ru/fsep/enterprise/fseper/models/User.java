@@ -21,9 +21,12 @@ public class User {
 
     private PersonInfo personInfo;
 
-    private List<Task> tasks;
+    private Tasks tasks;
 
-    public User(int id, AuthData authData, PersonInfo personInfo, List<Task> tasks) {
+    public User() {
+    }
+
+    public User(int id, AuthData authData, PersonInfo personInfo, Tasks tasks) {
         this.id = id;
         this.authData = authData;
         this.personInfo = personInfo;
@@ -34,29 +37,37 @@ public class User {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public AuthData getAuthData() {
         return authData;
+    }
+
+    public void setAuthData(AuthData authData) {
+        this.authData = authData;
     }
 
     public PersonInfo getPersonInfo() {
         return personInfo;
     }
 
-    public List<Task> getTasks() {
+    public void setPersonInfo(PersonInfo personInfo) {
+        this.personInfo = personInfo;
+    }
+
+    public Tasks getTasks() {
         return tasks;
+    }
+
+    public void setTasks(Tasks tasks) {
+        this.tasks = tasks;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hashCode(this.id, this.personInfo);
-    }
-
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this)
-                .add("Id", this.id)
-                .add("PersonInfo", this.personInfo)
-                .toString();
+        return Objects.hashCode(id, authData, personInfo, tasks);
     }
 
     @Override
@@ -64,13 +75,13 @@ public class User {
         if (this == obj) {
             return true;
         }
-
         if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-
-        final User that = (User) obj;
-        return Objects.equal(this.id, that.id)
-                && Objects.equal(this.personInfo, that.personInfo);
+        final User other = (User) obj;
+        return Objects.equal(this.id, other.id)
+                && Objects.equal(this.authData, other.authData)
+                && Objects.equal(this.personInfo, other.personInfo)
+                && Objects.equal(this.tasks, other.tasks);
     }
 }

@@ -12,13 +12,13 @@ import java.util.List;
  */
 public class TestDataCore {
     public static final User USER = new User(1, initAuthData(), initPersonInfo(), initTasks());
-    public static final Task TASK_1 = USER.getTasks().get(0);
-    public static final Step STEP_1_OF_TASK_1 = TASK_1.getSteps().get(0);
-    public static final Step STEP_2_OF_TASK_1 = TASK_1.getSteps().get(1);
+    public static final Task TASK_1 = USER.getTasks().getTasks().get(0);
+    public static final Step STEP_1_OF_TASK_1 = TASK_1.getSteps().getSteps().get(0);
+    public static final Step STEP_2_OF_TASK_1 = TASK_1.getSteps().getSteps().get(1);
 
-    public static final Task TASK_2 = USER.getTasks().get(1);
-    public static final Step STEP_1_OF_TASK_2 = TASK_2.getSteps().get(0);
-    public static final Step STEP_2_OF_TASK_2 = TASK_2.getSteps().get(1);
+    public static final Task TASK_2 = USER.getTasks().getTasks().get(1);
+    public static final Step STEP_1_OF_TASK_2 = TASK_2.getSteps().getSteps().get(0);
+    public static final Step STEP_2_OF_TASK_2 = TASK_2.getSteps().getSteps().get(1);
 
     static private final String surname = "Komarov";
     static private final String name = "Nikita";
@@ -38,14 +38,15 @@ public class TestDataCore {
         return posts;
     }
 
-    static public List<Task> initTasks() {
-        List<Task> tasks = new ArrayList<Task>();
+    static public Tasks initTasks() {
+        List<Task> tasksList = new ArrayList<Task>();
         String description = "create controller";
         Calendar c = Calendar.getInstance();
         Date date = c.getTime();
-        tasks.add(new Task(1, true, description, date, initSteps(), false));
+        tasksList.add(new Task(1, true, description, date, initSteps(), false));
         description = "refactor models";
-        tasks.add(new Task(2, true, description, date, initSteps(), false));
+        tasksList.add(new Task(2, true, description, date, initSteps(), false));
+        Tasks tasks = new Tasks(tasksList);
         return tasks;
     }
 
@@ -59,12 +60,13 @@ public class TestDataCore {
         return new AuthData("password", "login");
     }
 
-    static public List<Step> initSteps() {
-        List<Step> steps = new ArrayList<Step>();
+    static public Steps initSteps() {
+        List<Step> stepsList = new ArrayList<Step>();
         String description = "step by step perform";
-        steps.add(new Step(1, 1, description, false));
+        stepsList.add(new Step(1, 1, description, false));
         description = "second step of task";
-        steps.add(new Step(2, 1, description, false));
+        stepsList.add(new Step(2, 1, description, false));
+        Steps steps = new Steps(stepsList);
         return steps;
     }
 

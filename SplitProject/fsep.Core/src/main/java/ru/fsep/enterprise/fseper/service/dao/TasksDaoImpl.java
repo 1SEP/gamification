@@ -5,6 +5,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 import ru.fsep.enterprise.fseper.models.Task;
+import ru.fsep.enterprise.fseper.models.Tasks;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.DaoArgumentsVerifier;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.ParamsMapper;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.SqlQueryExecutor;
@@ -79,11 +80,12 @@ public class TasksDaoImpl implements TasksDao {
         return task;
     }
 
-    public List<Task> getTasksByDate(int taskId, Date date) {
+    public Tasks getTasksByDate(int taskId, Date date) {
         verifier.verifyTask(taskId);
         Map<String, Object> paramMap = paramsMapper.asMap(asList("taskId", "due_data"), asList(taskId, date));
-        List<Task> task = sqlQueryExecutor.queryForObjects(SQL_GET_TASK_BY_DATE, paramMap, USER_ROW_MAPPER);
-        return task;
+        List<Task> tasksList = sqlQueryExecutor.queryForObjects(SQL_GET_TASK_BY_DATE, paramMap, USER_ROW_MAPPER);
+        Tasks tasks = new Tasks(tasksList);
+        return tasks;
     }
 
     public void assignmentTask(Task task, int userId) {
@@ -100,21 +102,23 @@ public class TasksDaoImpl implements TasksDao {
         sqlQueryExecutor.updateQuery(SQL_DELETE_FROM_TASK_BY_IDS, paramMap);
     }
 
-    public List<Task> getTasks(int userId) {
+    public Tasks getTasks(int userId) {
         return null;
     }
 
-    public List<Task> getPrivatedTasks(int taskId) {
+    public Tasks getTasksByPrivatedFilter(int taskId, boolean privated) {
         verifier.verifyTask(taskId);
         Map<String, Object> paramMap = paramsMapper.asMap(asList("taskId"), asList(taskId));
-        List<Task> task = sqlQueryExecutor.queryForObjects(SQL_GET_PRIVATED, paramMap, USER_ROW_MAPPER);
-        return task;
+        List<Task> taskList = sqlQueryExecutor.queryForObjects(SQL_GET_PRIVATED, paramMap, USER_ROW_MAPPER);
+        Tasks tasks = new Tasks(taskList);
+        return tasks;
     }
 
-    public List<Task> getFinishedTasks(int taskId) {
+    public Tasks getTasksByFinishedFilter(int taskId, boolean finished) {
         verifier.verifyTask(taskId);
         Map<String, Object> paramMap = paramsMapper.asMap(asList("taskId"), asList(taskId));
-        List<Task> task = sqlQueryExecutor.queryForObjects(SQL_GET_FINISHED, paramMap, USER_ROW_MAPPER);
-        return task;
+        List<Task> taskList = sqlQueryExecutor.queryForObjects(SQL_GET_FINISHED, paramMap, USER_ROW_MAPPER);
+        Tasks tasks = new Tasks(taskList);
+        return tasks;
     }
 }

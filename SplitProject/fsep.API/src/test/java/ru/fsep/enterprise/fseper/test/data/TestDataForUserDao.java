@@ -10,8 +10,8 @@ public class TestDataForUserDao {
     public static final int INCORRECT_USER_ID = 2;
     public static final String INCORRECT_FIRSTNAME = "Incorrect first name";
     public static final String INCORRECT_LASTNAME = "Incorrect last name";
-    public static final User USER = new User(USER_ID, initAuthData(), initPersonInfo(), initTasks());
-    public static final User INCORRECT_USER = new User(INCORRECT_USER_ID, initAuthData(), initPersonInfo(), initTasks());
+    public static final User USER = new User(USER_ID, initAuthData(), initPersonInfo(), TestDataCore.initTasks());
+    public static final User INCORRECT_USER = new User(INCORRECT_USER_ID, initAuthData(), initPersonInfo(), TestDataCore.initTasks());
     public static final Map<String, Object> USER_MAP = createUserMap();
     public static final Map<String, Object> USER_MAP_WITH_NAMES = getUserMapWithNames();
     public static final List<User> LIST_OF_USERS = getListOfUsers();
@@ -80,18 +80,6 @@ public class TestDataForUserDao {
         return null;
     }
 
-    static public List<Task> initTasks() {
-        List<Task> tasks = new ArrayList<Task>();
-        String description = "create controller";
-        Calendar c = Calendar.getInstance();
-        Date date = c.getTime();
-        tasks.add(new Task(1, true, description, date, initSteps(), false));
-        description = "refactor models";
-        tasks.add(new Task(1, true, description, date, initSteps(), false));
-
-        return tasks;
-    }
-
     static public PersonInfo initPersonInfo() {
         URL photo = null;
         String surname = "Almakayev";
@@ -107,15 +95,6 @@ public class TestDataForUserDao {
         return new AuthData("ildar_pas", "ildar_login");
     }
 
-    static public List<Step> initSteps() {
-        List<Step> steps = new ArrayList<Step>();
-        String description = "step by step perform";
-        steps.add(new Step(1, 1, description, false));
-        description = "second step of task";
-        steps.add(new Step(2, 1, description, false));
-
-        return steps;
-    }
 }
 
 

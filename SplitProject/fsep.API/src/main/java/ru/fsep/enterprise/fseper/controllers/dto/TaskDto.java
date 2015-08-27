@@ -2,9 +2,11 @@ package ru.fsep.enterprise.fseper.controllers.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.common.base.MoreObjects;
-import com.google.common.base.Objects;
 import com.inspiresoftware.lib.dto.geda.annotations.Dto;
+import com.inspiresoftware.lib.dto.geda.annotations.DtoCollection;
 import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
+import com.google.common.base.*;
+import ru.fsep.enterprise.fseper.controllers.converters.Matcher;
 
 import java.util.List;
 
@@ -27,6 +29,7 @@ public class TaskDto {
     @DtoField(converter = "DateAndStringConvert")
     private String dueDate;
 
+    @DtoCollection(value = "steps.steps", readOnly = true, dtoBeanKey = "stepsBeanKey", dtoToEntityMatcher = Matcher.class)
     private List<StepDto> steps;
 
     @DtoField(converter = "BooleanAndStringConvert")
