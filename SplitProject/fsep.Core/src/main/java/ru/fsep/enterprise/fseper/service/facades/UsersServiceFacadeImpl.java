@@ -2,10 +2,9 @@ package ru.fsep.enterprise.fseper.service.facades;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ru.fsep.enterprise.fseper.models.Post;
-import ru.fsep.enterprise.fseper.models.Task;
-import ru.fsep.enterprise.fseper.models.User;
+import ru.fsep.enterprise.fseper.models.*;
 import ru.fsep.enterprise.fseper.service.dao.PostsDao;
+import ru.fsep.enterprise.fseper.service.dao.StepsDao;
 import ru.fsep.enterprise.fseper.service.dao.TasksDao;
 import ru.fsep.enterprise.fseper.service.dao.UsersDao;
 
@@ -13,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Ôëþð on 07.07.2015.
+ * Created by ï¿½ï¿½ï¿½ï¿½ on 07.07.2015.
  */
 @Service
 public class UsersServiceFacadeImpl implements UsersServiceFacade {
@@ -23,13 +22,15 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
     private PostsDao postsDao;
     @Autowired
     private TasksDao tasksDao;
-
-    public void signIn(User user) {
-        usersDao.logIn(user);
-    }
+    @Autowired
+    private StepsDao stepsDao;
 
     public void signUp(User user) {
         usersDao.signUp(user);
+    }
+
+    public void logIn(User user) {
+        usersDao.logIn(user);
     }
 
     public User getUser(int userId) {
@@ -56,6 +57,10 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
         return usersDao.getUsersByPost(post);
     }
 
+    public List<User> getSortedUsersByName() {
+        return usersDao.getSortedUsersByName();
+    }
+
 
     public List<User> getSortedUsers() {
         return usersDao.getSortedUsersByName();
@@ -63,6 +68,30 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
 
     public List<User> getSortedUsersByRating() {
         return usersDao.getSortedUsersByRating();
+    }
+
+    public Steps getSteps(int taskId) {
+        return stepsDao.getSteps(taskId);
+    }
+
+    public Step getStep(int taskId, int stepId) {
+        return stepsDao.getStep(taskId, stepId);
+    }
+
+    public Steps getStepsByFinishedFilter(int taskId, boolean finished) {
+        return stepsDao.getStepsByFinishedFilter(taskId, finished);
+    }
+
+    public void addStep(int taskId, Step step) {
+        stepsDao.addStep(taskId, step);
+    }
+
+    public Step updateStep(int taskId, Step step) {
+        return stepsDao.updateStep(taskId, step);
+    }
+
+    public void removeStep(int taskId, int stepId) {
+        stepsDao.removeStep(taskId, stepId);
     }
 
     public void addPost(Post post, int userId) {
@@ -90,7 +119,7 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
         return tasksDao.getTask(taskId);
     }
 
-    public List<Task> getTasks(int userId) {
+    public Tasks getTasks(int userId) {
         return tasksDao.getTasks(userId);
     }
 
@@ -102,15 +131,15 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
         tasksDao.removeTask(taskId);
     }
 
-    public List<Task> getPrivatedTasks(int userId) {
-        return tasksDao.getPrivatedTasks(userId);
+    public Tasks getTasksByPrivatedFilter(int userId, boolean privated) {
+        return tasksDao.getTasksByPrivatedFilter(userId, privated);
     }
 
-    public List<Task> getFinishedTasks(int userId) {
-        return tasksDao.getFinishedTasks(userId);
+    public Tasks getTasksByFinishedFilter(int userId, boolean finished) {
+        return tasksDao.getTasksByFinishedFilter(userId, finished);
     }
 
-    public List<Task> getTasksByDate(int usersId, Date date) {
+    public Tasks getTasksByDate(int usersId, Date date) {
         return tasksDao.getTasksByDate(usersId, date);
     }
 

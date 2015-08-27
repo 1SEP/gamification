@@ -87,8 +87,8 @@ public class UsersDaoImpl implements UsersDao {
                 photo = new URL(rs.getString("photo"));
             } catch (MalformedURLException e) {e.printStackTrace();}
 
-            List<Task> tasks = Collections.EMPTY_LIST;
-
+            List<Task> tasksList = Collections.EMPTY_LIST;
+            Tasks tasks = new Tasks(tasksList);
             return new User(id, new AuthData(password_hash, login),
                     new PersonInfo(first_name, last_name, rating, birthday, posts, role, photo), tasks);
         }

@@ -125,37 +125,37 @@ public class UserControllerTest {
         mockMvc.perform(post("/user/", user).content(json.getBytes()).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isCreated());
     }
-    public void testGetTasks() throws Exception {
-        when(usersServiceFacade.getTasks(USER.getId())).thenReturn(USER.getTasks());
-        mockMvc.perform(get("/user/{user-id}/tasks.json", USER.getId()).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.data[0].id", is(String.valueOf(1))))
-                .andExpect(jsonPath("$.data[0].privated", is(String.valueOf(TASK_1.isPrivated()))))
-                .andExpect(jsonPath("$.data[0].description", is(TASK_1.getDescription())))
-                .andExpect(jsonPath("$.data[0].dueDate", is(String.valueOf(TASK_1.getDueDate()))))
-                .andExpect(jsonPath("$.data[0].steps[0].id", is(String.valueOf(STEP_1_OF_TASK_1.getId()))))
-                .andExpect(jsonPath("$.data[0].steps[0].taskId", is(String.valueOf(STEP_1_OF_TASK_1.getTaskId()))))
-                .andExpect(jsonPath("$.data[0].steps[0].description", is(STEP_1_OF_TASK_1.getDescription())))
-                .andExpect(jsonPath("$.data[0].steps[0].finished", is(String.valueOf(STEP_1_OF_TASK_1.isFinished()))))
-                .andExpect(jsonPath("$.data[0].steps[1].id", is(String.valueOf(STEP_2_OF_TASK_1.getId()))))
-                .andExpect(jsonPath("$.data[0].steps[1].taskId", is(String.valueOf(STEP_2_OF_TASK_1.getTaskId()))))
-                .andExpect(jsonPath("$.data[0].steps[1].description", is(STEP_2_OF_TASK_1.getDescription())))
-                .andExpect(jsonPath("$.data[0].steps[1].finished", is(String.valueOf(STEP_2_OF_TASK_1.isFinished()))))
-                .andExpect(jsonPath("$.data[0].finished", is(String.valueOf(TASK_1.isFinished()))))
-                .andExpect(jsonPath("$.data[1].id", is(String.valueOf(2))))
-                .andExpect(jsonPath("$.data[1].privated", is(String.valueOf(TASK_2.isPrivated()))))
-                .andExpect(jsonPath("$.data[1].description", is(TASK_2.getDescription())))
-                .andExpect(jsonPath("$.data[1].dueDate", is(String.valueOf(TASK_2.getDueDate()))))
-                .andExpect(jsonPath("$.data[1].steps[0].id", is(String.valueOf(STEP_1_OF_TASK_2.getId()))))
-                .andExpect(jsonPath("$.data[1].steps[0].taskId", is(String.valueOf(STEP_1_OF_TASK_2.getTaskId()))))
-                .andExpect(jsonPath("$.data[1].steps[0].description", is(STEP_1_OF_TASK_2.getDescription())))
-                .andExpect(jsonPath("$.data[1].steps[0].finished", is(String.valueOf(STEP_1_OF_TASK_2.isFinished()))))
-                .andExpect(jsonPath("$.data[1].steps[1].id", is(String.valueOf(STEP_2_OF_TASK_2.getId()))))
-                .andExpect(jsonPath("$.data[1].steps[1].taskId", is(String.valueOf(STEP_2_OF_TASK_2.getTaskId()))))
-                .andExpect(jsonPath("$.data[1].steps[1].description", is(STEP_2_OF_TASK_2.getDescription())))
-                .andExpect(jsonPath("$.data[1].steps[1].finished", is(String.valueOf(STEP_2_OF_TASK_2.isFinished()))))
-                .andExpect(jsonPath("$.data[1].finished", is(String.valueOf(TASK_2.isFinished()))));
-    }
+//    public void testGetTasks() throws Exception {
+//        when(usersServiceFacade.getTasks(USER.getId())).thenReturn(USER.getTasks());
+//        mockMvc.perform(get("/user/{user-id}/tasks.json", USER.getId()).contentType(MediaType.APPLICATION_JSON))
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("$.data[0].id", is(String.valueOf(1))))
+//                .andExpect(jsonPath("$.data[0].privated", is(String.valueOf(TASK_1.isPrivated()))))
+//                .andExpect(jsonPath("$.data[0].description", is(TASK_1.getDescription())))
+//                .andExpect(jsonPath("$.data[0].dueDate", is(String.valueOf(TASK_1.getDueDate()))))
+//                .andExpect(jsonPath("$.data[0].steps[0].id", is(String.valueOf(STEP_1_OF_TASK_1.getId()))))
+//                .andExpect(jsonPath("$.data[0].steps[0].taskId", is(String.valueOf(STEP_1_OF_TASK_1.getTaskId()))))
+//                .andExpect(jsonPath("$.data[0].steps[0].description", is(STEP_1_OF_TASK_1.getDescription())))
+//                .andExpect(jsonPath("$.data[0].steps[0].finished", is(String.valueOf(STEP_1_OF_TASK_1.isFinished()))))
+//                .andExpect(jsonPath("$.data[0].steps[1].id", is(String.valueOf(STEP_2_OF_TASK_1.getId()))))
+//                .andExpect(jsonPath("$.data[0].steps[1].taskId", is(String.valueOf(STEP_2_OF_TASK_1.getTaskId()))))
+//                .andExpect(jsonPath("$.data[0].steps[1].description", is(STEP_2_OF_TASK_1.getDescription())))
+//                .andExpect(jsonPath("$.data[0].steps[1].finished", is(String.valueOf(STEP_2_OF_TASK_1.isFinished()))))
+//                .andExpect(jsonPath("$.data[0].finished", is(String.valueOf(TASK_1.isFinished()))))
+//                .andExpect(jsonPath("$.data[1].id", is(String.valueOf(2))))
+//                .andExpect(jsonPath("$.data[1].privated", is(String.valueOf(TASK_2.isPrivated()))))
+//                .andExpect(jsonPath("$.data[1].description", is(TASK_2.getDescription())))
+//                .andExpect(jsonPath("$.data[1].dueDate", is(String.valueOf(TASK_2.getDueDate()))))
+//                .andExpect(jsonPath("$.data[1].steps[0].id", is(String.valueOf(STEP_1_OF_TASK_2.getId()))))
+//                .andExpect(jsonPath("$.data[1].steps[0].taskId", is(String.valueOf(STEP_1_OF_TASK_2.getTaskId()))))
+//                .andExpect(jsonPath("$.data[1].steps[0].description", is(STEP_1_OF_TASK_2.getDescription())))
+//                .andExpect(jsonPath("$.data[1].steps[0].finished", is(String.valueOf(STEP_1_OF_TASK_2.isFinished()))))
+//                .andExpect(jsonPath("$.data[1].steps[1].id", is(String.valueOf(STEP_2_OF_TASK_2.getId()))))
+//                .andExpect(jsonPath("$.data[1].steps[1].taskId", is(String.valueOf(STEP_2_OF_TASK_2.getTaskId()))))
+//                .andExpect(jsonPath("$.data[1].steps[1].description", is(STEP_2_OF_TASK_2.getDescription())))
+//                .andExpect(jsonPath("$.data[1].steps[1].finished", is(String.valueOf(STEP_2_OF_TASK_2.isFinished()))))
+//                .andExpect(jsonPath("$.data[1].finished", is(String.valueOf(TASK_2.isFinished()))));
+//    }
 
 
     @Test

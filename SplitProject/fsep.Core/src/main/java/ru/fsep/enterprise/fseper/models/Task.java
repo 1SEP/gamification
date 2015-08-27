@@ -22,39 +22,19 @@ public class Task {
 
     private Date dueDate;
 
-    private List<Step> steps;
+    private Steps steps;
 
     private boolean finished;
 
     public Task() {
     }
 
-    public Task(int id, boolean privated, String description, Date dueDate, List<Step> steps, boolean finished) {
+    public Task(int id, boolean privated, String description, Date dueDate, Steps steps, boolean finished) {
         this.id = id;
         this.privated = privated;
         this.description = description;
         this.dueDate = dueDate;
         this.steps = steps;
-        this.finished = finished;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    public void setPrivated(boolean privated) {
-        this.privated = privated;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public void setDueDate(Date dueDate) {
-        this.dueDate = dueDate;
-    }
-
-    public void setFinished(boolean finished) {
         this.finished = finished;
     }
 
@@ -62,29 +42,48 @@ public class Task {
         return id;
     }
 
+    public void setId(int id) {
+        this.id = id;
+    }
+
     public boolean isPrivated() {
         return privated;
+    }
+
+    public void setPrivated(boolean privated) {
+        this.privated = privated;
     }
 
     public String getDescription() {
         return description;
     }
 
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public Date getDueDate() {
         return dueDate;
     }
 
+    public void setDueDate(Date dueDate) {
+        this.dueDate = dueDate;
+    }
 
-    public List<Step> getSteps() {
+    public Steps getSteps() {
         return steps;
+    }
+
+    public void setSteps(Steps steps) {
+        this.steps = steps;
     }
 
     public boolean isFinished() {
         return finished;
     }
 
-    public void setSteps(List<Step> steps) {
-        this.steps = steps;
+    public void setFinished(boolean finished) {
+        this.finished = finished;
     }
 
     @Override

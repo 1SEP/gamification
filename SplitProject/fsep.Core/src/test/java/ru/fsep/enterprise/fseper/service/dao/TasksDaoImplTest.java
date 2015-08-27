@@ -4,7 +4,9 @@ import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
 import ru.fsep.enterprise.fseper.models.Step;
+import ru.fsep.enterprise.fseper.models.Steps;
 import ru.fsep.enterprise.fseper.models.Task;
+import ru.fsep.enterprise.fseper.models.Tasks;
 import ru.fsep.enterprise.fseper.service.exceptions.TaskNotFoundException;
 import ru.fsep.enterprise.fseper.service.exceptions.UserNotFoundException;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.DaoArgumentsVerifier;
@@ -16,6 +18,7 @@ import java.util.List;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static ru.fsep.enterprise.fseper.service.dao.TasksDaoImpl.*;
@@ -24,10 +27,8 @@ import static ru.fsep.enterprise.fseper.test.data.TestDataForTaskDao.*;
 public class TasksDaoImplTest {
 
     private TasksDaoImpl taskDaoImplTest;
-
     @Mock
     private SqlQueryExecutor sqlQueryExecutorMock;
-
     @Mock
     private ParamsMapper paramsMapperMock;
     @Mock
@@ -64,8 +65,9 @@ public class TasksDaoImplTest {
     }
 
     private void stubbingStepsDaoMock() {
-        List<Step> steps = new ArrayList<Step>();
-        steps.add(new Step(1, TASK_ID, "test_description", true));
+        List<Step> stepsList = new ArrayList<Step>();
+        stepsList.add(new Step(1, TASK_ID, "test_description", true));
+        Steps steps = new Steps(stepsList);
         doReturn(steps).when(stepsDaoMock).getSteps(TASK_ID);
     }
 
@@ -93,7 +95,7 @@ public class TasksDaoImplTest {
 
     @Test(expected = TaskNotFoundException.class)
     public void testGetTaskWithIncorrectUser() throws Exception {
-        Task incorrectTask = taskDaoImplTest.getTask(INCORRECT_TASK_ID);
+        taskDaoImplTest.getTask(INCORRECT_TASK_ID);
     }
 
     @Test
@@ -124,10 +126,9 @@ public class TasksDaoImplTest {
 
     @Test
     public void testGetTasksByDate() throws Exception {
-        List<Task> actual = taskDaoImplTest.getTasksByDate(USER_ID, DATE_TASK);
-        List<Task> expected = TASK_LIST;
+        Tasks actual = taskDaoImplTest.getTasksByDate(USER_ID, DATE_TASK);
         verify(daoArgumentsVerifierMock).verifyUserById(USER_ID);
-        assertEquals(expected, actual);
+        assertNotNull(actual);
     }
 
     @Test
@@ -144,31 +145,27 @@ public class TasksDaoImplTest {
 
     @Test
     public void testGetPrivateTasks() throws Exception {
-        List<Task> expected = new ArrayList<Task>(LIST_PRIVATE_TASKS);
-        List<Task> actual = taskDaoImplTest.getPrivatedTasks(USER_ID);
+        Tasks actual = taskDaoImplTest.getTasksByPrivatedFilter(USER_ID, true);
         verify(daoArgumentsVerifierMock).verifyUserById(USER_ID);
-        assertEquals(expected, actual);
+        assertNotNull(actual);
     }
 
     @Test(expected = UserNotFoundException.class)
     public void testGetPrivateTasksWithIncorrectUserId() throws Exception {
-        List<Task> actual = taskDaoImplTest.getPrivatedTasks(INCORRECT_USER_ID);
+        Tasks actual = taskDaoImplTest.getTasksByPrivatedFilter(INCORRECT_USER_ID, false);
         verify(daoArgumentsVerifierMock).verifyUserById(INCORRECT_USER_ID);
     }
 
     @Test
     public void testGetFinishedTasks() throws Exception {
-        List<Task> expected = new ArrayList<Task>(LIST_FINISHED_TASKS);
-        List<Task> actual = taskDaoImplTest.getFinishedTasks(USER_ID);
+        Tasks actual = taskDaoImplTest.getTasksByFinishedFilter(USER_ID, true);
         verify(daoArgumentsVerifierMock).verifyUserById(USER_ID);
-        assertEquals(expected, actual);
+        assertNotNull(actual);
     }
 
     @Test(expected = UserNotFoundException.class)
     public void testGetFinishedTasksWithIncorrectUser() throws Exception {
-        List<Task> actual = taskDaoImplTest.getFinishedTasks(INCORRECT_USER_ID);
-        List<Task> expected = new ArrayList<Task>(LIST_FINISHED_TASKS);
+        Tasks actual = taskDaoImplTest.getTasksByFinishedFilter(INCORRECT_USER_ID, true);
         verify(daoArgumentsVerifierMock).verifyUserById(INCORRECT_USER_ID);
-        assertEquals(expected, actual);
     }
 }

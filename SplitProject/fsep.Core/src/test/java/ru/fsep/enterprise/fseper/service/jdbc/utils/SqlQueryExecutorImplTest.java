@@ -6,10 +6,7 @@ import org.junit.Test;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabase;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseBuilder;
 import org.springframework.jdbc.datasource.embedded.EmbeddedDatabaseType;
-import ru.fsep.enterprise.fseper.models.AuthData;
-import ru.fsep.enterprise.fseper.models.PersonInfo;
-import ru.fsep.enterprise.fseper.models.Post;
-import ru.fsep.enterprise.fseper.models.User;
+import ru.fsep.enterprise.fseper.models.*;
 
 import java.net.URL;
 import java.util.Collections;
@@ -115,7 +112,7 @@ public class SqlQueryExecutorImplTest {
 
         Map<String, Object> paramMapForUserId = paramsMapperTest.asMap(asList("userId"), asList(USER_ID));
         User actual = sqlQueryExecutorTest.queryForObject(SQL_GET_USER_BY_ID, paramMapForUserId, USER_ROW_MAPPER);
-        User expected = new User(0, authData, personInfo, Collections.EMPTY_LIST);
+        User expected = new User(0, authData, personInfo, new Tasks(Collections.EMPTY_LIST));
         assertEquals(expected, actual);
     }
 

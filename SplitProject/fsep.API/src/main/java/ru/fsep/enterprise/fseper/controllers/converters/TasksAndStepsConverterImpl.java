@@ -8,7 +8,9 @@ import org.springframework.stereotype.Component;
 import ru.fsep.enterprise.fseper.controllers.dto.StepDto;
 import ru.fsep.enterprise.fseper.controllers.dto.TaskDto;
 import ru.fsep.enterprise.fseper.models.Step;
+import ru.fsep.enterprise.fseper.models.Steps;
 import ru.fsep.enterprise.fseper.models.Task;
+import ru.fsep.enterprise.fseper.models.Tasks;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -68,17 +70,16 @@ public class TasksAndStepsConverterImpl implements TasksAndStepsConverter {
     public TaskDto fromTask(Task entity) {
         TaskDto taskDto = new TaskDto();
         Map<String, Object> adapters = new HashMap<String, Object>();
-        taskDto.setSteps(fromSteps(entity.getSteps()));
         adapters.put(INT_STR_ADAPTER_NAME, integerAndStringConverter);
         adapters.put(BOOL_STR_ADAPTER_NAME, booleanAndStringConverter);
         adapters.put(DATE_STR_ADAPTER_NAME, dateAndStringConverter);
-        taskAssembler.assembleDto(taskDto, entity, adapters, null);
+        taskAssembler.assembleDto(taskDto, entity, adapters, new Factory());
         return taskDto;
     }
 
-    public List<TaskDto> fromTasks(List<Task> entities) {
+    public List<TaskDto> fromTasks(Tasks entities) {
         List<TaskDto> tasksDtos = new LinkedList<TaskDto>();
-        for (Task task : entities) {
+        for (Task task : entities.getTasks()) {
             tasksDtos.add(fromTask(task));
         }
         return tasksDtos;
@@ -93,9 +94,9 @@ public class TasksAndStepsConverterImpl implements TasksAndStepsConverter {
         return stepDto;
     }
 
-    public List<StepDto> fromSteps(List<Step> entities) {
+    public List<StepDto> fromSteps(Steps entities) {
         List<StepDto> stepDtos = new LinkedList<StepDto>();
-        for (Step step : entities) {
+        for (Step step : entities.getSteps()) {
             stepDtos.add(fromStep(step));
         }
         return stepDtos;
@@ -107,7 +108,6 @@ public class TasksAndStepsConverterImpl implements TasksAndStepsConverter {
         adapters.put(INT_STR_ADAPTER_NAME, integerAndStringConverter);
         adapters.put(BOOL_STR_ADAPTER_NAME, booleanAndStringConverter);
         adapters.put(DATE_STR_ADAPTER_NAME, dateAndStringConverter);
-        task.setSteps(toSteps(taskDto.getSteps()));
         taskAssembler.assembleEntity(taskDto, task, adapters, null);
         return task;
     }

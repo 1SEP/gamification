@@ -1,6 +1,7 @@
 package ru.fsep.enterprise.fseper.service.dao;
 
 import ru.fsep.enterprise.fseper.models.Task;
+import ru.fsep.enterprise.fseper.models.Tasks;
 
 import java.util.Date;
 import java.util.List;
@@ -18,11 +19,11 @@ public interface TasksDao {
 
     void removeTask(int taskId);
 
-    List<Task> getTasks(int userId);
+    Tasks getTasks(int userId);
 
-    List<Task> getPrivatedTasks(int userId);
+    Tasks getTasksByPrivatedFilter(int userId, boolean privated);
 
-    List<Task> getFinishedTasks(int userId);
+    Tasks getTasksByFinishedFilter(int userId, boolean finished);
 
-    List<Task> getTasksByDate(int usersId, Date date);
+    Tasks getTasksByDate(int usersId, Date date);
 }

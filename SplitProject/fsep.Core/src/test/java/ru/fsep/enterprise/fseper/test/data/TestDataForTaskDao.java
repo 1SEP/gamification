@@ -16,9 +16,9 @@ public class TestDataForTaskDao {
     public static final List<Task> LIST_FINISHED_TASKS = getListFinishedTasks();
     public static final Date DATE_TASK = test();
     public static final List<Task> TASK_LIST = getListOfTasks();
-    public static final Task TASK = new Task(TASK_ID, IS_PRIVATE, " ", new Date(), Collections.EMPTY_LIST, IS_FINISHED);
+    public static final Task TASK = new Task(TASK_ID, IS_PRIVATE, " ", new Date(), null, IS_FINISHED);
 
-    public static final Task INCORRECT_TASK = new Task(INCORRECT_TASK_ID, IS_PRIVATE, null, null, getListOfSteps(), IS_FINISHED);
+    public static final Task INCORRECT_TASK = new Task(INCORRECT_TASK_ID, IS_PRIVATE, null, null, null, IS_FINISHED);
 
     public static final Map<String, Object> TASK_MAP = createMap();
 
@@ -42,11 +42,10 @@ public class TestDataForTaskDao {
         return map;
     }
 
-
     private static List<Task> getListOfTasks() {
         ArrayList<Task> result = new ArrayList<Task>();
-        result.add(new Task(1, true, null, null, Collections.EMPTY_LIST, true));
-        return  result;
+        result.add(new Task(1, true, null, null, null, true));
+        return result;
     }
 
     private static List<Task> getListPrivatedTasks() {

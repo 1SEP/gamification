@@ -60,7 +60,7 @@ public class UsersController {
 
     @RequestMapping(value = "sorted_by_abc.json")
     public ResponseEntity<ResponseDto> getSortedUserByAbc(){
-        List<User> users = usersServiceFacade.getSortedUsers();
+        List<User> users = usersServiceFacade.getSortedUsersByName();
         UsersDto usersDto = userConverter.fromUsers(users);
         return ResponseBuilder.buildResponseGet(usersDto);
     }

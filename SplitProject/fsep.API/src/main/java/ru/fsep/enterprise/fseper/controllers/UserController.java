@@ -32,48 +32,48 @@ public class UserController {
     @Autowired
     private UserConverter userConverter;
 
-    @RequestMapping(value = "{user-id}/tasks.json", method = RequestMethod.GET)
-    public ResponseEntity<ResponseDto> getTasks(@PathVariable("user-id") int userId)
-    {
-        List<Task> tasks = usersServiceFacade.getTasks(userId);
-        List<TaskDto> tasksDto= tasksAndStepsConverter.fromTasks(tasks);
-        return ResponseBuilder.buildResponseGet(tasksDto);
-    }
-
-    @RequestMapping(value = "{user-id}/tasks/assignments", method = RequestMethod.POST,
-            produces = MediaType.APPLICATION_JSON_VALUE,
-            consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<ResponseDto> assignmentsTask(@RequestBody TaskDto taskDto, @PathVariable("user-id") int userId)
-    {
-        Task task = tasksAndStepsConverter.toTask(taskDto);
-        usersServiceFacade.assignmentTask(task, userId);
-        return ResponseBuilder.buildResponsePut(taskDto);
-    }
-
-    @RequestMapping(value = "{user-id}/tasks.json/filter=privated", method = RequestMethod.GET)
-    public ResponseEntity<ResponseDto> getPrivatedTasks(@PathVariable("user-id") int userId)
-    {
-        List<Task> tasks = usersServiceFacade.getPrivatedTasks(userId);
-        List<TaskDto> tasksDto = tasksAndStepsConverter.fromTasks(tasks);
-        return ResponseBuilder.buildResponseGet(tasksDto);
-    }
-
-    @RequestMapping(value = "{user-id}}/tasks.json/filter=finished", method = RequestMethod.GET)
-    public ResponseEntity<ResponseDto> getFinishedTasks(@PathVariable("user-id") int userId)
-    {
-        List<Task> tasks = usersServiceFacade.getFinishedTasks(userId);
-        List<TaskDto> tasksDto = tasksAndStepsConverter.fromTasks(tasks);
-        return ResponseBuilder.buildResponseGet(tasksDto);
-    }
-
-    @RequestMapping(value = "{user-id}/tasks.json/filter={dueDate}", method = RequestMethod.GET)
-    public ResponseEntity<ResponseDto> getTasksByDate(@PathVariable("dueDate") Date dueDate,
-                                                            @PathVariable("user-id") int userId)
-    {
-        List<Task> tasks = usersServiceFacade.getTasksByDate(userId, dueDate);
-        List<TaskDto> tasksDto = tasksAndStepsConverter.fromTasks(tasks);
-        return ResponseBuilder.buildResponseGet(tasksDto);
-    }
+//    @RequestMapping(value = "{user-id}/tasks.json", method = RequestMethod.GET)
+//    public ResponseEntity<ResponseDto> getTasks(@PathVariable("user-id") int userId)
+//    {
+//        List<Task> tasks = usersServiceFacade.getTasks(userId);
+//        List<TaskDto> tasksDto= tasksAndStepsConverter.fromTasks(tasks);
+//        return ResponseBuilder.buildResponseGet(tasksDto);
+//    }
+//
+//    @RequestMapping(value = "{user-id}/tasks/assignments", method = RequestMethod.POST,
+//            produces = MediaType.APPLICATION_JSON_VALUE,
+//            consumes = MediaType.APPLICATION_JSON_VALUE)
+//    public ResponseEntity<ResponseDto> assignmentsTask(@RequestBody TaskDto taskDto, @PathVariable("user-id") int userId)
+//    {
+//        Task task = tasksAndStepsConverter.toTask(taskDto);
+//        usersServiceFacade.assignmentTask(task, userId);
+//        return ResponseBuilder.buildResponsePut(taskDto);
+//    }
+//
+//    @RequestMapping(value = "{user-id}/tasks.json/filter=privated", method = RequestMethod.GET)
+//    public ResponseEntity<ResponseDto> getPrivatedTasks(@PathVariable("user-id") int userId)
+//    {
+//        List<Task> tasks = usersServiceFacade.getTasksByPrivatedFilter(userId);
+//        List<TaskDto> tasksDto = tasksAndStepsConverter.fromTasks(tasks);
+//        return ResponseBuilder.buildResponseGet(tasksDto);
+//    }
+//
+//    @RequestMapping(value = "{user-id}}/tasks.json/filter=finished", method = RequestMethod.GET)
+//    public ResponseEntity<ResponseDto> getFinishedTasks(@PathVariable("user-id") int userId)
+//    {
+//        List<Task> tasks = usersServiceFacade.getTasksByFinishedFilter(userId);
+//        List<TaskDto> tasksDto = tasksAndStepsConverter.fromTasks(tasks);
+//        return ResponseBuilder.buildResponseGet(tasksDto);
+//    }
+//
+//    @RequestMapping(value = "{user-id}/tasks.json/filter={dueDate}", method = RequestMethod.GET)
+//    public ResponseEntity<ResponseDto> getTasksByDate(@PathVariable("dueDate") Date dueDate,
+//                                                            @PathVariable("user-id") int userId)
+//    {
+//        List<Task> tasks = usersServiceFacade.getTasksByDate(userId, dueDate);
+//        List<TaskDto> tasksDto = tasksAndStepsConverter.fromTasks(tasks);
+//        return ResponseBuilder.buildResponseGet(tasksDto);
+//    }
 
     @RequestMapping(method = RequestMethod.POST)
     public ResponseEntity<ResponseDto> signUpUser(@RequestBody UserDto userDto){

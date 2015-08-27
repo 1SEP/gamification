@@ -3,8 +3,9 @@ package ru.fsep.enterprise.fseper.service.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
-import ru.fsep.enterprise.fseper.models.Step;
+import ru.fsep.enterprise.fseper.models.Steps;
 import ru.fsep.enterprise.fseper.models.Task;
+import ru.fsep.enterprise.fseper.models.Tasks;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.DaoArgumentsVerifier;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.ParamsMapper;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.SqlQueryExecutor;
@@ -18,9 +19,6 @@ import java.util.Map;
 
 import static java.util.Arrays.asList;
 
-/**
- * Created by ramil on 09.07.2015.
- */
 @Repository
 public class TasksDaoImpl implements TasksDao {
 
@@ -46,31 +44,29 @@ public class TasksDaoImpl implements TasksDao {
         stepsDao = new StepsDaoImpl(sqlQueryExecutor, paramsMapper, verifier);
     }
 
-    public static final String SQL_GET_TASKS_BY_ID =
-            "SELECT * FROM task WHERE (id = :userId)";
-
+    public static final String SQL_GET_ALL_TASKS_BY_USER_ID =
+            "SELECT * FROM task, tasks WHERE (tasks.user_id = :userId)";
 
     public static final String SQL_GET_TASK_BY_ID =
             "SELECT * FROM task WHERE (id = :taskId)";
 
     public static final String SQL_GET_TASKS_BY_DATE =
-            "SELECT * FROM task WHERE (due_data = :date)";
+            "SELECT * FROM task, tasks WHERE (tasks.user_id = :userId AND task.due_data = :dueDate)";
 
     public static final String SQL_INSERT_INTO_TASK =
-            "INSERT INTO task VALUES (:privated, :description, :due_data, :steps_id, finished)";
+            "INSERT INTO task VALUES (:privated, :description, :due_data, finished)";
 
     public static final String SQL_UPDATE_TASK =
-            "UPDATE task VALUES (:id, :privated, :description, :due_data, :steps_id, :steps, :finished)";
+            "UPDATE task VALUES (:privated, :description, :due_data, :finished)";
 
     public static final String SQL_DELETE_FROM_TASK_BY_ID =
-            "DELETE FROM tasks WHERE (task_id = :taskId)";
+            "DELETE FROM task WHERE (id = :taskId)";
 
     public static final String SQL_GET_PRIVATED_TASKS =
-            "SELECT * FROM tasks WHERE (users_id = :userId)";
+            "SELECT * FROM task, tasks WHERE (tasks.users_id = :userId AND task.privated = :privated)";
 
     public static final String SQL_GET_FINISHED_TASKS =
-            "SELECT * FROM tasks WHERE (users_id = :userId)";
-
+            "SELECT * FROM task, tasks WHERE (tasks.users_id = :userId AND task.finished = :finished)";
 
     public static final RowMapper<Task> TASK_ROW_MAPPER = new RowMapper<Task>() {
         public Task mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -79,7 +75,7 @@ public class TasksDaoImpl implements TasksDao {
             String description = rs.getString("description");
             String str_due_date = rs.getString("due_date");
             Date duedate = new Date(str_due_date);
-            List<Step> steps = Collections.EMPTY_LIST;
+            Steps steps = new Steps(Collections.EMPTY_LIST);
             boolean finished = rs.getBoolean("finished");
 
             return new Task(id, isPrivate, description, duedate, steps, finished);
@@ -102,21 +98,23 @@ public class TasksDaoImpl implements TasksDao {
 
         sqlQueryExecutor.updateQuery(SQL_UPDATE_TASK, paramMap);
 
-        List<Step> steps = stepsDao.getSteps(task.getId());
+        Steps steps = stepsDao.getSteps(task.getId());
         task.setSteps(steps);
-
         return task;
     }
 
-    public List<Task> getTasksByDate(int userId, Date date) {
+    public Tasks getTasksByDate(int userId, Date date) {
         verifier.verifyUserById(userId);
-        Map<String, Object> paramMap = paramsMapper.asMap(asList("userId", "due_data"), asList(userId, date));
-        List<Task> tasks = sqlQueryExecutor.queryForObjects(SQL_GET_TASKS_BY_DATE, paramMap, TASK_ROW_MAPPER);
-        for (Task task : tasks) {
+        Map<String, Object> paramMap = paramsMapper.asMap(asList("userId", "dueDate"), asList(userId, date));
+        List<Task> tasksList = sqlQueryExecutor.queryForObjects(SQL_GET_TASKS_BY_DATE, paramMap, TASK_ROW_MAPPER);
+
+        for (Task task : tasksList) {
             int taskId = task.getId();
-            List<Step> steps = stepsDao.getSteps(taskId);
+            Steps steps = stepsDao.getSteps(taskId);
             task.setSteps(steps);
         }
+
+        Tasks tasks = new Tasks(tasksList);
         return tasks;
     }
 
@@ -135,44 +133,45 @@ public class TasksDaoImpl implements TasksDao {
         sqlQueryExecutor.updateQuery(SQL_DELETE_FROM_TASK_BY_ID, paramMap);
     }
 
-    public List<Task> getTasks(int userId) {
+    public Tasks getTasks(int userId) {
         verifier.verifyUserById(userId);
         Map<String, Object> paramMap = paramsMapper.asMap(asList("userId"), asList(userId));
-        List<Task> tasks = sqlQueryExecutor.queryForObjects(SQL_GET_TASKS_BY_ID, paramMap, TASK_ROW_MAPPER);
+        List<Task> taskList = sqlQueryExecutor.queryForObjects(SQL_GET_ALL_TASKS_BY_USER_ID, paramMap, TASK_ROW_MAPPER);
 
-        for (Task task : tasks) {
+        for (Task task : taskList) {
             int taskId = task.getId();
-            List<Step> steps = stepsDao.getSteps(taskId);
+            Steps steps = stepsDao.getSteps(taskId);
             task.setSteps(steps);
         }
+        Tasks tasks = new Tasks(taskList);
         return tasks;
     }
 
-    public List<Task> getPrivatedTasks(int userId) {
+    public Tasks getTasksByPrivatedFilter(int userId, boolean privated) {
         verifier.verifyUserById(userId);
         Map<String, Object> paramMap = paramsMapper.asMap(asList("userId"), asList(userId));
-        List<Task> tasks = sqlQueryExecutor.queryForObjects(SQL_GET_PRIVATED_TASKS, paramMap, TASK_ROW_MAPPER);
+        List<Task> tasksList = sqlQueryExecutor.queryForObjects(SQL_GET_PRIVATED_TASKS, paramMap, TASK_ROW_MAPPER);
 
-        for (Task task : tasks) {
+        for (Task task : tasksList) {
             int taskId = task.getId();
-            List<Step> steps = stepsDao.getSteps(taskId);
+            Steps steps = stepsDao.getSteps(taskId);
             task.setSteps(steps);
         }
-
+        Tasks tasks = new Tasks(tasksList);
         return tasks;
     }
 
-    public List<Task> getFinishedTasks(int userId) {
+    public Tasks getTasksByFinishedFilter(int userId, boolean finished) {
         verifier.verifyUserById(userId);
         Map<String, Object> paramMap = paramsMapper.asMap(asList("userId"), asList(userId));
-        List<Task> tasks = sqlQueryExecutor.queryForObjects(SQL_GET_FINISHED_TASKS, paramMap, TASK_ROW_MAPPER);
+        List<Task> tasksList = sqlQueryExecutor.queryForObjects(SQL_GET_FINISHED_TASKS, paramMap, TASK_ROW_MAPPER);
 
-        for (Task task : tasks) {
+        for (Task task : tasksList) {
             int taskId = task.getId();
-            List<Step> steps = stepsDao.getSteps(taskId);
+            Steps steps = stepsDao.getSteps(taskId);
             task.setSteps(steps);
         }
-
+        Tasks tasks = new Tasks(tasksList);
         return tasks;
     }
 }
