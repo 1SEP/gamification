@@ -12,10 +12,10 @@ public class TestDataForTaskDao {
 //        public static final int TASK_ID = 1;
 //        public static final int USER_ID = 1;
 //        public static final int INCORRECT_TASK_ID = 5;
-//        public static final boolean PRIVATED = true;
-//        public  static final boolean FINISHED = true;
-//        public static final List<Task> PRIVATED_TASK = getListPrivatedTasks();
-//        public static final List<Task> FINISHED_TASK = getListFinishedTasks();
+//        public static final boolean IS_PRIVATED = true;
+//        public  static final boolean IS_FINISHED = true;
+//        public static final List<Task> LIST_PRIVATE_TASKS = getListPrivatedTasks();
+//        public static final List<Task> LIST_FINISHED_TASKS = getListFinishedTasks();
 //        public static final Date DATE_TASK = test();
 //        public static final List<Task> TASK_LIST = getListTaskDate();
 //        public static final Task TASK = new Task(TASK_ID, true, null, null, 5, null, true);

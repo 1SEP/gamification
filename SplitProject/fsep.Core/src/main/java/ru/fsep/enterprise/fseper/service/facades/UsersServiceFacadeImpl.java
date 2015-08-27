@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.fsep.enterprise.fseper.models.*;
 import ru.fsep.enterprise.fseper.service.dao.PostsDao;
+import ru.fsep.enterprise.fseper.service.dao.StepsDao;
 import ru.fsep.enterprise.fseper.service.dao.TasksDao;
 import ru.fsep.enterprise.fseper.service.dao.UsersDao;
 
@@ -11,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by Ôëþð on 07.07.2015.
+ * Created by ï¿½ï¿½ï¿½ï¿½ on 07.07.2015.
  */
 @Service
 public class UsersServiceFacadeImpl implements UsersServiceFacade {
@@ -21,6 +22,8 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
     private PostsDao postsDao;
     @Autowired
     private TasksDao tasksDao;
+    @Autowired
+    private StepsDao stepsDao;
 
     public void signUp(User user) {
         usersDao.signUp(user);
@@ -63,27 +66,31 @@ public class UsersServiceFacadeImpl implements UsersServiceFacade {
     }
 
     public Steps getSteps(int taskId) {
-        return null;
+        return stepsDao.getSteps(taskId);
     }
 
     public Step getStep(int taskId, int stepId) {
-        return null;
+        return stepsDao.getStep(taskId, stepId);
     }
 
     public Steps getStepsByFinishedFilter(int taskId, boolean finished) {
-        return null;
+        return stepsDao.getStepsByFinishedFilter(taskId, finished);
     }
 
     public void addStep(int taskId, Step step) {
-
+        stepsDao.addStep(taskId, step);
     }
 
     public Step updateStep(int taskId, Step step) {
+<<<<<<< HEAD
         return null;
+=======
+        return stepsDao.updateStep(taskId, step);
+>>>>>>> 4df128e70903d1e4465a6c12cbfbfecad83b7b2b
     }
 
     public void removeStep(int taskId, int stepId) {
-
+        stepsDao.removeStep(taskId, stepId);
     }
 
     public void addPost(Post post, int userId) {

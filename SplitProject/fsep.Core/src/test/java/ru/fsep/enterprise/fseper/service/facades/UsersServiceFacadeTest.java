@@ -15,7 +15,7 @@ import java.util.List;
 import static org.mockito.Mockito.verify;
 import static ru.fsep.enterprise.fseper.test.data.TestDataCore.*;
 /**
- * Created by Ôëþð on 12.07.2015.
+ * Created by ï¿½ï¿½ï¿½ï¿½ on 12.07.2015.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = {AppTestContext.class})
@@ -101,14 +101,14 @@ public class UsersServiceFacadeTest {
         usersServiceFacade.getStep(TASK_1.getId(), STEP_1_OF_TASK_1.getId());
         usersServiceFacade.getStepsByFinishedFilter(TASK_1.getId(), true);
         usersServiceFacade.addStep(TASK_1.getId(), STEP_1_OF_TASK_1);
-        usersServiceFacade.updateStep(TASK_1.getId(), STEP_1_OF_TASK_1.getId(), STEP_1_OF_TASK_1);
+        usersServiceFacade.updateStep(TASK_1.getId(), STEP_1_OF_TASK_1);
         usersServiceFacade.removeStep(TASK_1.getId(), STEP_1_OF_TASK_1.getId());
 
         verify(usersServiceFacade).getSteps(TASK_1.getId());
         verify(usersServiceFacade).getStep(TASK_1.getId(), STEP_1_OF_TASK_1.getId());
         verify(usersServiceFacade).getStepsByFinishedFilter(TASK_1.getId(), true);
         verify(usersServiceFacade).addStep(TASK_1.getId(), STEP_1_OF_TASK_1);
-        verify(usersServiceFacade).updateStep(TASK_1.getId(), STEP_1_OF_TASK_1.getId(), STEP_1_OF_TASK_1);
+        verify(usersServiceFacade).updateStep(TASK_1.getId(), STEP_1_OF_TASK_1);
         verify(usersServiceFacade).removeStep(TASK_1.getId(), STEP_1_OF_TASK_1.getId());
     }
 }
