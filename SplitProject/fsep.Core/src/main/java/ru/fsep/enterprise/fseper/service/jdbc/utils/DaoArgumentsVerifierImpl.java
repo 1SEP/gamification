@@ -21,18 +21,18 @@ public class DaoArgumentsVerifierImpl implements DaoArgumentsVerifier {
     @Autowired
     private ParamsMapper paramsMapper;
     //language=SQL
-    private static final String SQL_COUNT_OF_ASSIGNMENTS_BY_IDS =
+    private final String SQL_COUNT_OF_ASSIGNMENTS_BY_IDS =
             "SELECT COUNT (*) FROM task WHERE (user_id = :userId AND task_id = :taskId)";
     //language=SQL
-    private static final String SQL_COUNT_USERS_BY_ID =
+    private final String SQL_COUNT_USERS_BY_ID =
             "SELECT COUNT (*) FROM users WHERE (id = :userId)";
     //language=SQL
-    private static final String SQL_GET_USERS_BY_NAME =
+    private final String SQL_GET_USERS_BY_NAME =
             "SELECT COUNT (*) FROM users WHERE first_name = :firstName, last_name =: lastName";
     //language=SQL
-    private static final String SQL_COUNT_OF_POST_BY_POSTID = "SELECT count(*) FROM posts WHERE id =: postId";
+    private final String SQL_COUNT_OF_POST_BY_POSTID = "SELECT count(*) FROM posts WHERE id =: postId";
     //language=SQL
-    public static final String SQL_COUNT_USERS_BY_LOGIN_AND_PASSWORD = "SELECT COUNT(*) FROM users WHERE login =: " +
+    private final String SQL_COUNT_USERS_BY_LOGIN_AND_PASSWORD = "SELECT COUNT(*) FROM users WHERE login =: " +
             "login, password_hash =: passwordHash";
 
     public void verifyUser(User user) {
