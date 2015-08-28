@@ -11,6 +11,7 @@ import ru.fsep.enterprise.fseper.controllers.dto.TaskDto;
 import ru.fsep.enterprise.fseper.models.Step;
 import ru.fsep.enterprise.fseper.models.Steps;
 import ru.fsep.enterprise.fseper.models.Task;
+import ru.fsep.enterprise.fseper.service.facades.TasksServiceFacade;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
 
 import java.util.LinkedList;
@@ -22,15 +23,16 @@ import java.util.List;
 @RestController
 @RequestMapping(value = "/tasks/")
 public class TasksController {
+
     @Autowired
-    private UsersServiceFacade usersServiceFacade;
+    private TasksServiceFacade tasksServiceFacade;
 
     @Autowired
     private TasksAndStepsConverter tasksAndStepsConverter;
 
     @RequestMapping(value = "{task-id}.json", method = RequestMethod.GET)
     public ResponseEntity<ResponseDto> getTask(@PathVariable("task-id") int taskId) {
-        Task task = usersServiceFacade.getTask(taskId);
+        Task task = tasksServiceFacade.getTask(taskId);
         TaskDto taskDto = tasksAndStepsConverter.fromTask(task);
         return ResponseBuilder.buildResponseGet(taskDto);
     }
@@ -38,19 +40,19 @@ public class TasksController {
     @RequestMapping(value = "{task-id}", method = RequestMethod.PUT)
     public ResponseEntity<ResponseDto> updateTask(@PathVariable("task-id") int taskId, @RequestBody TaskDto taskDto) {
         Task task = tasksAndStepsConverter.toTask(taskDto);
-        usersServiceFacade.updateTask(task);
+        tasksServiceFacade.updateTask(task);
         return ResponseBuilder.buildResponsePut(taskDto);
     }
 
     @RequestMapping(value = "{task-id}", method = RequestMethod.DELETE)
     public ResponseEntity<ResponseDto> removeTask(@PathVariable("task-id") int taskId) {
-        usersServiceFacade.removeTask(taskId);
+        tasksServiceFacade.removeTask(taskId);
         return ResponseBuilder.buildResponseDelete();
     }
 
     @RequestMapping(value = "{task-id}/steps.json", method = RequestMethod.GET)
     public ResponseEntity<ResponseDto> getSteps(@PathVariable("task-id") int id) {
-        Steps steps = usersServiceFacade.getTask(id).getSteps();
+        Steps steps = tasksServiceFacade.getTask(id).getSteps();
         List<StepDto> stepsDto = tasksAndStepsConverter.fromSteps(steps);
         return ResponseBuilder.buildResponseGet(stepsDto);
     }
@@ -58,7 +60,7 @@ public class TasksController {
     @RequestMapping(value = "{task-id}/steps/{step-id}.json", method = RequestMethod.GET)
     public ResponseEntity<ResponseDto> getStep(@PathVariable("task-id") int taskId,
                                                @PathVariable("step-id") int stepId) {
-        Steps steps = usersServiceFacade.getTask(taskId).getSteps();
+        Steps steps = tasksServiceFacade.getTask(taskId).getSteps();
         Step step = null;
         for (Step s : steps.getSteps()) {
             if (stepId == s.getId() && taskId == s.getTaskId()) step = s;
@@ -70,7 +72,7 @@ public class TasksController {
     @RequestMapping(value = "{task-id}/steps.json/filter={finished}", method = RequestMethod.GET)
     public ResponseEntity<ResponseDto> getStepsByFilterFinished(@PathVariable("task-id") int taskId,
                                                                 @PathVariable("finished") boolean finished) {
-        Steps steps = usersServiceFacade.getTask(taskId).getSteps();
+        Steps steps = tasksServiceFacade.getTask(taskId).getSteps();
         List<Step> result = new LinkedList<Step>();
         for (Step s : steps.getSteps()) {
             if (finished == s.isFinished() && taskId == s.getTaskId()) result.add(s);
@@ -83,35 +85,23 @@ public class TasksController {
             produces = MediaType.APPLICATION_JSON_VALUE,
             consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ResponseDto> addStep(@PathVariable("task-id") int taskId, @RequestBody StepDto stepDto) {
-        Task task = usersServiceFacade.getTask(taskId);
+        Task task = tasksServiceFacade.getTask(taskId);
         Steps steps = task.getSteps();
         Step step = tasksAndStepsConverter.toStep(stepDto);
         steps.getSteps().add(step);
         return ResponseBuilder.buildResponsePut(stepDto);
     }
 
-//    @RequestMapping(value = "{task-id}/steps/{step-id}", method = RequestMethod.PUT)
-//    public ResponseEntity<ResponseDto> updateStep(@PathVariable("task-id") int taskId,
-//                                                  @PathVariable("step-id") int stepId, @RequestBody StepDto stepDto) {
-//        List<Step> steps = usersServiceFacade.getTask(taskId).getSteps();
-//        Step step;
-//        for (int i = 0; i < steps.size(); i++) {
-//            if (stepId == steps.get(i).getId() && taskId == steps.get(i).getTaskId()) {
-//                steps.remove(i);
-//                step = tasksAndStepsConverter.toStep(stepDto);
-//                steps.add(i, step);
-//                break;
-//            }
-//        }
-//        return ResponseBuilder.buildResponseGet(stepDto);
-//    }
-//
-//    @RequestMapping(value = "{task-id}/steps/{step-id}", method = RequestMethod.DELETE)
-//    public ResponseEntity<ResponseDto> removeStep(@PathVariable("task-id") int taskId, @PathVariable("step-id") int stepId) {
-//        List<Step> steps = usersServiceFacade.getTask(taskId).getSteps();
-//        for (int i = 0; i < steps.size(); i++) {
-//            if (stepId == steps.get(i).getId() && taskId == steps.get(i).getTaskId()) steps.remove(i);
-//        }
-//        return ResponseBuilder.buildResponseDelete();
-//    }
+    @RequestMapping(value = "{task-id}/steps", method = RequestMethod.PUT)
+    public ResponseEntity<ResponseDto> updateStep(@PathVariable("task-id") int taskId, @RequestBody StepDto stepDto) {
+        Step step = tasksAndStepsConverter.toStep(stepDto);
+        tasksServiceFacade.updateStep(taskId, step);
+        return ResponseBuilder.buildResponsePut(stepDto);
+    }
+
+    @RequestMapping(value = "{task-id}/steps/{step-id}", method = RequestMethod.DELETE)
+    public ResponseEntity<ResponseDto> removeStep(@PathVariable("task-id") int taskId, @PathVariable("step-id") int stepId) {
+        tasksServiceFacade.removeStep(taskId, stepId);
+        return ResponseBuilder.buildResponseDelete();
+    }
 }

@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
 import ru.fsep.enterprise.fseper.service.dao.TasksDaoImpl;
+import ru.fsep.enterprise.fseper.service.facades.TasksServiceFacade;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacadeImpl;
 
@@ -20,7 +21,12 @@ public class AppTestContext {
     }
 
     @Bean
-    public TasksDaoImpl tasksDaoImpl() {
-        return new TasksDaoImpl();
+    public TasksServiceFacade tasksServiceFacade(){
+        return Mockito.mock(TasksServiceFacade.class);
     }
+
+//    @Bean
+//    public TasksDaoImpl tasksDaoImpl() {
+//        return new TasksDaoImpl();
+//    }
 }

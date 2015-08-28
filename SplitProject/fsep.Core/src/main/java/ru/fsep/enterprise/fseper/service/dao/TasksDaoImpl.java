@@ -32,11 +32,10 @@ public class TasksDaoImpl implements TasksDao {
     private SqlQueryExecutor sqlQueryExecutor;
 
     @Autowired
-    StepsDao stepsDao;
+    private StepsDao stepsDao;
 
     public TasksDaoImpl() {
     }
-
     public TasksDaoImpl(SqlQueryExecutor sqlQueryExecutor, ParamsMapper paramsMapper, DaoArgumentsVerifier verifier) {
         this.sqlQueryExecutor = sqlQueryExecutor;
         this.paramsMapper = paramsMapper;
@@ -102,7 +101,7 @@ public class TasksDaoImpl implements TasksDao {
         task.setSteps(steps);
         return task;
     }
-    
+
 
     public Tasks getTasksByDate(int userId, Date date) {
         verifier.verifyUserById(userId);

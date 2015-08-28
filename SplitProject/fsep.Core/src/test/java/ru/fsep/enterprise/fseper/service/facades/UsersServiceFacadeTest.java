@@ -6,6 +6,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import ru.fsep.enterprise.fseper.AppContext;
 import ru.fsep.enterprise.fseper.AppTestContext;
 import ru.fsep.enterprise.fseper.models.Post;
 
@@ -24,6 +25,8 @@ public class UsersServiceFacadeTest {
     @Autowired
     UsersServiceFacade usersServiceFacade;
 
+    @Autowired
+    TasksServiceFacade tasksServiceFacade;
     @Before
     public void setUp() throws Exception {
     }
@@ -60,24 +63,24 @@ public class UsersServiceFacadeTest {
     @Test
     public void partOfTaskService() throws Exception {
         Date date = TASK_1.getDueDate();
-        usersServiceFacade.assignmentTask(TASK_1, USER.getId());
-        usersServiceFacade.getTask(TASK_1.getId());
-        usersServiceFacade.removeTask(TASK_1.getId());
-        usersServiceFacade.getTasksByPrivatedFilter(USER.getId(), true);
-        usersServiceFacade.getTasksByFinishedFilter(USER.getId(), true);
-        usersServiceFacade.getTasksByDate(USER.getId(), date);
-        usersServiceFacade.updateTask(TASK_1);
-        usersServiceFacade.getTasks(USER.getId());
+        tasksServiceFacade.assignmentTask(TASK_1, USER.getId());
+        tasksServiceFacade.getTask(TASK_1.getId());
+        tasksServiceFacade.removeTask(TASK_1.getId());
+        tasksServiceFacade.getTasksByPrivatedFilter(USER.getId(), true);
+        tasksServiceFacade.getTasksByFinishedFilter(USER.getId(), true);
+        tasksServiceFacade.getTasksByDate(USER.getId(), date);
+        tasksServiceFacade.updateTask(TASK_1);
+        tasksServiceFacade.getTasks(USER.getId());
 
 
-        verify(usersServiceFacade).assignmentTask(TASK_1, USER.getId());
-        verify(usersServiceFacade).getTask(TASK_1.getId());
-        verify(usersServiceFacade).removeTask(TASK_1.getId());
-        verify(usersServiceFacade).getTasksByPrivatedFilter(USER.getId(), true);
-        verify(usersServiceFacade).getTasksByFinishedFilter(USER.getId(), true);
-        verify(usersServiceFacade).getTasksByDate(USER.getId(), date);
-        verify(usersServiceFacade).updateTask(TASK_1);
-        verify(usersServiceFacade).getTasks(USER.getId());
+        verify(tasksServiceFacade).assignmentTask(TASK_1, USER.getId());
+        verify(tasksServiceFacade).getTask(TASK_1.getId());
+        verify(tasksServiceFacade).removeTask(TASK_1.getId());
+        verify(tasksServiceFacade).getTasksByPrivatedFilter(USER.getId(), true);
+        verify(tasksServiceFacade).getTasksByFinishedFilter(USER.getId(), true);
+        verify(tasksServiceFacade).getTasksByDate(USER.getId(), date);
+        verify(tasksServiceFacade).updateTask(TASK_1);
+        verify(tasksServiceFacade).getTasks(USER.getId());
     }
 
     @Test
@@ -97,18 +100,18 @@ public class UsersServiceFacadeTest {
     }
     @Test
     public void partOfStepSeervice() throws Exception{
-        usersServiceFacade.getSteps(TASK_1.getId());
-        usersServiceFacade.getStep(TASK_1.getId(), STEP_1_OF_TASK_1.getId());
-        usersServiceFacade.getStepsByFinishedFilter(TASK_1.getId(), true);
-        usersServiceFacade.addStep(TASK_1.getId(), STEP_1_OF_TASK_1);
-        usersServiceFacade.updateStep(TASK_1.getId(), STEP_1_OF_TASK_1);
-        usersServiceFacade.removeStep(TASK_1.getId(), STEP_1_OF_TASK_1.getId());
+        tasksServiceFacade.getSteps(TASK_1.getId());
+        tasksServiceFacade.getStep(TASK_1.getId(), STEP_1_OF_TASK_1.getId());
+        tasksServiceFacade.getStepsByFinishedFilter(TASK_1.getId(), true);
+        tasksServiceFacade.addStep(TASK_1.getId(), STEP_1_OF_TASK_1);
+        tasksServiceFacade.updateStep(TASK_1.getId(), STEP_1_OF_TASK_1);
+        tasksServiceFacade.removeStep(TASK_1.getId(), STEP_1_OF_TASK_1.getId());
 
-        verify(usersServiceFacade).getSteps(TASK_1.getId());
-        verify(usersServiceFacade).getStep(TASK_1.getId(), STEP_1_OF_TASK_1.getId());
-        verify(usersServiceFacade).getStepsByFinishedFilter(TASK_1.getId(), true);
-        verify(usersServiceFacade).addStep(TASK_1.getId(), STEP_1_OF_TASK_1);
-        verify(usersServiceFacade).updateStep(TASK_1.getId(), STEP_1_OF_TASK_1);
-        verify(usersServiceFacade).removeStep(TASK_1.getId(), STEP_1_OF_TASK_1.getId());
+        verify(tasksServiceFacade).getSteps(TASK_1.getId());
+        verify(tasksServiceFacade).getStep(TASK_1.getId(), STEP_1_OF_TASK_1.getId());
+        verify(tasksServiceFacade).getStepsByFinishedFilter(TASK_1.getId(), true);
+        verify(tasksServiceFacade).addStep(TASK_1.getId(), STEP_1_OF_TASK_1);
+        verify(tasksServiceFacade).updateStep(TASK_1.getId(), STEP_1_OF_TASK_1);
+        verify(tasksServiceFacade).removeStep(TASK_1.getId(), STEP_1_OF_TASK_1.getId());
     }
 }

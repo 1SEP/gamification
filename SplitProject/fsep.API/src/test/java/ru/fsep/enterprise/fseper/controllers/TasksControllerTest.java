@@ -17,6 +17,7 @@ import org.springframework.web.context.WebApplicationContext;
 import ru.fsep.enterprise.fseper.AppContext;
 import ru.fsep.enterprise.fseper.AppTestContext;
 import ru.fsep.enterprise.fseper.service.exceptions.TaskNotFoundException;
+import ru.fsep.enterprise.fseper.service.facades.TasksServiceFacade;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
 
 import static org.hamcrest.Matchers.is;
@@ -38,7 +39,7 @@ public class TasksControllerTest {
     private MockMvc mockMvc;
 
     @Autowired
-    private UsersServiceFacade usersServiceFacade;
+    private TasksServiceFacade tasksServiceFacade;
 
     @Autowired
     WebApplicationContext context;
@@ -47,10 +48,10 @@ public class TasksControllerTest {
 
     @Before
     public void setUp() throws Exception {
-        Mockito.reset(usersServiceFacade);
+        Mockito.reset(tasksServiceFacade);
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
-        when(usersServiceFacade.getTask(Matchers.anyInt())).thenThrow(new TaskNotFoundException(5));
-        doReturn(TASK_1).when(usersServiceFacade).getTask(TASK_1.getId());
+        when(tasksServiceFacade.getTask(Matchers.anyInt())).thenThrow(new TaskNotFoundException(5));
+        doReturn(TASK_1).when(tasksServiceFacade).getTask(TASK_1.getId());
     }
 
     @Test
@@ -70,7 +71,7 @@ public class TasksControllerTest {
                 .andExpect(jsonPath("$.data.steps[1].description", is(STEP_2_OF_TASK_1.getDescription())))
                 .andExpect(jsonPath("$.data.steps[1].finished", is(String.valueOf(STEP_2_OF_TASK_1.isFinished()))))
                 .andExpect(jsonPath("$.data.finished", is(String.valueOf(TASK_1.isFinished()))));
-        verify(usersServiceFacade).getTask(TASK_1.getId());
+        verify(tasksServiceFacade).getTask(TASK_1.getId());
     }
 
     @Test
@@ -109,7 +110,7 @@ public class TasksControllerTest {
     public void testRemoveTask() throws Exception {
         mockMvc.perform(delete("/tasks/{task-id}", TASK_1.getId()).contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-        verify(usersServiceFacade).removeTask(TASK_1.getId());
+        verify(tasksServiceFacade).removeTask(TASK_1.getId());
     }
 
     @Test
@@ -167,12 +168,11 @@ public class TasksControllerTest {
 
     @Test
     public void testUpdateStep() throws Exception {
-        ;
         String json = mapper.writeValueAsString(STEP_DTO);
-        mockMvc.perform(put("/tasks/{task-id}/steps/{step-id}", TASK_1.getId(), STEP_DTO.getId())
+        mockMvc.perform(put("/tasks/{task-id}/steps", TASK_1.getId())
                 .content(json.getBytes())
                 .contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.data.id", is(STEP_DTO.getId())))
                 .andExpect(jsonPath("$.data.taskId", is(STEP_DTO.getTaskId())))
                 .andExpect(jsonPath("$.data.description", is(STEP_DTO.getDescription())))

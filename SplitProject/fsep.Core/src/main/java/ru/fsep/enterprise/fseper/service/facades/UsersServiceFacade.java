@@ -10,18 +10,6 @@ import java.util.List;
  */
 
 public interface UsersServiceFacade {
-    void addPost(Post post, int userId);
-    void removePost(int postId);
-    Post updatePost(Post post);
-    List<Post> getPosts(int userId);
-
-    void assignmentTask(Task task, int taskId);
-    Task getTask(int taskId);
-    Task updateTask(Task task);
-    void removeTask(int taskId);
-    Tasks getTasks(int userId);
-    Tasks getTasksByDate(int usersId, Date date);
-
     void signUp(User user);
     void logIn(User user);
     User getUser(int userId);
@@ -33,10 +21,8 @@ public interface UsersServiceFacade {
     List<User> getSortedUsersByName();
     List<User> getSortedUsersByRating();
 
-    Steps getSteps(int taskId);
-    Step getStep(int taskId, int stepId);
-    Steps getStepsByFinishedFilter(int taskId, boolean finished);
-    void addStep(int taskId, Step step);
-    Step updateStep(int taskId, Step step);
-    void removeStep(int taskId, int stepId);
+    void addPost(Post post, int userId);
+    void removePost(int postId);
+    Post updatePost(Post post);
+    List<Post> getPosts(int userId);
 }
