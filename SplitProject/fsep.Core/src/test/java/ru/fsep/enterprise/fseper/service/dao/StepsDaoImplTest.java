@@ -73,9 +73,17 @@ public class StepsDaoImplTest {
 
     @Test
     public void testGetStep() throws Exception {
-        Step actual = stepsDao.getStep(TASK_ID, 1);
         Step expected = new Step(1, TASK_ID, "test_description", true);
+        int testStepId = 1;
+        Step actual = stepsDao.getStep(TASK_ID, testStepId);
+        verify(argumentsVerifier).verifyTask(TASK_ID);
         assertEquals(expected, actual);
+    }
+
+    @Test(expected = TaskNotFoundException.class)
+    public void testGetStepIncorrectTaskId() throws Exception {
+        int testStepId = 1;
+        Step actual = stepsDao.getStep(INCORRECT_TASK_ID, testStepId);
     }
 
     @Test
@@ -85,12 +93,24 @@ public class StepsDaoImplTest {
         verify(argumentsVerifier).verifyTask(TASK_ID);
     }
 
+    @Test(expected = TaskNotFoundException.class)
+    public void testAddWithIncorrectTaskId() throws Exception {
+        stepsDao.addStep(INCORRECT_TASK_ID, new Step(1, INCORRECT_TASK_ID, "test", false));
+    }
+
     @Test
-    public  void testRemove() throws Exception {
+    public void testRemove() throws Exception {
         int testStepId = 1;
         stepsDao.removeStep(TASK_ID, testStepId);
         verify(argumentsVerifier).verifyTask(TASK_ID);
     }
+
+    @Test(expected = TaskNotFoundException.class)
+    public void testRemoveWithIncorrectTaskId() throws Exception {
+        int testStepId = 1;
+        stepsDao.removeStep(INCORRECT_TASK_ID, testStepId);
+    }
+
 
     @Test
     public void testUpdate() throws Exception {
@@ -99,9 +119,20 @@ public class StepsDaoImplTest {
         assertEquals(testStep, actual);
     }
 
+    @Test(expected = TaskNotFoundException.class)
+    public void testUpdateWithIncorrectTaskId() throws Exception {
+        Step testStep = new Step(1, INCORRECT_TASK_ID, "test_description", true);
+        Step actual = stepsDao.updateStep(INCORRECT_TASK_ID, testStep);
+    }
+
     @Test
     public void testGetStepsByFinishedFilter() throws Exception {
         Steps actual = stepsDao.getStepsByFinishedFilter(TASK_ID, true);
         assertNotNull(actual);
+    }
+
+    @Test(expected = TaskNotFoundException.class)
+    public void testGetStepsByFinishedFilterIncorrectTaskId() throws Exception {
+        Steps actual = stepsDao.getStepsByFinishedFilter(INCORRECT_TASK_ID, true);
     }
 }
