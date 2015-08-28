@@ -1,10 +1,12 @@
 package ru.fsep.enterprise.fseper;
 
+import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.web.servlet.config.annotation.DefaultServletHandlerConfigurer;
+import ru.fsep.enterprise.fseper.service.facades.TasksServiceFacade;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacadeImpl;
 
@@ -19,6 +21,9 @@ public class AppTestContext {
     public UsersServiceFacade usersServiceFacade(){
         return Mockito.mock(UsersServiceFacade.class);
     }
+
+    @Bean
+    public TasksServiceFacade tasksServiceFacade(){ return Mockito.mock(TasksServiceFacade.class); }
 
     @Bean
     public DataSource dataSource(){

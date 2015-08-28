@@ -120,15 +120,6 @@ public class UserControllerTest {
     public void testSignUpUser() throws Exception {
 
     }
-
-    @Test
-    public void testGetTask() throws Exception {
-        User user = USER;
-        String json = mapper.writeValueAsString(user);
-
-        mockMvc.perform(post("/user/", user).content(json.getBytes()).contentType(MediaType.APPLICATION_JSON))
-                .andExpect(status().isCreated());
-    }
     public void testGetTasks() throws Exception {
         when(tasksServiceFacade.getTasks(USER.getId())).thenReturn(USER.getTasks());
         mockMvc.perform(get("/user/{user-id}/tasks.json", USER.getId()).contentType(MediaType.APPLICATION_JSON))
@@ -167,7 +158,6 @@ public class UserControllerTest {
         User user = USER;
         user.getPersonInfo().setRole("new role");
         int userId = user.getId();
-
         String json = mapper.writeValueAsString(user);
         mockMvc.perform(put("/user/{user-id}", userId, user).content(json.getBytes())
                 .contentType(MediaType.APPLICATION_JSON))

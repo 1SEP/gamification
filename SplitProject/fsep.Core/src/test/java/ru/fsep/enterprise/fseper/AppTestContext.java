@@ -25,8 +25,4 @@ public class AppTestContext {
         return Mockito.mock(TasksServiceFacade.class);
     }
 
-//    @Bean
-//    public TasksDaoImpl tasksDaoImpl() {
-//        return new TasksDaoImpl();
-//    }
 }
