@@ -7,7 +7,7 @@ import ru.fsep.enterprise.fseper.controllers.dto.StepsDto;
 /**
  * Created by Ôëþð on 26.08.2015.
  */
-public class Factory implements BeanFactory {
+public class StepsFactory implements BeanFactory {
 
     public Class getClazz(String entityBeanKey) {
         if (entityBeanKey.equals("stepsBeanKey")) {
