@@ -46,6 +46,7 @@ public class UserControllerTest {
 
     @Autowired
     private TasksServiceFacade tasksServiceFacade;
+
     @Autowired
     WebApplicationContext context;
 
