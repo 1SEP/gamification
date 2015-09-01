@@ -20,17 +20,18 @@ public class DaoArgumentsVerifierImpl implements DaoArgumentsVerifier {
 
     @Autowired
     private ParamsMapper paramsMapper;
+
     //language=SQL
     private final String SQL_COUNT_OF_ASSIGNMENTS_BY_IDS =
-            "SELECT COUNT (*) FROM task WHERE (user_id = :userId AND task_id = :taskId)";
+            "SELECT COUNT(*) FROM task WHERE (user_id = :userId AND task_id = :taskId)";
     //language=SQL
     private final String SQL_COUNT_USERS_BY_ID =
-            "SELECT COUNT (*) FROM users WHERE (id = :userId)";
+            "SELECT COUNT(*) FROM users WHERE id = :userId";
     //language=SQL
     private final String SQL_GET_USERS_BY_NAME =
-            "SELECT COUNT (*) FROM users WHERE first_name = :firstName, last_name =: lastName";
+            "SELECT COUNT(*) FROM users WHERE first_name = :firstName, last_name =: lastName";
     //language=SQL
-    private final String SQL_COUNT_OF_POST_BY_POSTID = "SELECT count(*) FROM posts WHERE id =: postId";
+    private final String SQL_COUNT_OF_POST_BY_POSTID = "SELECT COUNT(*) FROM posts WHERE id =: postId";
     //language=SQL
     private final String SQL_COUNT_USERS_BY_LOGIN_AND_PASSWORD = "SELECT COUNT(*) FROM users WHERE login =: " +
             "login, password_hash =: passwordHash";
@@ -43,8 +44,8 @@ public class DaoArgumentsVerifierImpl implements DaoArgumentsVerifier {
     }
 
     public void verifyUserById(int userId) {
-        Map<String, Object> paramMap = paramsMapper.asMap(asList("userId"), asList(userId));
-        int countAvailableUsers = sqlQueryExecutor.queryForInt(SQL_COUNT_USERS_BY_ID, paramMap);
+        Map<String, Object> params = paramsMapper.asMap(asList("userId"), asList(userId));
+        int countAvailableUsers = sqlQueryExecutor.queryForInt(SQL_COUNT_USERS_BY_ID, params);
         if (countAvailableUsers != 1) {
             throw new UserNotFoundException(userId);
         }

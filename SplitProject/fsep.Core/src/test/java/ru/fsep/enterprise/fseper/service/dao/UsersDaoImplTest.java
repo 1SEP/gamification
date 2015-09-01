@@ -3,10 +3,8 @@ package ru.fsep.enterprise.fseper.service.dao;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import ru.fsep.enterprise.fseper.AppContext;
-import ru.fsep.enterprise.fseper.AppTestContext;
 import ru.fsep.enterprise.fseper.models.User;
 import ru.fsep.enterprise.fseper.service.exceptions.PostsNotFoundException;
 import ru.fsep.enterprise.fseper.service.exceptions.UserNotFoundException;
@@ -21,13 +19,13 @@ import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
-import static ru.fsep.enterprise.fseper.test.data.TestDataForUserDao.*;
 import static ru.fsep.enterprise.fseper.service.dao.UsersDaoImpl.*;
+import static ru.fsep.enterprise.fseper.test.data.TestDataForUserDao.*;
 
 @ContextConfiguration(classes = {AppContext.class})
 public class UsersDaoImplTest {
 
-    private UsersDaoImpl usersDaoImplTest;
+    private UsersDao usersDaoImplTest;
     @Mock
     private SqlQueryExecutor sqlQueryExecutorMock;
     @Mock
@@ -107,7 +105,7 @@ public class UsersDaoImplTest {
     public void testGetUser() throws Exception {
         User actual = usersDaoImplTest.getUser(USER_ID);
         User expected = USER;
-        verify(daoArgumentsVerifierMock).verifyUserById(USER_ID);
+        verify(daoArgumentsVerifierMock, times(2)).verifyUserById(USER_ID);
         assertEquals(expected, actual);
     }
 

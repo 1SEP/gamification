@@ -29,6 +29,12 @@ public class UsersDaoImpl implements UsersDao {
     @Autowired
     private DaoArgumentsVerifier daoArgumentsVerifier;
 
+    @Autowired
+    private PostsDao postsDao;
+
+    @Autowired
+    private TasksDao tasksDao;
+
     public UsersDaoImpl() {
     }
 
@@ -36,6 +42,8 @@ public class UsersDaoImpl implements UsersDao {
         this.sqlQueryExecutor = sqlQueryExecutor;
         this.paramsMapper = paramsMapper;
         this.daoArgumentsVerifier = verifier;
+        postsDao = new PostsDaoImpl(sqlQueryExecutor, paramsMapper, verifier);
+        tasksDao = new TasksDaoImpl(sqlQueryExecutor, paramsMapper, verifier);
     }
 
     //language=SQL
@@ -46,7 +54,6 @@ public class UsersDaoImpl implements UsersDao {
     public static final String SQL_UPDATE_USER = "UPDATE users SET first_name = :firstName, last_name = :lastName, " +
             "birthday = :birthday, rating = :rating, photo = :photo, user_role = :role, login = :login, " +
             "password_hash = :password WHERE id = :userId;";
-
     //language=SQL
     public static final String SQL_GET_ALL_USERS = "SELECT * FROM users;";
     //language=SQL
@@ -62,7 +69,7 @@ public class UsersDaoImpl implements UsersDao {
     //language=SQL
     public static final String SQL_GET_ALL_SORTED_USERS_BY_RATING = "SELECT * FROM users ORDER BY rating;";
     //language=SQL
-    public static final String SQL_GET_USERS_BY_POST = "SELECT * FROM users WHERE (post.id = :postId) " +
+    public static final String SQL_GET_USERS_BY_POST = "SELECT * FROM post, users WHERE (post.id = :postId) " +
             "AND (post.name = :postName) AND (post.description = :postDescription);";
 
     public void logIn(User user) {
@@ -85,10 +92,13 @@ public class UsersDaoImpl implements UsersDao {
             URL photo = null;
             try {
                 photo = new URL(rs.getString("photo"));
-            } catch (MalformedURLException e) {e.printStackTrace();}
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            }
 
             List<Task> tasksList = Collections.EMPTY_LIST;
             Tasks tasks = new Tasks(tasksList);
+
             return new User(id, new AuthData(password_hash, login),
                     new PersonInfo(first_name, last_name, rating, birthday, posts, role, photo), tasks);
         }
@@ -119,6 +129,13 @@ public class UsersDaoImpl implements UsersDao {
         daoArgumentsVerifier.verifyUserById(userId);
         Map<String, Object> paramMap = paramsMapper.asMap(asList("userId"), asList(userId));
         User user = sqlQueryExecutor.queryForObject(SQL_GET_USER_BY_ID, paramMap, USER_ROW_MAPPER);
+
+        Tasks tasks = tasksDao.getTasks(userId);
+        user.setTasks(tasks);
+
+        List<Post> posts = postsDao.getPosts(userId);
+        user.getPersonInfo().setPosts(posts);
+
         return user;
     }
 
@@ -138,11 +155,23 @@ public class UsersDaoImpl implements UsersDao {
         String login = authData.getLogin();
         String passwordHash = authData.getPasswordHash();
 
+        Tasks tasks = user.getTasks();
+        for (Task task : tasks.getTasks()) {
+            tasksDao.updateTask(task);
+        }
+
+        List<Post> posts = user.getPersonInfo().getPosts();
+        for (Post post : posts) {
+            postsDao.updatePost(post);
+        }
         Map<String, Object> paramMap = paramsMapper.asMap(asList("userId", "firstName", "lastName", "birthday",
                         "rating", "photo", "role", "login", "password"),
                 asList(userId, firstName, lastName, birthday, rating, photo.toString(), role, login, passwordHash));
         sqlQueryExecutor.updateQuery(SQL_UPDATE_USER, paramMap);
-        return user;
+
+        User result = getUser(userId);
+
+        return result;
     }
 
     public void removeUser(int userId) {
@@ -152,8 +181,9 @@ public class UsersDaoImpl implements UsersDao {
     }
 
     public List<User> getUsers() {
-        List<User> result = sqlQueryExecutor.queryForObjects(SQL_GET_ALL_USERS, USER_ROW_MAPPER);
-        return result;
+        List<User> listOfUsers = sqlQueryExecutor.queryForObjects(SQL_GET_ALL_USERS, USER_ROW_MAPPER);
+        setPostsAndTasksToUser(listOfUsers);
+        return listOfUsers;
     }
 
     public List<User> getUsersByName(String firstName, String lastName) {
@@ -162,8 +192,10 @@ public class UsersDaoImpl implements UsersDao {
                 asList(firstName, lastName));
         List<User> users = sqlQueryExecutor.queryForObjects(SQL_GET_ALL_USERS_BY_NAME, paramMap,
                 USER_ROW_MAPPER);
-        return users;
 
+        setPostsAndTasksToUser(users);
+
+        return users;
     }
 
     public List<User> getUsersByPost(Post post) {
@@ -177,12 +209,26 @@ public class UsersDaoImpl implements UsersDao {
 
     public List<User> getSortedUsersByName() {
         List<User> users = sqlQueryExecutor.queryForObjects(SQL_GET_ALL_SORTED_USERS_BY_NAME, USER_ROW_MAPPER);
+        setPostsAndTasksToUser(users);
         return users;
     }
 
     public List<User> getSortedUsersByRating() {
         List<User> users = sqlQueryExecutor.queryForObjects(SQL_GET_ALL_SORTED_USERS_BY_RATING,
                 USER_ROW_MAPPER);
+        setPostsAndTasksToUser(users);
         return users;
+    }
+
+    private void setPostsAndTasksToUser(List<User> listOfUsers) {
+        for (User user : listOfUsers) {
+            int userId = user.getId();
+            Tasks tasks = tasksDao.getTasks(userId);
+            user.setTasks(tasks);
+
+            List<Post> posts = postsDao.getPosts(userId);
+            PersonInfo personInfo = user.getPersonInfo();
+            personInfo.setPosts(posts);
+        }
     }
 }

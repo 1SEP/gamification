@@ -1,9 +1,9 @@
 package ru.fsep.enterprise.fseper.models;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * 05.07.15
@@ -102,5 +102,17 @@ public class Task {
     @Override
     public int hashCode() {
         return Objects.hashCode(id, privated, description, dueDate, steps, finished);
+    }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("id", id)
+                .add("privated", privated)
+                .add("description", description)
+                .add("dueDate", dueDate)
+                .add("steps", steps)
+                .add("finished", finished)
+                .toString();
     }
 }

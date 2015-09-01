@@ -89,7 +89,7 @@ public class TasksDaoImplTest {
     public void testGetTask() throws Exception {
         Task actual = taskDaoImplTest.getTask(TASK_ID);
         Task expected = TASK;
-        verify(daoArgumentsVerifierMock, times(2)).verifyTask(TASK_ID);
+        verify(daoArgumentsVerifierMock, times(1)).verifyTask(TASK_ID);
         assertEquals(expected, actual);
     }
 

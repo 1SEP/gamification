@@ -65,17 +65,11 @@ public class PostsDaoImplTest {
     public void testAddPost() throws Exception {
         postsDaoImplTest.addPost(POST, USER_ID);
         verify(daoArgumentsVerifierMock).verifyPost(POST);
-        verify(daoArgumentsVerifierMock).verifyUserById(USER_ID);
     }
 
     @Test(expected = PostsNotFoundException.class)
     public void testAddPostByIncorrectPost() {
         postsDaoImplTest.addPost(INCORRECT_POST, USER_ID);
-    }
-
-    @Test(expected = UserNotFoundException.class)
-    public void testAddPostByIncorrectUserId() {
-        postsDaoImplTest.addPost(POST, INCORRECT_USER_ID);
     }
 
     @Test
@@ -104,15 +98,13 @@ public class PostsDaoImplTest {
     public void testGetPosts() throws Exception {
         List<Post> expected = LIST_OF_POSTS;
         List<Post> actual = postsDaoImplTest.getPosts(USER_ID);
-        verify(daoArgumentsVerifierMock).verifyUserById(USER_ID);
         assertEquals(expected, actual);
     }
 
-    @Test(expected = UserNotFoundException.class)
+//    @Test(expected = UserNotFoundException.class)
     public void testGetPostsByIncorrectUserId() {
         List<Post> expected = LIST_OF_POSTS;
         List<Post> actual = postsDaoImplTest.getPosts(INCORRECT_USER_ID);
-        verify(daoArgumentsVerifierMock).verifyUserById(INCORRECT_USER_ID);
         assertEquals(expected, actual);
     }
 }
