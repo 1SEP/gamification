@@ -12,7 +12,6 @@ import ru.fsep.enterprise.fseper.service.jdbc.utils.DaoArgumentsVerifier;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.ParamsMapper;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.SqlQueryExecutor;
 import ru.fsep.enterprise.fseper.test.data.TestDataForTaskDao;
-import ru.fsep.enterprise.fseper.test.data.TestDataForUserDao;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,15 +40,8 @@ public class UsersDaoImplTest {
 
     private void stubbingDaoArgumentsVerifierMock() {
         doThrow(UserNotFoundException.class).when(daoArgumentsVerifierMock).verifyUser(INCORRECT_USER);
-
-        doThrow(UserNotFoundException.class).when(daoArgumentsVerifierMock).verifyUserById(anyInt());
-        doNothing().when(daoArgumentsVerifierMock).verifyUserById(USER_ID);
-
-        String firstName = USER.getPersonInfo().getFirstName();
-        String lastName = USER.getPersonInfo().getLastName();
-        doThrow(UserNotFoundException.class).when(daoArgumentsVerifierMock).verifyUserByName(anyString(), anyString());
-        doNothing().when(daoArgumentsVerifierMock).verifyUserByName(firstName, lastName);
-
+        doThrow(UserNotFoundException.class).when(daoArgumentsVerifierMock).verifyUserById(INCORRECT_USER_ID);
+        doThrow(UserNotFoundException.class).when(daoArgumentsVerifierMock).verifyUserByName(INCORRECT_FIRSTNAME, INCORRECT_LASTNAME);
         doThrow(PostsNotFoundException.class).when(daoArgumentsVerifierMock).verifyPost(INCORRECT_POST);
         doNothing().when(daoArgumentsVerifierMock).verifyPost(POST);
     }
