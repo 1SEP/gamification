@@ -3,31 +3,34 @@ package ru.fsep.enterprise.fseper.service.dao;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mock;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import ru.fsep.enterprise.fseper.AppContext;
-import ru.fsep.enterprise.fseper.AppTestContext;
 import ru.fsep.enterprise.fseper.models.User;
 import ru.fsep.enterprise.fseper.service.exceptions.PostsNotFoundException;
 import ru.fsep.enterprise.fseper.service.exceptions.UserNotFoundException;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.DaoArgumentsVerifier;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.ParamsMapper;
 import ru.fsep.enterprise.fseper.service.jdbc.utils.SqlQueryExecutor;
+import ru.fsep.enterprise.fseper.test.data.TestDataForTaskDao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static java.util.Arrays.asList;
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
-import static ru.fsep.enterprise.fseper.test.data.TestDataForUserDao.*;
+import static ru.fsep.enterprise.fseper.service.dao.TasksDaoImpl.SQL_GET_TASK_BY_ID;
+import static ru.fsep.enterprise.fseper.service.dao.TasksDaoImpl.TASK_ROW_MAPPER;
 import static ru.fsep.enterprise.fseper.service.dao.UsersDaoImpl.*;
+import static ru.fsep.enterprise.fseper.test.data.TestDataForUserDao.*;
 
 @ContextConfiguration(classes = {AppContext.class})
 public class UsersDaoImplTest {
 
-    private UsersDaoImpl usersDaoImplTest;
+    private UsersDao usersDaoImplTest;
     @Mock
     private SqlQueryExecutor sqlQueryExecutorMock;
     @Mock
@@ -37,15 +40,8 @@ public class UsersDaoImplTest {
 
     private void stubbingDaoArgumentsVerifierMock() {
         doThrow(UserNotFoundException.class).when(daoArgumentsVerifierMock).verifyUser(INCORRECT_USER);
-
-        doThrow(UserNotFoundException.class).when(daoArgumentsVerifierMock).verifyUserById(anyInt());
-        doNothing().when(daoArgumentsVerifierMock).verifyUserById(USER_ID);
-
-        String firstName = USER.getPersonInfo().getFirstName();
-        String lastName = USER.getPersonInfo().getLastName();
-        doThrow(UserNotFoundException.class).when(daoArgumentsVerifierMock).verifyUserByName(anyString(), anyString());
-        doNothing().when(daoArgumentsVerifierMock).verifyUserByName(firstName, lastName);
-
+        doThrow(UserNotFoundException.class).when(daoArgumentsVerifierMock).verifyUserById(INCORRECT_USER_ID);
+        doThrow(UserNotFoundException.class).when(daoArgumentsVerifierMock).verifyUserByName(INCORRECT_FIRSTNAME, INCORRECT_LASTNAME);
         doThrow(PostsNotFoundException.class).when(daoArgumentsVerifierMock).verifyPost(INCORRECT_POST);
         doNothing().when(daoArgumentsVerifierMock).verifyPost(POST);
     }
@@ -77,6 +73,8 @@ public class UsersDaoImplTest {
                 USER_ROW_MAPPER);
         doReturn(LIST_OF_USERS).when(sqlQueryExecutorMock).queryForObjects(SQL_GET_ALL_SORTED_USERS_BY_RATING,
                 USER_ROW_MAPPER);
+        Map<String, Object> task_map = paramsMapperMock.asMap(asList("taskId"), asList(TestDataForTaskDao.TASK_ID));
+        doReturn(TestDataForTaskDao.TASK).when(sqlQueryExecutorMock).queryForObject(SQL_GET_TASK_BY_ID, task_map, TASK_ROW_MAPPER);
     }
 
     private void stubbingAll() {
@@ -107,13 +105,14 @@ public class UsersDaoImplTest {
     public void testGetUser() throws Exception {
         User actual = usersDaoImplTest.getUser(USER_ID);
         User expected = USER;
-        verify(daoArgumentsVerifierMock).verifyUserById(USER_ID);
+        verify(daoArgumentsVerifierMock, times(2)).verifyUserById(USER_ID);
         assertEquals(expected, actual);
     }
 
     @Test(expected = UserNotFoundException.class)
     public void testGetUserForIncorrectId() throws Exception {
-        usersDaoImplTest.getUser(INCORRECT_USER_ID);
+        User user = usersDaoImplTest.getUser(INCORRECT_USER_ID);
+        assertNotNull(user);
     }
 
     @Test
@@ -153,7 +152,6 @@ public class UsersDaoImplTest {
         String surname = USER.getPersonInfo().getLastName();
         List<User> actual = usersDaoImplTest.getUsersByName(name, surname);
         List<User> expected = LIST_OF_USERS;
-
         verify(daoArgumentsVerifierMock).verifyUserByName(name, surname);
         assertEquals(expected, actual);
     }

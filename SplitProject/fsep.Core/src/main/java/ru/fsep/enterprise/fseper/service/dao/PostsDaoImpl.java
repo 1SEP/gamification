@@ -52,11 +52,10 @@ public class PostsDaoImpl implements PostsDao {
     //language=SQL
     static final String SQL_UPDATE_POST = "UPDATE post SET name = :name, description = :description WHERE id = :id;";
     //language=SQL
-    static final String SQL_GET_POSTS = "SELECT * FROM post WHERE users.id =: userId;";
+    static final String SQL_GET_POSTS = "SELECT * FROM post, posts WHERE posts.info_id = :userId;";
 
     public void addPost(Post post, int userId) {
         daoArgumentsVerifier.verifyPost(post);
-        daoArgumentsVerifier.verifyUserById(userId);
         int postId = post.getId();
         String postName = post.getName();
         String postDescription = post.getDescription();
@@ -80,7 +79,6 @@ public class PostsDaoImpl implements PostsDao {
     }
 
     public List<Post> getPosts(int userId) {
-        daoArgumentsVerifier.verifyUserById(userId);
         Map<String, Object> paramMap = paramsMapper.asMap(asList("userId"), asList(userId));
         List<Post> posts = sqlQueryExecutor.queryForObjects(SQL_GET_POSTS, paramMap,
                 POST_ROW_MAPPER);

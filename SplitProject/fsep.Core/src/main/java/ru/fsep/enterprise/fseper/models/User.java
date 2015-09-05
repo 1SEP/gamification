@@ -84,4 +84,14 @@ public class User {
                 && Objects.equal(this.personInfo, other.personInfo)
                 && Objects.equal(this.tasks, other.tasks);
     }
+
+    @Override
+    public String toString() {
+        return MoreObjects.toStringHelper(this)
+                .add("id", id)
+                .add("authData", authData)
+                .add("personInfo", personInfo)
+                .add("tasks", tasks)
+                .toString();
+    }
 }

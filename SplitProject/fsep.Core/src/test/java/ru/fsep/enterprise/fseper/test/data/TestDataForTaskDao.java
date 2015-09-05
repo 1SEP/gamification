@@ -1,6 +1,7 @@
 package ru.fsep.enterprise.fseper.test.data;
 
 import ru.fsep.enterprise.fseper.models.Step;
+import ru.fsep.enterprise.fseper.models.Steps;
 import ru.fsep.enterprise.fseper.models.Task;
 
 import java.util.*;
@@ -16,7 +17,7 @@ public class TestDataForTaskDao {
     public static final List<Task> LIST_FINISHED_TASKS = getListFinishedTasks();
     public static final Date DATE_TASK = test();
     public static final List<Task> TASK_LIST = getListOfTasks();
-    public static final Task TASK = new Task(TASK_ID, IS_PRIVATE, " ", new Date(), null, IS_FINISHED);
+    public static final Task TASK = new Task(TASK_ID, IS_PRIVATE, " ", new Date(), new Steps(Collections.EMPTY_LIST), IS_FINISHED);
 
     public static final Task INCORRECT_TASK = new Task(INCORRECT_TASK_ID, IS_PRIVATE, null, null, null, IS_FINISHED);
 
@@ -44,7 +45,7 @@ public class TestDataForTaskDao {
 
     private static List<Task> getListOfTasks() {
         ArrayList<Task> result = new ArrayList<Task>();
-        result.add(new Task(1, true, null, null, null, true));
+        result.add(new Task(0, true, "task-description", new Date(1991, 12, 31), new Steps(Collections.EMPTY_LIST), true));
         return result;
     }
 

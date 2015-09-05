@@ -61,7 +61,6 @@ public class StepsDaoImpl implements StepsDao {
             "task_id = :task_id WHERE id = :stepId";
 
     public Steps getSteps(int taskId) {
-        daoArgumentsVerifier.verifyTask(taskId);
         Map<String, Object> stepsParamMap = paramsMapper.asMap(asList("taskId"), asList(taskId));
         List<Step> stepsList = sqlQueryExecutor.queryForObjects(SQL_GET_STEPS_BY_TASKID, stepsParamMap, STEPS_ROW_MAPPER);
         Steps steps = new Steps(stepsList);

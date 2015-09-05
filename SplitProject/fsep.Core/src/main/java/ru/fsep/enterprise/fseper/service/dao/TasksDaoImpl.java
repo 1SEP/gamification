@@ -3,6 +3,7 @@ package ru.fsep.enterprise.fseper.service.dao;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
+import ru.fsep.enterprise.fseper.models.Step;
 import ru.fsep.enterprise.fseper.models.Steps;
 import ru.fsep.enterprise.fseper.models.Task;
 import ru.fsep.enterprise.fseper.models.Tasks;
@@ -36,6 +37,7 @@ public class TasksDaoImpl implements TasksDao {
 
     public TasksDaoImpl() {
     }
+
     public TasksDaoImpl(SqlQueryExecutor sqlQueryExecutor, ParamsMapper paramsMapper, DaoArgumentsVerifier verifier) {
         this.sqlQueryExecutor = sqlQueryExecutor;
         this.paramsMapper = paramsMapper;
@@ -72,12 +74,11 @@ public class TasksDaoImpl implements TasksDao {
             int id = rs.getInt("id");
             boolean isPrivate = rs.getBoolean("privated");
             String description = rs.getString("description");
-            String str_due_date = rs.getString("due_date");
-            Date duedate = new Date(str_due_date);
+            java.sql.Date due_data = rs.getDate("due_data");
             Steps steps = new Steps(Collections.EMPTY_LIST);
             boolean finished = rs.getBoolean("finished");
 
-            return new Task(id, isPrivate, description, duedate, steps, finished);
+            return new Task(id, isPrivate, description, due_data, steps, finished);
         }
     };
 
@@ -90,16 +91,23 @@ public class TasksDaoImpl implements TasksDao {
     }
 
     public Task updateTask(Task task) {
-        verifier.verifyTask(task.getId());
+        int taskId = task.getId();
+        verifier.verifyTask(taskId);
         Map<String, Object> paramMap = paramsMapper.asMap(
-                asList("taskId", "privated", "description", "due_data", "steps", "finished"),
-                asList(task.getId(), task.isPrivated(), task.getDescription(), task.getDueDate(), task.getSteps(), task.isFinished()));
-
+                asList("taskId", "privated", "description", "due_data", "finished"),
+                asList(taskId, task.isPrivated(), task.getDescription(), task.getDueDate(), task.isFinished()));
         sqlQueryExecutor.updateQuery(SQL_UPDATE_TASK, paramMap);
 
-        Steps steps = stepsDao.getSteps(task.getId());
-        task.setSteps(steps);
-        return task;
+        Steps steps = task.getSteps();
+        if (steps != null) {
+            for(Step step : steps.getSteps()){
+                stepsDao.updateStep(taskId, step);
+            }
+        }
+
+        Task result = getTask(taskId);
+
+        return result;
     }
 
 

@@ -61,14 +61,7 @@ public class StepsDaoImplTest {
     @Test
     public void testGetSteps() throws Exception {
         Steps steps = stepsDao.getSteps(TASK_ID);
-        verify(argumentsVerifier).verifyTask(TASK_ID);
         assertNotNull("The reference of steps list is NULL!", steps);
-    }
-
-    @Test(expected = TaskNotFoundException.class)
-    public void testGetStepsIncorrectTaskId() throws Exception {
-        stepsDao.getSteps(INCORRECT_TASK_ID);
-        verify(argumentsVerifier).verifyTask(INCORRECT_TASK_ID);
     }
 
     @Test
