@@ -18,18 +18,12 @@ import java.util.List;
  */
 @Configuration
 @EnableWebMvc
-@ComponentScan(basePackages = "ru.fsep.enterprise.fseper")
-public class AppContext extends WebMvcConfigurerAdapter {
+@ComponentScan(basePackages = "ru.fsep.enterprise.fseper.controllers")
+public class AppConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();
-    }
-
-    @Override
-    public void configureMessageConverters(List<HttpMessageConverter<?>> converters) {
-        converters.add(new MappingJackson2HttpMessageConverter());
-        super.configureMessageConverters(converters);
     }
 
     @Bean
