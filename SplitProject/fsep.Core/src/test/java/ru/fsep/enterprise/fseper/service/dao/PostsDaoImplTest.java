@@ -19,7 +19,7 @@ import static org.junit.Assert.assertEquals;
 import static org.mockito.Mockito.*;
 import static org.mockito.MockitoAnnotations.initMocks;
 import static ru.fsep.enterprise.fseper.service.dao.PostsDaoImpl.POST_ROW_MAPPER;
-import static ru.fsep.enterprise.fseper.service.dao.PostsDaoImpl.SQL_GET_POSTS;
+import static ru.fsep.enterprise.fseper.service.dao.PostsDaoImpl.SQL_GET_POSTS_BY_USER_ID;
 import static ru.fsep.enterprise.fseper.test.data.TestDataForUserDao.*;
 
 @ContextConfiguration(classes = {AppContext.class})
@@ -41,7 +41,7 @@ public class PostsDaoImplTest {
     }
 
     private void stubbingSqlQueryExecutorMock() {
-        doReturn(LIST_OF_POSTS).when(sqlQueryExecutorMock).queryForObjects(SQL_GET_POSTS, USER_MAP, POST_ROW_MAPPER);
+        doReturn(LIST_OF_POSTS).when(sqlQueryExecutorMock).queryForObjects(SQL_GET_POSTS_BY_USER_ID, USER_MAP, POST_ROW_MAPPER);
     }
 
     private void stubbingParamMapperMock() {

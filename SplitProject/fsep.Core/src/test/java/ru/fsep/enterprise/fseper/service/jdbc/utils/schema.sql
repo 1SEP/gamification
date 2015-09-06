@@ -45,9 +45,3 @@ CREATE TABLE step (
   tasks_id INTEGER,
   finished BOOLEAN
 );
-
-ALTER TABLE posts ADD CONSTRAINT auth_fk1 FOREIGN KEY (info_id) REFERENCES users(id);
-ALTER TABLE posts ADD CONSTRAINT auth_fk2 FOREIGN KEY (info_id) REFERENCES post(id);
-ALTER TABLE tasks ADD CONSTRAINT auth_fk3 FOREIGN KEY (task_id) REFERENCES task(id);
-ALTER TABLE tasks ADD CONSTRAINT auth_fk4 FOREIGN KEY (user_id) REFERENCES users(id);
-ALTER TABLE step ADD CONSTRAINT auth_fk7 FOREIGN KEY (tasks_id) REFERENCES task(id);
