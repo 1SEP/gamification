@@ -9,6 +9,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import ru.fsep.enterprise.fseper.AppContext;
 import ru.fsep.enterprise.fseper.AppTestContext;
 import ru.fsep.enterprise.fseper.models.Post;
+import ru.fsep.enterprise.fseper.models.Posts;
 
 import java.util.Date;
 import java.util.List;
@@ -33,7 +34,7 @@ public class UsersServiceFacadeTest {
 
     @Test
     public void partOfUserService() throws Exception {
-        List<Post> posts;
+        Posts posts;
         posts = USER.getPersonInfo().getPosts();
         String firstName = USER.getPersonInfo().getFirstName();
         String lastName = USER.getPersonInfo().getLastName();
@@ -44,7 +45,7 @@ public class UsersServiceFacadeTest {
         usersServiceFacade.removeUser(USER.getId());
         usersServiceFacade.getUsers();
         usersServiceFacade.getUsersByName(firstName, lastName);
-        usersServiceFacade.getUsersByPost(posts.get(1));
+        usersServiceFacade.getUsersByPost(posts.getPosts().get(1));
         usersServiceFacade.getSortedUsersByName();
         usersServiceFacade.getSortedUsersByRating();
 
@@ -55,7 +56,7 @@ public class UsersServiceFacadeTest {
         verify(usersServiceFacade).removeUser(USER.getId());
         verify(usersServiceFacade).getUsers();
         verify(usersServiceFacade).getUsersByName(firstName, lastName);
-        verify(usersServiceFacade).getUsersByPost(posts.get(1));
+        verify(usersServiceFacade).getUsersByPost(posts.getPosts().get(1));
         verify(usersServiceFacade).getSortedUsersByName();
         verify(usersServiceFacade).getSortedUsersByRating();
     }
@@ -85,7 +86,7 @@ public class UsersServiceFacadeTest {
 
     @Test
     public void partOfPostService() throws Exception {
-        Post post = USER.getPersonInfo().getPosts().get(0);
+        Post post = USER.getPersonInfo().getPosts().getPosts().get(0);
 
         int postId = post.getId();
         usersServiceFacade.addPost(post, USER.getId());

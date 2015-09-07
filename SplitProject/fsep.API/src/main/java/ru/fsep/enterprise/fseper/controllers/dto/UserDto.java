@@ -5,7 +5,9 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.common.base.MoreObjects;
 import com.google.common.base.Objects;
 import com.inspiresoftware.lib.dto.geda.annotations.Dto;
+import com.inspiresoftware.lib.dto.geda.annotations.DtoCollection;
 import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
+import ru.fsep.enterprise.fseper.controllers.converters.Matcher;
 
 import java.util.List;
 
@@ -20,10 +22,10 @@ public class UserDto {
     @DtoField(converter = "IntegerToString")
     private String id;
 
- //   @DtoField (value = "instructions", converter = "TaskToTaskDto", readOnly = true)
+    @DtoCollection(value = "tasks.tasks", readOnly = true, dtoToEntityMatcher = Matcher.class)
     private List<TaskDto> tasks;
 
-    //   @DtoField (value = "instructions", converter = "PersonInfoToPersonInfoDto", readOnly = true)
+    @DtoField (value = "instructions", converter = "PersonInfoToPersonInfoDto", readOnly = true)
     private PersonInfoDto PersonInfo;
 
     public UserDto() {

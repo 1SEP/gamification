@@ -87,7 +87,8 @@ public class UsersDaoImpl implements UsersDao {
             String birthday = rs.getString("birthday");
             String role = rs.getString("user_role");
 
-            List<Post> posts = Collections.EMPTY_LIST;
+            List<Post> postsList = Collections.EMPTY_LIST;
+            Posts posts = new Posts(postsList);
 
             URL photo = null;
             try {
@@ -133,7 +134,8 @@ public class UsersDaoImpl implements UsersDao {
         Tasks tasks = tasksDao.getTasks(userId);
         user.setTasks(tasks);
 
-        List<Post> posts = postsDao.getPosts(userId);
+        List<Post> postsList = postsDao.getPosts(userId);
+        Posts posts = new Posts(postsList);
         user.getPersonInfo().setPosts(posts);
 
         return user;
@@ -160,8 +162,8 @@ public class UsersDaoImpl implements UsersDao {
             tasksDao.updateTask(task);
         }
 
-        List<Post> posts = user.getPersonInfo().getPosts();
-        for (Post post : posts) {
+        Posts posts = user.getPersonInfo().getPosts();
+        for (Post post : posts.getPosts()) {
             postsDao.updatePost(post);
         }
         Map<String, Object> paramMap = paramsMapper.asMap(asList("userId", "firstName", "lastName", "birthday",
@@ -226,7 +228,9 @@ public class UsersDaoImpl implements UsersDao {
             Tasks tasks = tasksDao.getTasks(userId);
             user.setTasks(tasks);
 
-            List<Post> posts = postsDao.getPosts(userId);
+            List<Post> postsList = postsDao.getPosts(userId);
+            Posts posts = new Posts(postsList);
+
             PersonInfo personInfo = user.getPersonInfo();
             personInfo.setPosts(posts);
         }

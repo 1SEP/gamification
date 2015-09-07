@@ -29,7 +29,6 @@ public class UserConverterImpl implements UserConverter {
     private final static String DOUBLE_TO_STR_ADAPTER_NAME = "DoubleToString";
     private final static String URL_TO_STR_ADAPTER_NAME = "UrlToString";
 
-
     private final ValueConverter integerToStringConverter = new ValueConverter() {
         public Object convertToDto(Object o, BeanFactory beanFactory) {
             return String.valueOf(o);
@@ -91,13 +90,7 @@ public class UserConverterImpl implements UserConverter {
         Map<String, Object> adapter = new HashMap<String, Object>();
         adapter.put(DOUBLE_TO_STR_ADAPTER_NAME, doubleToStringConverter);
         adapter.put(URL_TO_STR_ADAPTER_NAME, urlToStringConverter);
-
         personInfoAssembler.assembleDto(PIDto, entity, adapter, null);
-        PIDto.setPosts(fromPosts(entity.getPosts()));
-        PIDto.setFirstName(entity.getFirstName());
-        PIDto.setLastName(entity.getLastName());
-        PIDto.setBirthday(entity.getBirthday());
-        PIDto.setRole(entity.getRole());
         return PIDto;
     }
 
@@ -144,20 +137,21 @@ public class UserConverterImpl implements UserConverter {
     }
 
     public PersonInfo toPersonInfo (PersonInfoDto dto) {
-        PersonInfo personInfo = new PersonInfo(dto.getFirstName(),
-                dto.getLastName(),
-                Double.parseDouble(dto.getRating()),
-                dto.getBirthday(),
-                toPosts(dto.getPosts()),
-                dto.getRole(),
-                (URL) urlToStringConverter.convertToEntity(dto.getPhoto(),URL_TO_STR_ADAPTER_NAME, null));
-//        Map<String, Object> adapter = new HashMap<String, Object>();
-//        adapter.put(DOUBLE_TO_STR_ADAPTER_NAME, doubleToStringConverter);
-//        adapter.put(URL_TO_STR_ADAPTER_NAME, urlToStringConverter);
+        //dto
+//        PersonInfo personInfo = new PersonInfo(dto.getFirstName(),
+//                dto.getLastName(),
+//                Double.parseDouble(dto.getRating()),
+//                dto.getBirthday(),
+//                toPosts(dto.getPosts()),
+//                dto.getRole(),
+//                (URL) urlToStringConverter.convertToEntity(dto.getPhoto(),URL_TO_STR_ADAPTER_NAME, null));
+////        Map<String, Object> adapter = new HashMap<String, Object>();
+////        adapter.put(DOUBLE_TO_STR_ADAPTER_NAME, doubleToStringConverter);
+////        adapter.put(URL_TO_STR_ADAPTER_NAME, urlToStringConverter);
+////
+////        postAssembler.assembleEntity(dto, personInfo, adapter, null);
 //
-//        postAssembler.assembleEntity(dto, personInfo, adapter, null);
-
-        return personInfo;
+        return null; //personInfo;
     }
 
     public User toUser (UserDto dto){

@@ -103,7 +103,8 @@ public class SqlQueryExecutorImplTest {
         double rating = 100.0;
         URL photo = new URL("http://cs627828.vk.me/v627828952/1121a/dVYbT2kT7ps.jpg");
         String role = "cpp-dev";
-        List<Post> posts = Collections.emptyList();
+        List<Post> postsList = Collections.emptyList();
+        Posts posts = new Posts(postsList);
         PersonInfo personInfo = new PersonInfo(firstName, lastName, rating, birthday, posts, role, photo);
         String login = "ivanovLogin";
         String passwordHash = "Ivanov_password_hash";
@@ -142,7 +143,8 @@ public class SqlQueryExecutorImplTest {
         double rating = 99.0;
         URL photo = new URL("http://cs627828.vk.me/v627828952/1121a/dVYbT2kT7ps.jpg");
         String role = "ruby-dev";
-        List<Post> posts = Collections.emptyList();
+        List<Post> postsList = Collections.emptyList();
+        Posts posts = new Posts(postsList);
         PersonInfo personInfo = new PersonInfo(firstName, lastName, rating, birthday, posts, role, photo);
         String login = "mishaLogin";
         String passwordHash = "Misha_password_hash";

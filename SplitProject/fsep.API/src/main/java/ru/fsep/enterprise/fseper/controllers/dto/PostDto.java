@@ -2,6 +2,8 @@ package ru.fsep.enterprise.fseper.controllers.dto;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.common.base.Objects;
+import com.inspiresoftware.lib.dto.geda.adapter.BeanFactory;
+import com.inspiresoftware.lib.dto.geda.adapter.ValueConverter;
 import com.inspiresoftware.lib.dto.geda.annotations.Dto;
 import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
 
@@ -18,6 +20,11 @@ public class PostDto {
 
     @DtoField
     private String name;
+
+    @DtoField
+    private String description;
+
+    public PostDto() {}
 
     public PostDto(String id, String name, String description) {
         this.id = id;
@@ -43,13 +50,6 @@ public class PostDto {
                 && Objects.equal(this.name, other.name)
                 && Objects.equal(this.description, other.description);
     }
-
-    public PostDto() {
-
-    }
-
-    @DtoField
-    private String description;
 
     public String getId() {
 

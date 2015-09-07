@@ -31,10 +31,11 @@ public class TestDataCore {
     static private final String postDescription2 = "He is mentor of developer's crew";
 
 
-    static public List<Post> initPosts() {
-        List<Post> posts = new ArrayList<Post>();
-        posts.add(new Post(1, postName1, postDescription1));
-        posts.add(new Post(2, postName2, postDescription2));
+    static public Posts initPosts() {
+        List<Post> postsList = new ArrayList<Post>();
+        postsList.add(new Post(1, postName1, postDescription1));
+        postsList.add(new Post(2, postName2, postDescription2));
+        Posts posts = new Posts(postsList);
         return posts;
     }
 

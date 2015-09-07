@@ -68,16 +68,16 @@ public class TestDataForUserDao {
         return result;
     }
 
-    static public List<Post> initPosts() {
-        List<Post> posts = new ArrayList<Post>();
+    static public Posts initPosts() {
+        List<Post> postsList = new ArrayList<Post>();
         String post = "It director";
         String description = "He creates new steps of company development in IT";
-        posts.add(new Post(1, post, description));
+        postsList.add(new Post(1, post, description));
         post = "Team Lead";
         description = "He is mentor of developer's crew";
-        posts.add(new Post(2, post, description));
-
-        return null;
+        postsList.add(new Post(2, post, description));
+        Posts posts = new Posts(postsList);
+        return posts;
     }
 
     static public PersonInfo initPersonInfo() {

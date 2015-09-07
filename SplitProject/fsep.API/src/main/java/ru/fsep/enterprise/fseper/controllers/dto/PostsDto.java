@@ -21,6 +21,10 @@ public class PostsDto {
         return posts;
     }
 
+    public PostsDto(List<PostDto> posts) {
+        this.posts = posts;
+    }
+
     public void setPosts(List<PostDto> posts) {
         this.posts = posts;
     }
