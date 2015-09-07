@@ -46,19 +46,19 @@ public class StepsDaoImpl implements StepsDao {
     }
 
     //language=SQL
-    public static final String SQL_GET_STEPS_BY_TASKID = "SELECT * FROM step WHERE tasks_id = :taskId";
+    public static final String SQL_GET_STEPS_BY_TASKID = "SELECT * FROM step WHERE tasks_id = :taskId;";
     //language=SQL
-    public static final String SQL_GET_STEP = "SELECT * FROM step WHERE id = :stepId AND task_id = :taskId";
+    public static final String SQL_GET_STEP = "SELECT * FROM step WHERE id = :stepId AND tasks_id = :taskId;";
     //language=SQL
-    public static final String SQL_INSERT_STEP_BY_TASK_ID = "INSERT INTO step VALUES (:taskId, :description, :finished)";
+    public static final String SQL_INSERT_STEP_BY_TASK_ID = "INSERT INTO step VALUES (:taskId, :description, :finished);";
     //language=SQL
-    public static final String SQL_DELETE_STEP = "DELETE FROM step WHERE (id = :stepId AND task_id = :taskId)";
+    public static final String SQL_DELETE_STEP = "DELETE FROM step WHERE (id = :stepId AND task_id = :taskId);";
     //language=SQL
     public static final String SQL_GET_ALL_FINISHED_STEPS = "SELECT * FROM step WHERE " +
-            "(task_id = :taskId AND finished = :finished))";
+            "(task_id = :taskId AND finished = :finished);";
     //language=SQL
     public static final String SQL_UPDATE_STEP = "UPDATE step SET description = :description, finished = :finished, " +
-            "task_id = :task_id WHERE id = :stepId";
+            "task_id = :task_id WHERE id = :stepId;";
 
     public Steps getSteps(int taskId) {
         Map<String, Object> stepsParamMap = paramsMapper.asMap(asList("taskId"), asList(taskId));

@@ -7,7 +7,7 @@ import ru.fsep.enterprise.fseper.models.Step;
 /**
  * Created by дыў№ on 26.08.2015.
  */
-public class Matcher implements DtoToEntityMatcher<StepDto, Step> {
+public class StepsMatcher implements DtoToEntityMatcher<StepDto, Step> {
 
     public boolean match(StepDto stepDto, Step step) {
         return true;

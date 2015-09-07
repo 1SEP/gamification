@@ -37,8 +37,11 @@ public class TasksDaoImplTest {
     private StepsDao stepsDaoMock;
 
     private void stubbingDaoArgumentsVerifierMock() {
+        doNothing().when(daoArgumentsVerifierMock).verifyTask(anyInt());
         doThrow(TaskNotFoundException.class).when(daoArgumentsVerifierMock).verifyTask(INCORRECT_TASK_ID);
+        doNothing().when(daoArgumentsVerifierMock).verifyUserById(anyInt());
         doThrow(UserNotFoundException.class).when(daoArgumentsVerifierMock).verifyUserById(INCORRECT_USER_ID);
+        doNothing().when(daoArgumentsVerifierMock).verifyAssignment(anyInt(), anyInt());
         doThrow(UserNotFoundException.class).when(daoArgumentsVerifierMock).verifyAssignment(INCORRECT_USER_ID, INCORRECT_TASK_ID);
     }
 
@@ -95,7 +98,7 @@ public class TasksDaoImplTest {
 
     @Test(expected = TaskNotFoundException.class)
     public void testGetTaskWithIncorrectUser() throws Exception {
-        taskDaoImplTest.getTask(INCORRECT_TASK_ID);
+        Task task = taskDaoImplTest.getTask(INCORRECT_TASK_ID);
     }
 
     @Test
@@ -109,7 +112,7 @@ public class TasksDaoImplTest {
     @Test(expected = TaskNotFoundException.class)
     public void testUpdateTaskWithIncorrectTaskId() throws Exception {
         Task task = taskDaoImplTest.updateTask(INCORRECT_TASK);
-        verify(daoArgumentsVerifierMock, times(2)).verifyTask(INCORRECT_TASK.getId());
+        verify(daoArgumentsVerifierMock, times(2)).verifyTask(INCORRECT_TASK_ID);
     }
 
     @Test

@@ -32,33 +32,6 @@ public class SqlQueryExecutorImplTest {
     SqlQueryExecutor sqlQueryExecutorTest;
     ParamsMapper paramsMapperTest;
 
-    //language=SQL
-    private final String TEST_SQL_GET_USER_BY_ID = "SELECT * FROM users WHERE  id = :userId;";
-    //language=SQL
-    private final String TEST_SQL_GET_ALL_USERS = "SELECT * FROM users;";
-    //language=SQL
-    private final String TEST_SQL_GET_ALL_USERS_BY_NAME = "SELECT * FROM users WHERE (first_name = :firstName " +
-            "AND last_name = :lastName);";
-    //language=SQL
-    private final String TEST_SQL_UPDATE_USER = "UPDATE users SET first_name = :firstName, last_name = :lastName, " +
-            "birthday = :birthday, rating = :rating, photo = :photo, user_role = :role, login = :login, " +
-            "password_hash = :password WHERE id = :userId";
-    //language=SQL
-    private final String TEST_SQL_DELETE_USER_BY_ID = "DELETE FROM users WHERE id = :userId;";
-    //language=SQL
-    private final String TEST_SQL_GET_COUNT_OF_USERS_WITH_THIS_ID = "SELECT COUNT(*) FROM users  WHERE id = :userId;";
-    //language=SQL
-    private final String TEST_SQL_INSERT_USER = "INSERT INTO users(first_name, last_name, birthday, rating, " +
-            "photo, user_role, login, password_hash) " +
-            "VALUES (:firstName, :lastName, :birthday, :rating, :photo, :role, :login, :password);";
-    //language=SQL
-    private final String TEST_SQL_GET_COUNT_OF_USERS_WITH_THIS_NAME = "SELECT COUNT(*) FROM users WHERE first_name = " +
-            ":firstName";
-    //language=SQL
-    private final String TEST_SQL_GET_COUNT_OF_USERS = "SELECT COUNT(*) FROM users;";
-    //language=SQL
-    private static final String SQL_GET_ALL_POSTS = "SELECT * FROM post";
-
     private void databaseInitialize() {
         EmbeddedDatabaseBuilder builder = new EmbeddedDatabaseBuilder();
         databaseTest = builder.setType(EmbeddedDatabaseType.HSQL)
@@ -96,6 +69,7 @@ public class SqlQueryExecutorImplTest {
     }
 
     @Test
+<<<<<<< HEAD
     public void testUpdateQueryForUpdateUser() throws Exception {
         String firstName = "Ivan";
         String lastName = "Ivanov";
@@ -124,14 +98,14 @@ public class SqlQueryExecutorImplTest {
 
 
     @Test
+=======
+>>>>>>> 44ee8c9f5ad25f760a3d5c5efcaf487dcfc25733
     public void testUpdateUserQueryForRemoveUser() throws Exception {
-        int userId = USER.getId();
+        int userId = USER_ID;
         Map<String, Object> paramMap = paramsMapperTest.asMap(asList("userId"), asList(userId));
         sqlQueryExecutorTest.updateQuery(SQL_DELETE_USER_BY_ID, paramMap);
-
-        int actual = sqlQueryExecutorTest.queryForInt("select count(*) from users", paramMap);
+        int actual = sqlQueryExecutorTest.queryForInt("SELECT COUNT(*) FROM users", paramMap);
         int expected = 0;
-
         assertEquals(expected, actual);
     }
 
@@ -175,14 +149,8 @@ public class SqlQueryExecutorImplTest {
 
     @Test
     public void testQueryForIntWithJdbcTemplate() throws Exception {
-        int actual = sqlQueryExecutorTest.queryForInt("select count(*) from users");
+        int actual = sqlQueryExecutorTest.queryForInt("SELECT COUNT(*) FROM users");
         assertTrue("The count of users: ", actual >= 0);
-    }
-
-    @Test
-    public void testQueryForObjectGetAllPosts() throws Exception {
-        List<Post> actual = sqlQueryExecutorTest.queryForObjects(SQL_GET_ALL_POSTS, POST_ROW_MAPPER);
-        assertNotNull("The ref must not be null: ", actual);
     }
 
     @After

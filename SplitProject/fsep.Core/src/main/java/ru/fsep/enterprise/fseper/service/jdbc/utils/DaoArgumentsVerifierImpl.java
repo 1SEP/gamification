@@ -44,7 +44,9 @@ public class DaoArgumentsVerifierImpl implements DaoArgumentsVerifier {
     }
 
     public void verifyUserById(int userId) {
+        ParamsMapperJDBCImpl paramsMapper = new ParamsMapperJDBCImpl();
         Map<String, Object> params = paramsMapper.asMap(asList("userId"), asList(userId));
+        System.out.println(sqlQueryExecutor);
         int countAvailableUsers = sqlQueryExecutor.queryForInt(SQL_COUNT_USERS_BY_ID, params);
         if (countAvailableUsers != 1) {
             throw new UserNotFoundException(userId);

@@ -6,7 +6,7 @@ import com.inspiresoftware.lib.dto.geda.annotations.Dto;
 import com.inspiresoftware.lib.dto.geda.annotations.DtoCollection;
 import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
 import com.google.common.base.*;
-import ru.fsep.enterprise.fseper.controllers.converters.Matcher;
+import ru.fsep.enterprise.fseper.controllers.converters.StepsMatcher;
 
 import java.util.List;
 
@@ -29,7 +29,7 @@ public class TaskDto {
     @DtoField(converter = "DateAndStringConvert")
     private String dueDate;
 
-    @DtoCollection(value = "steps.steps", readOnly = true, dtoBeanKey = "stepsBeanKey", dtoToEntityMatcher = Matcher.class)
+    @DtoCollection(value = "steps.steps", readOnly = true, dtoBeanKey = "stepsBeanKey", dtoToEntityMatcher = StepsMatcher.class)
     private List<StepDto> steps;
 
     @DtoField(converter = "BooleanAndStringConvert")

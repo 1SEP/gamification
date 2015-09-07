@@ -45,23 +45,27 @@ public class PostsDaoImpl implements PostsDao {
     };
 
     //language=SQL
-    static final String SQL_ADD_POST = "INSERT INTO post(id, name, description) " +
-            "VALUES (:postId, :postName, :postDescription) WHERE users.id = :userId;";
+    static final String SQL_INSERT_POST = "INSERT INTO post VALUES (:postId, :postName, :postDescription);";
+    //language=SQL
+    static final String SQL_INSERT_INTO_POSTS = "INSERT INTO posts VALUES (:postId, :userId);";
     //language=SQL
     static final String SQL_REMOVE_POST = "DELETE FROM post WHERE (id = :postId);";
     //language=SQL
     static final String SQL_UPDATE_POST = "UPDATE post SET name = :name, description = :description WHERE id = :id;";
     //language=SQL
-    static final String SQL_GET_POSTS = "SELECT * FROM post, posts WHERE posts.info_id = :userId;";
+    static final String SQL_GET_POSTS_BY_USER_ID = "SELECT * FROM post INNER JOIN posts ON posts.info_id = :userId;";
 
     public void addPost(Post post, int userId) {
         daoArgumentsVerifier.verifyPost(post);
         int postId = post.getId();
         String postName = post.getName();
         String postDescription = post.getDescription();
-        Map<String, Object> paramMap = paramsMapper.asMap(asList("userId", "postId", "postName", "postDescription"),
-                asList(userId, postId, postName, postDescription));
-        sqlQueryExecutor.updateQuery(SQL_ADD_POST, paramMap);
+        Map<String, Object> paramMap = paramsMapper.asMap(asList("postId", "postName", "postDescription"),
+                asList(postId, postName, postDescription));
+        sqlQueryExecutor.updateQuery(SQL_INSERT_POST, paramMap);
+
+        paramMap = paramsMapper.asMap(asList("userId"), asList(userId));
+        sqlQueryExecutor.updateQuery(SQL_INSERT_INTO_POSTS, paramMap);
     }
 
     public void removePost(int postId) {
@@ -80,7 +84,7 @@ public class PostsDaoImpl implements PostsDao {
 
     public List<Post> getPosts(int userId) {
         Map<String, Object> paramMap = paramsMapper.asMap(asList("userId"), asList(userId));
-        List<Post> posts = sqlQueryExecutor.queryForObjects(SQL_GET_POSTS, paramMap,
+        List<Post> posts = sqlQueryExecutor.queryForObjects(SQL_GET_POSTS_BY_USER_ID, paramMap,
                 POST_ROW_MAPPER);
         return posts;
     }

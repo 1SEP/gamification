@@ -73,7 +73,7 @@ public class TasksAndStepsConverterImpl implements TasksAndStepsConverter {
         adapters.put(INT_STR_ADAPTER_NAME, integerAndStringConverter);
         adapters.put(BOOL_STR_ADAPTER_NAME, booleanAndStringConverter);
         adapters.put(DATE_STR_ADAPTER_NAME, dateAndStringConverter);
-        taskAssembler.assembleDto(taskDto, entity, adapters, new Factory());
+        taskAssembler.assembleDto(taskDto, entity, adapters, new StepsFactory());
         return taskDto;
     }
 

@@ -44,30 +44,32 @@ public class TasksDaoImpl implements TasksDao {
         this.verifier = verifier;
         stepsDao = new StepsDaoImpl(sqlQueryExecutor, paramsMapper, verifier);
     }
-
+    //language=SQL
     public static final String SQL_GET_ALL_TASKS_BY_USER_ID =
-            "SELECT * FROM task, tasks WHERE (tasks.user_id = :userId)";
-
+            "SELECT * FROM task INNER JOIN tasks on tasks.user_id = :userId;";
+    //language=SQL
     public static final String SQL_GET_TASK_BY_ID =
-            "SELECT * FROM task WHERE (id = :taskId)";
-
+            "SELECT * FROM task WHERE (id = :taskId);";
+    //language=SQL
     public static final String SQL_GET_TASKS_BY_DATE =
-            "SELECT * FROM task, tasks WHERE (tasks.user_id = :userId AND task.due_data = :dueDate)";
-
+            "SELECT * FROM task INNER JOIN tasks ON tasks.user_id = :userId AND task.due_data = :dueDate;";
+    //language=SQL
     public static final String SQL_INSERT_INTO_TASK =
-            "INSERT INTO task VALUES (:privated, :description, :due_data, finished)";
-
+            "INSERT INTO task VALUES (:privated, :description, :due_data, finished);";
+    //language=SQL
     public static final String SQL_UPDATE_TASK =
-            "UPDATE task VALUES (:privated, :description, :due_data, :finished)";
-
+            "UPDATE task VALUES (:privated, :description, :due_data, :finished) WHERE id = :taskId;";
+    //language=SQL
     public static final String SQL_DELETE_FROM_TASK_BY_ID =
-            "DELETE FROM task WHERE (id = :taskId)";
-
+            "DELETE FROM task WHERE (id = :taskId);";
+    //language=SQL
     public static final String SQL_GET_PRIVATED_TASKS =
-            "SELECT * FROM task, tasks WHERE (tasks.users_id = :userId AND task.privated = :privated)";
-
+            "SELECT * FROM task INNER JOIN tasks ON tasks.user_id = :userId AND task.privated = :privated;";
+    //language=SQL
     public static final String SQL_GET_FINISHED_TASKS =
-            "SELECT * FROM task, tasks WHERE (tasks.users_id = :userId AND task.finished = :finished)";
+            "SELECT * FROM task INNER JOIN tasks ON tasks.user_id = :userId AND task.finished = :finished;";
+    //language=SQL
+    public static final String INSERT_INTO_TASKS_VALUES_TASK_ID_USER_ID = "INSERT INTO tasks VALUES (:taskId, :userId);";
 
     public static final RowMapper<Task> TASK_ROW_MAPPER = new RowMapper<Task>() {
         public Task mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -133,6 +135,9 @@ public class TasksDaoImpl implements TasksDao {
                 asList("taskId", "privated", "description", "due_data", "steps", "finished"),
                 asList(task.getId(), task.isPrivated(), task.getDescription(), task.getDueDate(), task.getSteps(), task.isFinished()));
         sqlQueryExecutor.queryForObject(SQL_INSERT_INTO_TASK, paramMap, TASK_ROW_MAPPER);
+
+        paramMap = paramsMapper.asMap(asList("userId"), asList(userId));
+        sqlQueryExecutor.updateQuery(INSERT_INTO_TASKS_VALUES_TASK_ID_USER_ID, paramMap);
     }
 
     public void removeTask(int taskId) {
@@ -157,7 +162,7 @@ public class TasksDaoImpl implements TasksDao {
 
     public Tasks getTasksByPrivatedFilter(int userId, boolean privated) {
         verifier.verifyUserById(userId);
-        Map<String, Object> paramMap = paramsMapper.asMap(asList("userId"), asList(userId));
+        Map<String, Object> paramMap = paramsMapper.asMap(asList("userId", "privated"), asList(userId, privated));
         List<Task> tasksList = sqlQueryExecutor.queryForObjects(SQL_GET_PRIVATED_TASKS, paramMap, TASK_ROW_MAPPER);
 
         for (Task task : tasksList) {
@@ -171,7 +176,7 @@ public class TasksDaoImpl implements TasksDao {
 
     public Tasks getTasksByFinishedFilter(int userId, boolean finished) {
         verifier.verifyUserById(userId);
-        Map<String, Object> paramMap = paramsMapper.asMap(asList("userId"), asList(userId));
+        Map<String, Object> paramMap = paramsMapper.asMap(asList("userId", "finished"), asList(userId, finished));
         List<Task> tasksList = sqlQueryExecutor.queryForObjects(SQL_GET_FINISHED_TASKS, paramMap, TASK_ROW_MAPPER);
 
         for (Task task : tasksList) {

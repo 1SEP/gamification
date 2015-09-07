@@ -67,7 +67,7 @@ public class UsersDaoImpl implements UsersDao {
             "VALUES (:firstName, :lastName, :birthday, :rating, :photo, :role, :login, :password);";
 
     //language=SQL
-    public static final String SQL_GET_ALL_SORTED_USERS_BY_RATING = "SELECT * FROM users ORDER BY rating;";
+    public static final String SQL_GET_ALL_SORTED_USERS_BY_RATING = "SELECT * FROM users ORDER BY rating DESC;";
     //language=SQL
     public static final String SQL_GET_USERS_BY_POST = "SELECT * FROM post, users WHERE (post.id = :postId) " +
             "AND (post.name = :postName) AND (post.description = :postDescription);";
@@ -222,8 +222,8 @@ public class UsersDaoImpl implements UsersDao {
         return users;
     }
 
-    private void setPostsAndTasksToUser(List<User> listOfUsers) {
-        for (User user : listOfUsers) {
+    private void setPostsAndTasksToUser(List<User> usersList) {
+        for (User user : usersList) {
             int userId = user.getId();
             Tasks tasks = tasksDao.getTasks(userId);
             user.setTasks(tasks);
