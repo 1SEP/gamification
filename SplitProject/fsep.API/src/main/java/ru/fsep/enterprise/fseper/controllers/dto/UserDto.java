@@ -7,9 +7,10 @@ import com.google.common.base.Objects;
 import com.inspiresoftware.lib.dto.geda.annotations.Dto;
 import com.inspiresoftware.lib.dto.geda.annotations.DtoCollection;
 import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
-import ru.fsep.enterprise.fseper.controllers.converters.Matcher;
+import ru.fsep.enterprise.fseper.controllers.converters.StepsMatcher;
 
 import java.util.List;
+import java.util.regex.Matcher;
 
 /**
  * Author Fedorov Juriy on 14.07.2015
@@ -22,7 +23,7 @@ public class UserDto {
     @DtoField(converter = "IntegerToString")
     private String id;
 
-    @DtoCollection(value = "tasks.tasks", readOnly = true, dtoToEntityMatcher = Matcher.class)
+    @DtoCollection(value = "tasks.tasks", readOnly = true, dtoToEntityMatcher = StepsMatcher.class)
     private List<TaskDto> tasks;
 
     @DtoField (value = "instructions", converter = "PersonInfoToPersonInfoDto", readOnly = true)

@@ -16,13 +16,10 @@ import java.util.List;
 public interface UserConverter {
 
     UserDto fromUser(User entity);
-    UsersDto fromUsers(List<User> entities);
-    PostDto fromPost(Post entity);
-    List<PostDto>  fromPosts(List<Post> entities);
+    List<UserDto> fromUsers(List<User> entities);
     PersonInfoDto fromPersonInfo(PersonInfo entity);
     User toUser(UserDto dto);
-    List<User> toUsers(UsersDto dto);
-    Post toPost(PostDto dto);
-    List<Post> toPosts(List<PostDto> dtos);
+    List<User> toUsers(List<UserDto> dto);
     PersonInfo toPersonInfo (PersonInfoDto dto);
+    List<Post> toPosts(List<PostDto> PostsDto);
 }

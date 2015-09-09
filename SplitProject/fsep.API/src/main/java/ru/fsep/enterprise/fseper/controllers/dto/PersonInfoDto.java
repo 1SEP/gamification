@@ -6,8 +6,8 @@ import com.google.common.base.Objects;
 import com.inspiresoftware.lib.dto.geda.annotations.Dto;
 import com.inspiresoftware.lib.dto.geda.annotations.DtoCollection;
 import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
-import ru.fsep.enterprise.fseper.controllers.converters.Matcher;
-import ru.fsep.enterprise.fseper.controllers.converters.MatcherForPosts;
+import ru.fsep.enterprise.fseper.controllers.converters.PostsFactory;
+import ru.fsep.enterprise.fseper.controllers.converters.PostsMatcher;
 
 import java.util.List;
 
@@ -37,7 +37,7 @@ public class PersonInfoDto {
     @DtoField (converter = "UrlToString")
     private String photo;
 
-    @DtoCollection(value = "posts.posts", readOnly = true, dtoBeanKey = "FactoryForPosts", dtoToEntityMatcher = MatcherForPosts.class)
+    @DtoCollection(value = "posts.posts", readOnly = true, dtoBeanKey = "postsBeanKey", dtoToEntityMatcher = PostsMatcher.class)
     private List<PostDto> posts;
 
     public PersonInfoDto() {

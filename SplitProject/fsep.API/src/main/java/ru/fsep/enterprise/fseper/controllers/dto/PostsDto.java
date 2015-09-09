@@ -3,6 +3,7 @@ package ru.fsep.enterprise.fseper.controllers.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.google.common.base.Objects;
 import com.inspiresoftware.lib.dto.geda.annotations.Dto;
+import com.inspiresoftware.lib.dto.geda.annotations.DtoCollection;
 import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
 
 import java.util.List;
@@ -14,7 +15,7 @@ import java.util.List;
 @Dto
 public class PostsDto {
 
-    @DtoField(converter = "IntegerToString")
+    @DtoCollection()
     private List<PostDto> posts;
 
     public List<PostDto> getPosts() {

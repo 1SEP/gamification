@@ -69,7 +69,6 @@ public class SqlQueryExecutorImplTest {
     }
 
     @Test
-<<<<<<< HEAD
     public void testUpdateQueryForUpdateUser() throws Exception {
         String firstName = "Ivan";
         String lastName = "Ivanov";
@@ -98,8 +97,6 @@ public class SqlQueryExecutorImplTest {
 
 
     @Test
-=======
->>>>>>> 44ee8c9f5ad25f760a3d5c5efcaf487dcfc25733
     public void testUpdateUserQueryForRemoveUser() throws Exception {
         int userId = USER_ID;
         Map<String, Object> paramMap = paramsMapperTest.asMap(asList("userId"), asList(userId));

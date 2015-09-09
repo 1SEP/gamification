@@ -4,14 +4,13 @@ import com.inspiresoftware.lib.dto.geda.adapter.BeanFactory;
 import com.inspiresoftware.lib.dto.geda.adapter.ValueConverter;
 import com.inspiresoftware.lib.dto.geda.assembler.Assembler;
 import com.inspiresoftware.lib.dto.geda.assembler.DTOAssembler;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import ru.fsep.enterprise.fseper.controllers.dto.PersonInfoDto;
 import ru.fsep.enterprise.fseper.controllers.dto.PostDto;
 import ru.fsep.enterprise.fseper.controllers.dto.UserDto;
 import ru.fsep.enterprise.fseper.controllers.dto.UsersDto;
-import ru.fsep.enterprise.fseper.models.PersonInfo;
-import ru.fsep.enterprise.fseper.models.Post;
-import ru.fsep.enterprise.fseper.models.User;
+import ru.fsep.enterprise.fseper.models.*;
 
 import java.net.URL;
 import java.util.HashMap;
@@ -24,6 +23,9 @@ import java.util.Map;
  */
 @Component
 public class UserConverterImpl implements UserConverter {
+    @Autowired
+    TasksAndStepsConverter tasksAndStepsConverter;
+
 
     private final static String INT_TO_STR_ADAPTER_NAME = "IntegerToString";
     private final static String DOUBLE_TO_STR_ADAPTER_NAME = "DoubleToString";
@@ -65,105 +67,67 @@ public class UserConverterImpl implements UserConverter {
         }
     };
 
-    private final Assembler postAssembler = DTOAssembler.newAssembler(PostDto.class, Post.class);
     private final Assembler personInfoAssembler = DTOAssembler.newAssembler(PersonInfoDto.class, PersonInfo.class);
-
-    public PostDto fromPost(Post entity) {
-        PostDto postDto = new PostDto();
-        Map<String, Object> adapters = new HashMap<String, Object>();
-        adapters.put(INT_TO_STR_ADAPTER_NAME, integerToStringConverter);
-
-        postAssembler.assembleDto(postDto, entity, adapters, null);
-        return postDto;
-    }
-
-    public List<PostDto> fromPosts(List<Post> entities) {
-        List<PostDto> postsDto = new LinkedList<PostDto>();
-        for (Post post : entities) {
-            postsDto.add(fromPost(post));
-        }
-        return postsDto;
-    }
 
     public PersonInfoDto fromPersonInfo(PersonInfo entity) {
         PersonInfoDto PIDto = new PersonInfoDto();
         Map<String, Object> adapter = new HashMap<String, Object>();
         adapter.put(DOUBLE_TO_STR_ADAPTER_NAME, doubleToStringConverter);
         adapter.put(URL_TO_STR_ADAPTER_NAME, urlToStringConverter);
-        personInfoAssembler.assembleDto(PIDto, entity, adapter, null);
+        adapter.put(INT_TO_STR_ADAPTER_NAME, integerToStringConverter);
+        personInfoAssembler.assembleDto(PIDto, entity, adapter, new PostsFactory());
         return PIDto;
     }
 
     public UserDto fromUser(User entity) {
-        TasksAndStepsConverterImpl converterForTask = new TasksAndStepsConverterImpl();
-        UserDto userDto = new UserDto(String.valueOf(entity.getId()),
-                converterForTask.fromTasks(entity.getTasks()),
+        UserDto user = new UserDto(String.valueOf(entity.getId()),
+                tasksAndStepsConverter.fromTasks(entity.getTasks()),
                 fromPersonInfo(entity.getPersonInfo()));
-
-        return userDto;
+        return user;
     }
 
-    public UsersDto fromUsers(List<User> entities) {
+    public List<UserDto> fromUsers(List<User> entities){
+        int sizeOfList = entities.size();
         List<UserDto> usersDto = new LinkedList<UserDto>();
-        for (User user : entities) {
-            usersDto.add(fromUser(user));
+        for (int i = 0; i < sizeOfList; i++){
+            usersDto.add(fromUser(entities.get(i)));
         }
-        UsersDto usersDtoOut = new UsersDto();
-        usersDtoOut.setUsers(usersDto);
-        return usersDtoOut;
+        return usersDto;
     }
 
-    public Post toPost(PostDto dto) {
-        Post post = new Post();
+    public PersonInfo toPersonInfo(PersonInfoDto dto){
+        PersonInfo entity = new PersonInfo();
         Map<String, Object> adapter = new HashMap<String, Object>();
+        adapter.put(DOUBLE_TO_STR_ADAPTER_NAME, doubleToStringConverter);
+        adapter.put(URL_TO_STR_ADAPTER_NAME, urlToStringConverter);
         adapter.put(INT_TO_STR_ADAPTER_NAME, integerToStringConverter);
-
-        postAssembler.assembleEntity(dto, post, adapter, null);
-
-        return post;
+        personInfoAssembler.assembleEntity(dto, entity, adapter, new PostsFactory());
+        Posts posts = new Posts(toPosts(dto.getPosts()));
+        entity.setPosts(posts);
+        return entity;
     }
-//    public List<Post> toPosts(PostsDto dto) {
-//        List<Post> listOfPost = new LinkedList<Post>();
-//    public Posts toPosts(PostsDto dtos) {
-//        Posts posts = new Posts();
-//        List<Post> listPost = new LinkedList<Post>();
 
-    public List<Post> toPosts(List<PostDto> dtos) {
-        List<Post> posts = new LinkedList<Post>();
-        for (PostDto postDto : dtos) {
-            posts.add(toPost(postDto));
+    public List<Post> toPosts(List<PostDto> postsDto) {
+        List<Post> Posts = new LinkedList<Post>();
+        for (int i = 0; i < postsDto.size(); i++){
+            Posts.add(new Post(Integer.parseInt(postsDto.get(i).getId()), postsDto.get(i).getName(), postsDto.get(i).getDescription()));
         }
-        return posts;
+        return Posts;
     }
 
-    public PersonInfo toPersonInfo (PersonInfoDto dto) {
-        //dto
-//        PersonInfo personInfo = new PersonInfo(dto.getFirstName(),
-//                dto.getLastName(),
-//                Double.parseDouble(dto.getRating()),
-//                dto.getBirthday(),
-//                toPosts(dto.getPosts()),
-//                dto.getRole(),
-//                (URL) urlToStringConverter.convertToEntity(dto.getPhoto(),URL_TO_STR_ADAPTER_NAME, null));
-////        Map<String, Object> adapter = new HashMap<String, Object>();
-////        adapter.put(DOUBLE_TO_STR_ADAPTER_NAME, doubleToStringConverter);
-////        adapter.put(URL_TO_STR_ADAPTER_NAME, urlToStringConverter);
-////
-////        postAssembler.assembleEntity(dto, personInfo, adapter, null);
-//
-        return null; //personInfo;
+    public User toUser(UserDto dto){
+        Tasks tasks = new Tasks(tasksAndStepsConverter.toTasks(dto.getTasks()));
+        User entity = new User(Integer.parseInt(dto.getId()), null, toPersonInfo(dto.getPersonInfo()), tasks);
+        return entity;
     }
 
-    public User toUser (UserDto dto){
 
-        return new User(Integer.parseInt(dto.getId()),
-                null, toPersonInfo(dto.getPersonInfo()), null);
-    }
 
-    public List<User> toUsers(UsersDto dto){
+    public List<User> toUsers(List<UserDto> dto){
+        int sizeOfList = dto.size();
         List<User> users = new LinkedList<User>();
-        for (UserDto userDto: dto.getUsers()){
-            users.add(toUser(userDto));
+        for (int i = 0; i < sizeOfList; i++){
+            users.add(toUser(dto.get(i)));
         }
         return users;
     }

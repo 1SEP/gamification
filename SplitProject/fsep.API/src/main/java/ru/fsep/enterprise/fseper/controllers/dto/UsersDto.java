@@ -13,6 +13,10 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @Dto
 public class UsersDto {
+    public UsersDto(List<UserDto> users) {
+        Users = users;
+    }
+
     @Override
     public int hashCode() {
         return Objects.hashCode(Users);

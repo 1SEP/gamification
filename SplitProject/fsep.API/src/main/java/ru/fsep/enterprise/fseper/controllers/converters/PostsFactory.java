@@ -7,15 +7,15 @@ import ru.fsep.enterprise.fseper.controllers.dto.PostsDto;
 /**
  * Author Fedorov Juriy on 02.09.2015
  */
-public class FactoryForPosts implements BeanFactory{
+public class PostsFactory implements BeanFactory{
     public Class getClazz(String beanKey) {
         if (beanKey.equals("postsBeanKey")){
-            return PostsDto.class;
+            return PostDto.class;
         } else throw new IllegalArgumentException();
     }
 
-    public Object get(String BeanKey) {
-        if (BeanKey.equals("postsBeanKey")){
+    public Object get(String beanKey) {
+        if (beanKey.equals("postsBeanKey")){
             return new PostDto();
         } else throw new IllegalArgumentException();
     }

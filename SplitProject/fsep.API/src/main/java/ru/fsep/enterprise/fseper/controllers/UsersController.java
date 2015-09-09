@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import ru.fsep.enterprise.fseper.controllers.converters.UserConverter;
 import ru.fsep.enterprise.fseper.controllers.dto.ResponseDto;
+import ru.fsep.enterprise.fseper.controllers.dto.UserDto;
 import ru.fsep.enterprise.fseper.controllers.dto.UsersDto;
 import ru.fsep.enterprise.fseper.models.Post;
 import ru.fsep.enterprise.fseper.models.User;
@@ -29,7 +30,7 @@ public class UsersController {
     @RequestMapping
     public ResponseEntity<ResponseDto> getAllUsers() {
         List<User> users = usersServiceFacade.getUsers();
-        UsersDto usersDto = userConverter.fromUsers(users);
+        UsersDto usersDto = new UsersDto(userConverter.fromUsers(users));
         return ResponseBuilder.buildResponseGet(usersDto);
     }
 
@@ -37,7 +38,7 @@ public class UsersController {
     public ResponseEntity<ResponseDto> getUsersByName(@RequestParam("first_name") String firstName,
                                                             @RequestParam("last_name") String lastName){
         List<User> users = usersServiceFacade.getUsersByName(firstName, lastName);
-        UsersDto usersDto = userConverter.fromUsers(users);
+        List<UserDto> usersDto = userConverter.fromUsers(users);
         return ResponseBuilder.buildResponseGet(usersDto);
     }
 
@@ -47,21 +48,21 @@ public class UsersController {
         //TODO
         Post post = new Post(0, nameOfPost, null);
         List<User> users = usersServiceFacade.getUsersByPost(post);
-        UsersDto usersDto = userConverter.fromUsers(users);
+        List<UserDto> usersDto = userConverter.fromUsers(users);
         return ResponseBuilder.buildResponseGet(usersDto);
     }
 
     @RequestMapping(value = "sorted_by_rating.json")
     public ResponseEntity<ResponseDto> getSortedUserByRating(){
         List<User> users = usersServiceFacade.getSortedUsersByRating();
-        UsersDto usersDto = userConverter.fromUsers(users);
+        List<UserDto> usersDto = userConverter.fromUsers(users);
         return ResponseBuilder.buildResponseGet(usersDto);
     }
 
     @RequestMapping(value = "sorted_by_abc.json")
     public ResponseEntity<ResponseDto> getSortedUserByAbc(){
         List<User> users = usersServiceFacade.getSortedUsersByName();
-        UsersDto usersDto = userConverter.fromUsers(users);
+        List<UserDto> usersDto = userConverter.fromUsers(users);
         return ResponseBuilder.buildResponseGet(usersDto);
     }
 }
