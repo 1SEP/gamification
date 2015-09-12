@@ -15,7 +15,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
-import ru.fsep.enterprise.fseper.AppConfig;
+import ru.fsep.enterprise.fseper.WebAppConfig;
 import ru.fsep.enterprise.fseper.AppTestContext;
 import ru.fsep.enterprise.fseper.controllers.converters.TasksAndStepsConverterImpl;
 import ru.fsep.enterprise.fseper.models.User;
@@ -36,7 +36,7 @@ import static ru.fsep.enterprise.fseper.test.data.TestDataCore.*;
  */
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(classes = {AppTestContext.class, AppConfig.class})
+@ContextConfiguration(classes = {AppTestContext.class, WebAppConfig.class})
 @WebAppConfiguration
 public class UserControllerTest {
     private MockMvc mockMvc;

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Component;
 import ru.fsep.enterprise.fseper.controllers.dto.PersonInfoDto;
 import ru.fsep.enterprise.fseper.controllers.dto.PostDto;
 import ru.fsep.enterprise.fseper.controllers.dto.UserDto;
-import ru.fsep.enterprise.fseper.controllers.dto.UsersDto;
 import ru.fsep.enterprise.fseper.models.*;
 
 import java.net.URL;
