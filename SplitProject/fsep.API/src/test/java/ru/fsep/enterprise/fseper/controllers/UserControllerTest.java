@@ -22,6 +22,7 @@ import ru.fsep.enterprise.fseper.models.User;
 import ru.fsep.enterprise.fseper.service.exceptions.UserNotFoundException;
 import ru.fsep.enterprise.fseper.service.facades.TasksServiceFacade;
 import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
+import ru.fsep.enterprise.fseper.test.data.TestDataAPI;
 
 import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.verify;
@@ -156,13 +157,11 @@ public class UserControllerTest {
 
     @Test
     public void testUpdateUserById() throws Exception {
-//        User user = USER;
-//        user.getPersonInfo().setRole("new role");
-//        int userId = user.getId();
-//        String json = mapper.writeValueAsString(user);
-//        mockMvc.perform(put("/user/{user-id}", userId, user).content(json.getBytes())
-//                .contentType(MediaType.APPLICATION_JSON))
-//                .andExpect(status().isOk())
+        String json = mapper.writeValueAsString(TestDataAPI.initUserDto());
+        when(usersServiceFacade.updateUser(USER)).thenReturn(USER);
+        mockMvc.perform(put("/user/{user-id}", USER.getId()).content(json.getBytes())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isCreated());
 //                .andExpect(jsonPath("$.data.id", is("1")))
 //                .andExpect(jsonPath("$.data.personInfo.birthday", is("13.12.1990")));
 

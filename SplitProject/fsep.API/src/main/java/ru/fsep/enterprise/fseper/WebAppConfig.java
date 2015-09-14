@@ -10,12 +10,12 @@ import ru.fsep.enterprise.fseper.controllers.UserController;
  */
 @Configuration
 public class WebAppConfig {
-    @Bean
+    @Bean(name="/")
     public UserController getUserController() {
         return new UserController();
     }
 
-    @Bean
+    @Bean(name="/")
     public TasksController getTaskCOntroller() {
         return new TasksController();
     }

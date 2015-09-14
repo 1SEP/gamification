@@ -68,7 +68,7 @@ public class SqlQueryExecutorImplTest {
         assertNotNull("The ref must not be null: ", actual);
     }
 
-    @Test
+  //  @Test
     public void testUpdateQueryForUpdateUser() throws Exception {
         String firstName = "Ivan";
         String lastName = "Ivanov";

@@ -97,10 +97,10 @@ public class UserController {
     }
 
     @RequestMapping(value = "{user-id}", method = RequestMethod.PUT)
-    public ResponseEntity<ResponseDto>  updateUserById(@RequestBody UserDto userDto, @PathVariable("user-id") int userId){
+    public ResponseEntity<ResponseDto>  updateUserById(@PathVariable("user-id") int userId, @RequestBody UserDto userDto){
         User user = userConverter.toUser(userDto);
         usersServiceFacade.updateUser(user);
-        return ResponseBuilder.buildResponseGet(userDto);
+        return ResponseBuilder.buildResponsePut(userDto);
     }
 
     @RequestMapping(value = "{user-id}", method = RequestMethod.DELETE)

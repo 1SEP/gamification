@@ -52,6 +52,15 @@
                 <version>1.0-beta-1</version>
             </plugin>
 
+            <plugin>
+                <groupId>com.heroku.sdk</groupId>
+                <artifactId>heroku-maven-plugin</artifactId>
+                <version>0.5.1</version>
+                <configuration>
+                    <appName>enigmatic-citadel-8061</appName>
+                </configuration>
+            </plugin>
+
             <!--<plugin>-->
                 <!--<groupid>org.codehaus.mojo</groupid>-->
                 <!--<artifactid>tomcat-maven-plugin</artifactid>-->
