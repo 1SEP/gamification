@@ -12,7 +12,6 @@ import ru.fsep.enterprise.fseper.models.Step;
 import ru.fsep.enterprise.fseper.models.Steps;
 import ru.fsep.enterprise.fseper.models.Task;
 import ru.fsep.enterprise.fseper.service.facades.TasksServiceFacade;
-import ru.fsep.enterprise.fseper.service.facades.UsersServiceFacade;
 
 import java.util.LinkedList;
 import java.util.List;

@@ -2,7 +2,6 @@ package ru.fsep.enterprise.fseper.controllers.converters;
 
 import com.inspiresoftware.lib.dto.geda.adapter.BeanFactory;
 import ru.fsep.enterprise.fseper.controllers.dto.PostDto;
-import ru.fsep.enterprise.fseper.controllers.dto.PostsDto;
 
 /**
  * Author Fedorov Juriy on 02.09.2015

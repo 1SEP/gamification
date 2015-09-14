@@ -6,7 +6,6 @@ import com.google.common.base.Objects;
 import com.inspiresoftware.lib.dto.geda.annotations.Dto;
 import com.inspiresoftware.lib.dto.geda.annotations.DtoCollection;
 import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
-import ru.fsep.enterprise.fseper.controllers.converters.PostsFactory;
 import ru.fsep.enterprise.fseper.controllers.converters.PostsMatcher;
 
 import java.util.List;

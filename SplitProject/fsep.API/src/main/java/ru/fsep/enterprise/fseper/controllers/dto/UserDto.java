@@ -10,7 +10,6 @@ import com.inspiresoftware.lib.dto.geda.annotations.DtoField;
 import ru.fsep.enterprise.fseper.controllers.converters.StepsMatcher;
 
 import java.util.List;
-import java.util.regex.Matcher;
 
 /**
  * Author Fedorov Juriy on 14.07.2015

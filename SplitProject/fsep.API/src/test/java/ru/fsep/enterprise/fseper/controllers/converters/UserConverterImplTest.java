@@ -5,7 +5,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import ru.fsep.enterprise.fseper.controllers.dto.PersonInfoDto;
 import ru.fsep.enterprise.fseper.models.PersonInfo;
-import ru.fsep.enterprise.fseper.models.Posts;
 
 
 import static org.junit.Assert.*;
