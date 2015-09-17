@@ -58,7 +58,7 @@ public class StepsDaoImpl implements StepsDao {
             "(task_id = :taskId AND finished = :finished);";
     //language=SQL
     public static final String SQL_UPDATE_STEP = "UPDATE step SET description = :description, finished = :finished, " +
-            "task_id = :task_id WHERE id = :stepId;";
+            "task_id = :taskId WHERE id = :stepId;";
 
     public Steps getSteps(int taskId) {
         Map<String, Object> stepsParamMap = paramsMapper.asMap(asList("taskId"), asList(taskId));

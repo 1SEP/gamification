@@ -55,10 +55,11 @@ public class TasksDaoImpl implements TasksDao {
             "SELECT * FROM task INNER JOIN tasks ON tasks.user_id = :userId AND task.due_data = :dueDate;";
     //language=SQL
     public static final String SQL_INSERT_INTO_TASK =
-            "INSERT INTO task VALUES (:privated, :description, :due_data, finished);";
+            "INSERT INTO task VALUES (:privated, :description, :due_data, :finished);";
     //language=SQL
     public static final String SQL_UPDATE_TASK =
-            "UPDATE task VALUES (:privated, :description, :due_data, :finished) WHERE id = :taskId;";
+            "UPDATE task SET privated = :privated, description = :description, due_data = :due_data, finished = :finished " +
+                    "WHERE id = :taskId;";
     //language=SQL
     public static final String SQL_DELETE_FROM_TASK_BY_ID =
             "DELETE FROM task WHERE (id = :taskId);";
