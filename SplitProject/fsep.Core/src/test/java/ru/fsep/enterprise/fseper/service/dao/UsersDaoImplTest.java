@@ -105,7 +105,8 @@ public class UsersDaoImplTest {
     public void testGetUser() throws Exception {
         User actual = usersDaoImplTest.getUser(USER_ID);
         User expected = USER;
-        verify(daoArgumentsVerifierMock, times(2)).verifyUserById(USER_ID);
+        verify(daoArgumentsVerifierMock, times(3
+        )).verifyUserById(USER_ID);
         assertEquals(expected, actual);
     }
 

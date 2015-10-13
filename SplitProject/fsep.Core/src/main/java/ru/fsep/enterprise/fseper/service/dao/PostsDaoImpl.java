@@ -83,6 +83,7 @@ public class PostsDaoImpl implements PostsDao {
     }
 
     public List<Post> getPosts(int userId) {
+        daoArgumentsVerifier.verifyUserById(userId);
         Map<String, Object> paramMap = paramsMapper.asMap(asList("userId"), asList(userId));
         List<Post> posts = sqlQueryExecutor.queryForObjects(SQL_GET_POSTS_BY_USER_ID, paramMap,
                 POST_ROW_MAPPER);
