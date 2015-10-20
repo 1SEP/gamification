@@ -106,8 +106,6 @@ public class UsersDaoImpl implements UsersDao {
     };
 
     public void signUp(User user) {
-        daoArgumentsVerifier.verifyUser(user);
-
         PersonInfo personInfo = user.getPersonInfo();
         String firstName = personInfo.getFirstName();
         String lastName = personInfo.getLastName();

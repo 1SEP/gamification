@@ -93,7 +93,6 @@ public class UsersDaoImplTest {
     @Test
     public void testSignUp() throws Exception {
         usersDaoImplTest.signUp(USER);
-        verify(daoArgumentsVerifierMock).verifyUser(USER);
     }
 
     @Test(expected = UserNotFoundException.class)
